@@ -1,9 +1,13 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import CardImage from '../components/CardImage/CardImage'
 import Header from '../components/Header/Header'
 import Sitebanner from '../components/Sitebanner/Sitebanner'
 
 export default function pageFour() {
+    useEffect(() => {
+        document.body.classList.add("pageFour");
+    });
+
     return (
         <React.Fragment>
             {/* Header */}
@@ -18,6 +22,7 @@ export default function pageFour() {
                     <CardImage 
                         cardImg="/images/burgers.png"
                         cardTitle="Burgers & Wraps"
+                        cardTitleLink="/page-6"
                     />
                     
                     <CardImage 

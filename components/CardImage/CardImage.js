@@ -14,7 +14,13 @@ export default function CardImage(props) {
                     }
                     <div className='card--img--detail'>
                         <div className='flexBlockTwo'>
-                            {props.cardTitle &&
+                            {props.cardTitleLink ?
+                            <Link href={props.cardTitleLink}>
+                                <a>
+                                    <h4 className='name font-18'>{props.cardTitle}</h4>
+                                </a>
+                            </Link>
+                            :
                             <Link href="#">
                                 <a>
                                     <h4 className='name font-18'>{props.cardTitle}</h4>

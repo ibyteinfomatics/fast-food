@@ -6,7 +6,9 @@ import Header from '../components/Header/Header';
 export default function HomePage(){
     useEffect(() =>{
         document.body.classList.add("home__page")
+        document.body.classList.remove("pageFour")
     }, []);
+    
     const [showMe, setShowMe] = useState(false);
     function toggle(){
         setShowMe(!showMe);

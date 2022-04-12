@@ -121,7 +121,7 @@ body {
   @apply flex items-center justify-between siteWidth;
 }
 .site__logo{
-  @apply w-40 h-24 relative -ml-2;
+  @apply w-40 h-24 relative -ml-2 mr-6;
 }
 .site__logo:hover{
   opacity: .65;
@@ -143,6 +143,55 @@ nav.site__navigation {
 .mobile__header{
   @apply relative;
 }
+span.map_icon {
+  @apply relative h-6 block mr-6;
+  width: 1.125rem;
+}
+
+.header__left {
+  @apply flex items-center;
+}
+.restra__name--links {
+  @apply relative hidden;
+}
+.pageFour .restra__name--links{
+  @apply block;
+}
+.restra__name--links p {
+  @apply flex items-center leading-none py-5 px-6 site_font--600;
+  background: #F3F3F3;
+  border-radius: 2rem;
+}
+.restra__name--links p:after {
+  content: '';
+  height: 0;
+  width: 0;
+  display: block;
+  margin-left: 1rem;
+  border-top: 0.3875rem solid #C4C4C4;
+  border-right: 0.3125rem solid transparent;
+  border-left: 0.3125rem solid transparent;
+}
+ul.restra__name--lists {
+  @apply absolute z-50 bg-white inset-x-0 mt-2 opacity-0 transition-opacity overflow-hidden;
+  border: 0.0625rem solid #e5e5e5;
+  border-radius: 2rem;
+}
+ul.restra__name--lists--active{
+  @apply opacity-100;
+}
+ul.restra__name--lists li a {
+  @apply py-2.5 px-6 block transition;
+}
+ul.restra__name--lists li a:hover{
+  background-color: #f3f3f3;
+}
+ul.restra__name--lists li:not(:last-child) {
+  border-bottom: 0.0625rem solid #e5e5e5;
+}
+
+
+
 /* Homepage css */
 .home__page .site__wrapper .pageWrapper{
   @apply bg-cover bg-no-repeat bg-center min-h-screen;
@@ -170,10 +219,6 @@ nav.site__navigation {
 }
 .bgGray{
   background: #F9F9F9;
-}
-.pageTitle{
-  font-size: 1.625rem;
-  @apply font-extrabold mb-4;
 }
 .searchBox {
   @apply flex items-center relative mb-4;
@@ -251,12 +296,6 @@ a{
 }
 .mb-16{
   @apply mb-4;
-}
-.card--img--detail p{
-  font-size: 0.886rem;
-}
-.card--img--detail .name, .card--img--detail .price{
-  @apply font-bold;
 }
 .restroDetail{
   border-top: 1px solid #E1E1E1;
@@ -386,12 +425,13 @@ a{
 
 /* Product lists Card blocks styling */
 .product__lists {
-  @apply main__grid mt-12;
+  @apply main__grid my-12;
   column-gap: 2.5rem;
   row-gap: 2.5rem;
 }
 .cardBlock{
   @apply rounded-3xl overflow-hidden;
+  box-shadow: 0px 2.87071px 2.87071px rgba(149, 149, 149, 0.25), 0px 0px 1.43535px rgba(0, 0, 0, 0.25);
 }
 .cardBlock__wrapper{
   @apply relative;
@@ -416,4 +456,15 @@ a{
 }
 .card--img--desc p{ 
   @apply mt-0;
+}
+.cateTitle{
+  font-size: 1.625rem;
+  @apply site_font--900 mt-10 mb-0;
+}
+.card--img--detail p{
+  font-size: 0.886rem;
+}
+.card--img--detail .name, 
+.card--img--detail .price{
+  @apply site_font--700;
 }
