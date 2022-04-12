@@ -1,0 +1,419 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@import url('responsive-styles.css');
+
+@font-face {
+  font-family: 'Caveat Brush';
+  src: url('../public/fonts/CaveatBrush-Regular.ttf');
+}
+@font-face {
+  font-family: 'Camren Sans 300';
+  src: url('../public/fonts/Carmen_Sans_Light.otf');
+}
+@font-face {
+  font-family: 'Camren Sans 400';
+  src: url('../public/fonts/Carmen_Sans_Regular.otf');
+}
+@font-face {
+  font-family: 'Camren Sans 500';
+  src: url('../public/fonts/Carmen_Sans_Medium.otf');
+}
+@font-face {
+  font-family: 'Camren Sans 600';
+  src: url('../public/fonts/Carmen_Sans_SemiBold.otf');
+}
+@font-face {
+  font-family: 'Camren Sans 700';
+  src: url('../public/fonts/Carmen_Sans_Bold.otf');
+}
+@font-face {
+  font-family: 'Camren Sans 900';
+  src: url('../public/fonts/Carmen_Sans_ExtraBold.otf');
+}
+
+.site_font--400{
+  font-family: 'Camren Sans 400';
+}
+.site_font--500{
+  font-family: 'Camren Sans 500';
+}
+.site_font--300{
+  font-family: 'Camren Sans 300';
+}
+.site_font--600{
+  font-family: 'Camren Sans 600';
+}
+.site_font--700{
+  font-family: 'Camren Sans 700';
+}
+.site_font--900{
+  font-family: 'Camren Sans 900';
+}
+
+.highlight__font{
+  font-family: 'Caveat Brush';
+}
+.text-color-light{
+  color: #818181;
+}
+.text-color{
+  color: #181E27;
+}
+
+.siteWidth{
+  max-width: 95%;
+  @apply mx-auto;
+}
+
+.main__grid{
+  @apply grid;
+  grid-template-columns: repeat(1, 1fr);
+}
+.grid-lg{
+  grid-template-columns: 57.392% 42.308%;
+}
+.grid__2{
+  grid-template-columns: repeat(2, 1fr);
+}
+.grid__3{
+  grid-template-columns: repeat(3, 1fr);
+}
+.grid__4{
+  grid-template-columns: repeat(4, 1fr);
+}
+.grid__5{
+  grid-template-columns: repeat(5, 1fr);
+}
+.grid__6{
+  grid-template-columns: repeat(6, 1fr);
+}
+html {
+    @apply text-base scroll-smooth;
+}
+body {
+    @apply bg-black site_font--400;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.site__wrapper{
+  @apply rounded-3xl h-screen bg-white overflow-x-hidden overflow-y-auto;
+}
+::-webkit-scrollbar{
+  display: none;
+}
+.font-21{
+  font-size: 1.3125rem;
+}
+
+/*===== Header Styling =====*/
+.desktop__header{
+  @apply sticky w-full top-0 bg-white py-0.5 z-50;
+  box-shadow: 0px 4px 4px rgba(177, 177, 177, 0.25);
+}
+.home__page .desktop__header{
+  @apply relative;
+}
+.header__wrap--inner {
+  @apply flex items-center justify-between siteWidth;
+}
+.site__logo{
+  @apply w-40 h-24 relative -ml-2;
+}
+.site__logo:hover{
+  opacity: .65;
+}
+.site__logo a.logo__link{
+  @apply block;
+}
+.site__navigation ul {
+  @apply flex items-center;
+}
+nav.site__navigation {
+  @apply flex;
+}
+.site__navigation ul li a {
+  @apply flex items-center text-lg font-bold pl-10 bg-no-repeat;
+  background-image: url('../public/images/user-icon.svg');
+  background-size: 1.5rem 1.6875rem;
+}
+.mobile__header{
+  @apply relative;
+}
+/* Homepage css */
+.home__page .site__wrapper .pageWrapper{
+  @apply bg-cover bg-no-repeat bg-center min-h-screen;
+  background-image: url('../public/images/page--bg.jpg');
+}
+.gridBlogTwo{
+  @apply grid h-full;
+}
+.gridCol {
+  @apply pb-12 text-color-light min-h-screen;
+  padding-left: 5%;
+  padding-right: 5%;
+  background-color: rgb(255 255 255 / 0.75);
+  padding-top: 4.1875rem;
+}
+.secTitle{
+  @apply text-black highlight__font text-center leading-none mb-3.5;
+  font-size: 2.66rem;
+}
+.colDesc{
+  @apply text-center mx-auto site_font--600;
+  max-width: 44.1875rem;
+  font-size: 1.2875rem;
+  line-height: 1.359225;
+}
+.bgGray{
+  background: #F9F9F9;
+}
+.pageTitle{
+  font-size: 1.625rem;
+  @apply font-extrabold mb-4;
+}
+.searchBox {
+  @apply flex items-center relative mb-4;
+}
+a{
+  text-decoration: none;
+}
+.searchForm{
+  @apply mt-8 relative;
+}
+.searchBox input {
+  @apply w-full py-4 px-8;
+  border: 1px solid hsl(216, 24%, 12%);
+  cursor: pointer;
+  border-radius: 0.438rem;
+}
+.searchBox .leftIcon{
+  @apply absolute;
+  left: 0.5rem;
+}
+.useLocation{
+  @apply font-semibold;
+}
+.searchBox .rightIcon{
+  @apply absolute;
+  right: 0.5rem;
+}
+.searchList{
+  @apply opacity-0 h-0 bg-white transition-opacity overflow-hidden absolute inset-x-0 z-50;
+}
+.searchList_active{
+  @apply opacity-100 h-auto -mt-12;
+  border: 1px solid #181E27;
+  padding: 1.563rem;
+  border-radius: 0.438rem;
+}
+.searchList li:not(:last-child){
+  margin-bottom: 1.5rem;
+}
+.searchList li a {
+  font-size: 1.359375rem;
+  line-height: 1.38;
+  @apply site_font--700 text-color;
+}
+.searchForm .location__link{
+  @apply mb-4;
+}
+.searchForm .useLocation{
+  @apply flex items-center text-black;
+}
+.searchForm .useLocation svg{
+  margin-right: 0.688rem;
+}
+.text-align-center{
+  @apply text-center;
+}
+.gridBlockFour{
+  display: grid;
+  align-items: center;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 2.5rem;
+  row-gap: 4.5rem;
+}
+.font-18{
+  font-size: 1.125rem;
+}
+.font-20{
+  font-size: 1.25rem;
+}
+.flexBlockTwo{
+  @apply flex justify-between flex-wrap;
+}
+.mt-16{
+  @apply mt-4;
+}
+.mb-16{
+  @apply mb-4;
+}
+.card--img--detail p{
+  font-size: 0.886rem;
+}
+.card--img--detail .name, .card--img--detail .price{
+  @apply font-bold;
+}
+.restroDetail{
+  border-top: 1px solid #E1E1E1;
+  padding-top: 1.563rem;
+  padding-bottom: 1.563rem;
+}
+.restroGroup .colLeft, .restroGroup .colRight{
+  max-width: 12.125rem;
+  @apply w-full;
+}
+.restroGroup .colLeft .prdtImg{
+  @apply relative overflow-hidden;
+  height: 10.625rem;
+  width: 10.625rem;
+  border-radius: 0.438rem;
+}
+.flexBlockLeft{
+  @apply mt-4 mr-3;
+}
+.orderStatus{
+  @apply mt-4 w-full;
+  max-width: 14.688rem;
+}
+.restroGroup .colLeft .prdtImg img{
+  width: auto !important;
+  max-width: inherit !important;
+}
+/* .restroGroup{
+  @apply flex;
+} */
+.colMid.productDes .prdtNm{
+  @apply font-bold mb-4;
+  color: #181E27;
+}
+.colMid.productDes .flexBlockTwo:first-child{
+  margin-bottom: 1.375rem;
+}
+.colMid.productDes .orderAdd{
+  @apply font-normal ml-8 relative flex;
+  color: #181E27;
+  font-size: 0.875rem;
+  margin-top: 1.5rem;
+}
+.openStatus {
+  margin-top: 0.313rem;
+}
+/* .flexBlockTwo.noALign{
+  align-items: inherit;
+} */
+.colMid.productDes .orderAdd::before{
+  @apply absolute;
+  content: '';
+  background-image: url('../public/images/location.png');
+  left: -2rem;
+  width: 1.25rem;
+  height: 1.688rem;
+}
+.collect, .open, .time, .close{
+  font-size: 1.018rem;
+  color: #181E27;
+  @apply font-bold;
+}
+.close{
+  color: #FE0435;
+}
+.open{
+  color: #4AC79A;
+}
+.btnRed{
+  background: #FE0435;
+  border-radius: 2rem;
+  @apply text-white p-4 text-center;
+}
+.bannerSubTitle h3{
+  font-size: 3.998rem;
+  @apply site_font--900 leading-tight;
+}
+.textWhite{
+  @apply text-white;
+}
+.bannerContent {
+  @apply absolute w-full;
+  top: 50%;
+  left: 6.625rem;
+  max-width: 40.125rem;
+  transform: translateY(-50%);
+}
+.bannerImage {
+  @apply relative mt-2.5 mb-3;
+  height: 31.625rem;
+}
+.bannerImage img {
+  border-radius: 1.875rem;
+}
+.banner__wrapper {
+  margin-bottom: 2.938rem;
+}
+.stepGridTwo{
+  display: grid;
+  grid-template-columns: 25% auto;
+}
+.bgGray{
+  background: #E5E5E5;
+  @apply p-8;
+}
+.card--img--detail.noBg {
+  background: transparent;
+  box-shadow: none;
+}
+.stepRightData.bgWhite{
+  @apply p-8 bg-white;
+}
+.font-26{
+  font-size: 1.625rem;
+}
+.pageBanner {
+  @apply relative;
+  height: 40rem;
+}
+.pageBanner img {
+  @apply absolute h-full w-auto;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+/* Product lists Card blocks styling */
+.product__lists {
+  @apply main__grid mt-12;
+  column-gap: 2.5rem;
+  row-gap: 2.5rem;
+}
+.cardBlock{
+  @apply rounded-3xl overflow-hidden;
+}
+.cardBlock__wrapper{
+  @apply relative;
+}
+.cardImg {
+  @apply relative w-full h-80;
+}
+.cardImg img{
+  width: auto !important;
+  height: 100% !important;
+  max-width: inherit !important;
+  border-radius: 0.831rem;
+  left: 50% !important;
+  transform: translateX(-50%);
+}
+.card--img--detail{ 
+  @apply p-6 bg-white rounded-t-2xl absolute inset-x-0 bottom-0;
+  /* box-shadow: 0px 2.87071px 2.87071px rgba(149, 149, 149, 0.25), 0px 0px 1.43535px rgba(0, 0, 0, 0.25); */
+}
+.card--img--desc{
+  @apply pb-6 px-6;
+}
+.card--img--desc p{ 
+  @apply mt-0;
+}
