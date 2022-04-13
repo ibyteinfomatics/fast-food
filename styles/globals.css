@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 
-@import url('responsive-styles.css');
+/* @import url('responsive-styles.css'); */
 
 @font-face {
   font-family: 'Caveat Brush';
@@ -154,8 +154,8 @@ span.map_icon {
 .restra__name--links {
   @apply relative hidden;
 }
-.pageFour .restra__name--links{
-  @apply block;
+.rest__pages .restra__name--links{
+  @apply block cursor-pointer;
 }
 .restra__name--links p {
   @apply flex items-center leading-none py-5 px-6 site_font--600;
@@ -173,12 +173,12 @@ span.map_icon {
   border-left: 0.3125rem solid transparent;
 }
 ul.restra__name--lists {
-  @apply absolute z-50 bg-white inset-x-0 mt-2 opacity-0 transition-opacity overflow-hidden;
+  @apply absolute z-50 h-0 bg-white inset-x-0 mt-2 opacity-0 transition-opacity overflow-hidden;
   border: 0.0625rem solid #e5e5e5;
   border-radius: 2rem;
 }
 ul.restra__name--lists--active{
-  @apply opacity-100;
+  @apply opacity-100 h-auto;
 }
 ul.restra__name--lists li a {
   @apply py-2.5 px-6 block transition;
@@ -370,7 +370,7 @@ a{
   @apply text-white p-4 text-center;
 }
 .bannerSubTitle h3{
-  font-size: 3.998rem;
+  font-size: 1.25rem;
   @apply site_font--900 leading-tight;
 }
 .textWhite{
@@ -379,13 +379,13 @@ a{
 .bannerContent {
   @apply absolute w-full;
   top: 50%;
-  left: 6.625rem;
-  max-width: 40.125rem;
+  left: 0;
+  padding: 5%;
+  max-width: 54.125rem;
   transform: translateY(-50%);
 }
 .bannerImage {
   @apply relative mt-2.5 mb-3;
-  height: 31.625rem;
 }
 .bannerImage img {
   border-radius: 1.875rem;
@@ -394,8 +394,9 @@ a{
   margin-bottom: 2.938rem;
 }
 .stepGridTwo{
-  display: grid;
-  grid-template-columns: 25% auto;
+  @apply main__grid;
+  column-gap: 2rem;
+  row-gap: 2rem;
 }
 .bgGray{
   background: #E5E5E5;
@@ -430,11 +431,17 @@ a{
   row-gap: 2.5rem;
 }
 .cardBlock{
-  @apply rounded-3xl overflow-hidden;
+  @apply rounded-3xl overflow-hidden relative;
   box-shadow: 0px 2.87071px 2.87071px rgba(149, 149, 149, 0.25), 0px 0px 1.43535px rgba(0, 0, 0, 0.25);
 }
 .cardBlock__wrapper{
   @apply relative;
+}
+.card__link {
+  @apply absolute inset-0 z-20 transition;
+}
+a.card__link:hover {
+  background-color: rgb(0 0 0 /0.1);
 }
 .cardImg {
   @apply relative w-full h-80;
@@ -449,10 +456,9 @@ a{
 }
 .card--img--detail{ 
   @apply p-6 bg-white rounded-t-2xl absolute inset-x-0 bottom-0;
-  /* box-shadow: 0px 2.87071px 2.87071px rgba(149, 149, 149, 0.25), 0px 0px 1.43535px rgba(0, 0, 0, 0.25); */
 }
 .card--img--desc{
-  @apply pb-6 px-6;
+  @apply pb-6 px-6 bg-white;
 }
 .card--img--desc p{ 
   @apply mt-0;
@@ -467,4 +473,74 @@ a{
 .card--img--detail .name, 
 .card--img--detail .price{
   @apply site_font--700;
+}
+
+/* Responsive styling */
+@media screen and (max-width: 39.999rem) {
+  /* .desktop__header{
+    @apply hidden;
+  } */
+  .restroGroup .colMid{
+      @apply mt-4;
+  }
+}
+@media screen and (min-width: 30rem){
+  .product__lists{
+      @apply grid__2;
+  }
+  .bannerSubTitle h3{
+    font-size: 1.75rem;
+  }
+}
+@media screen and (min-width: 40rem){
+  .restroGroup{
+      @apply flex;
+  }
+  .restroGroup .colMid{
+    @apply w-full;
+    max-width: calc(100% - 12rem);
+  }
+  .stepGridTwo{
+    grid-template-columns: 25% auto;
+  }
+  .bannerSubTitle h3{
+    font-size: 2.5rem;
+  }
+}
+@media screen and (min-width: 48rem){
+  .mobile__header{
+      @apply hidden;
+  }
+  .bannerSubTitle h3{
+    font-size: 2.75rem;
+  }
+}
+@media screen and (min-width: 60rem){
+  .product__lists{
+      @apply grid__3;
+  }
+  .bannerSubTitle h3{
+    font-size: 3.998rem;
+  }
+}
+@media screen and (min-width: 64rem) {
+  .gridBlogTwo{
+      @apply grid__2;
+  }
+  .gridCol{
+      @apply bg-white;
+  }
+}
+@media screen and (min-width: 75rem){
+  html{
+    font-size: 0.833333333vw;
+  }
+  .product__lists{
+      @apply grid__4;
+  }
+}
+@media screen and (min-width: 121rem){
+  html{
+      font-size: 1vw;
+  }
 }

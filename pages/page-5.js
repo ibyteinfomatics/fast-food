@@ -4,7 +4,9 @@ import Header from '../components/Header/Header'
 
 export default function pageSix() {
   useEffect(() => {
-      document.body.classList.add("pageFour");
+      document.body.classList.add("rest__pages");
+      document.body.classList.remove("home__page");
+      document.body.classList.remove("steps");
   });
   return (
     <React.Fragment>
@@ -19,6 +21,7 @@ export default function pageSix() {
           </div>
           <div className='product__lists prod__lists--content'>
             <CardImage 
+              cardStepLink= "yes"
               cardImg="/images/bg.png"
               cardTitle="Sunset Burgers"
               cardPrice="$8.25"
@@ -26,6 +29,7 @@ export default function pageSix() {
             />
             
             <CardImage 
+              cardStepLink= "yes"
               cardImg="/images/bg.png"
               cardTitle="Starters"
               cardPrice="$8.25"
@@ -33,6 +37,7 @@ export default function pageSix() {
             />
             
             <CardImage 
+              cardStepLink= "yes"
               cardImg="/images/bg.png"
               cardTitle="Chicken"
               cardPrice="$8.25"
@@ -40,6 +45,7 @@ export default function pageSix() {
             />
             
             <CardImage 
+              cardStepLink= "yes"
               cardImg="/images/bg.png"
               cardTitle="Salads"
               cardPrice="$8.25"

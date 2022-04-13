@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
-import Header from '../components/Header/Header';
+import Header from '../components/Header/Header'
 
 export default function HomePage(){
     useEffect(() =>{
-        document.body.classList.add("home__page")
-        document.body.classList.remove("pageFour")
+        document.body.classList.add("home__page");
+        document.body.classList.remove("rest__pages");
+        document.body.classList.remove('steps')
     }, []);
     
     const [showMe, setShowMe] = useState(false);
@@ -54,7 +54,7 @@ export default function HomePage(){
                             </div>
                             <ul className= {showMe?'searchList searchList_active':'searchList'}>
                                 <li>
-                                    <Link href="#">
+                                    <Link href="/page-3">
                                         <a>SE1 0FH, London, England, United Kingdom</a>
                                     </Link>
                                 </li>
@@ -80,82 +80,6 @@ export default function HomePage(){
                                 </li>
                             </ul>
                         </form>
-                        <div className='search__detail--lists'>
-                            <div className='restroDetail'>
-                                <div className='restroGroup'>
-                                    <div className='colLeft'>
-                                        <div className='prdtImg'>   
-                                            <Image src='/images/rec_burger.jpg' alt='Food Image' layout="fill" quality={100} />
-                                        </div>
-                                    </div>
-                                    <div className='colMid productDes'>
-                                        <div className='flexBlockTwo'>
-                                            <h4 className='font-18 prdtNm'>
-                                                Fastfood Elephant & Castle
-                                                <span className='orderAdd'>#123, Lorem ipsum address comes here</span>
-                                            </h4>
-                                            <p>
-                                                0.3 mi. away
-                                            </p>
-                                        </div>
-                                        <div className='flexBlockTwo'>
-                                            <div className='flexBlockLeft'>
-                                                <Link href="#">
-                                                    <a className='collect'>Click & Collect</a>
-                                                </Link>
-                                                <p className='openStatus'>
-                                                    <span className='open'>Open• </span><span className='time'>11:30 - 22:05</span>
-                                                </p>
-                                            </div>
-                                            <div className='orderStatus'>
-                                                <div className='btnRed style1'>
-                                                    <Link href="#">
-                                                        <a className='btn'>Order Online</a>
-                                                    </Link>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='restroDetail'>
-                                <div className='restroGroup'>
-                                    <div className='colLeft'>
-                                        <div className='prdtImg'>
-                                            <Image src='/images/rec_burger.jpg' alt='Food Image' layout="fill" quality={100} />
-                                        </div>
-                                    </div>
-                                    <div className='colMid productDes'>
-                                        <div className='flexBlockTwo'>
-                                            <h4 className='font-18 prdtNm'>
-                                                Fastfood Elephant & Castle
-                                                <span className='orderAdd'>#123, Lorem ipsum address comes here</span>
-                                            </h4>
-                                            <p>
-                                                0.3 mi. away
-                                            </p>
-                                        </div>
-                                        <div className='flexBlockTwo'>
-                                            <div className='flexBlockLeft'>
-                                                <Link href="#">
-                                                    <a className='collect'>Click & Collect</a>
-                                                </Link>
-                                                <p className='openStatus'>
-                                                    <span className='close'>Currently Unavailable</span>
-                                                </p>
-                                            </div>
-                                            <div className='orderStatus'>
-                                                <div className='btnRed style1'>
-                                                    <Link href="#">
-                                                        <a className='btn'>Order Online</a>
-                                                    </Link>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

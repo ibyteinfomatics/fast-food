@@ -5,7 +5,9 @@ import Sitebanner from '../components/Sitebanner/Sitebanner'
 
 export default function pageFour() {
     useEffect(() => {
-        document.body.classList.add("pageFour");
+        document.body.classList.add("rest__pages");
+        document.body.classList.remove("home__page");
+        document.body.classList.remove("step__1");
     });
 
     return (
@@ -22,7 +24,6 @@ export default function pageFour() {
                     <CardImage 
                         cardImg="/images/burgers.png"
                         cardTitle="Burgers & Wraps"
-                        cardTitleLink="/page-6"
                     />
                     
                     <CardImage 
