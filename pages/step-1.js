@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Header from '../components/Header/Header'
 import CardImage from '../components/CardImage/CardImage'
 
-export default function stepOne() {
+export default function StepOne() {
     useEffect(() => {
         document.body.classList.add("steps");
         document.body.classList.remove("home__page");

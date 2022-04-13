@@ -26,7 +26,7 @@ export default function Header(){
                         </div>
                         <div className='restra__name--links'>
                             <p onClick={toggle}>
-                                <span class="map_icon"><Image src="/images/map-pin.svg" alt="Map Pin Icon" layout="fill" quality={100} /></span>
+                                <span className="map_icon"><Image src="/images/map-pin.svg" alt="Map Pin Icon" layout="fill" quality={100} /></span>
                                 Fastfood Elephant Cas..
                             </p>
                             <ul className={showMe ? 'restra__name--lists restra__name--lists--active' : 'restra__name--lists'}>

@@ -16,7 +16,7 @@ export default function StepLeftBlock() {
                         <h4 className='price font-20'>$8.25</h4>
                     </div>
                     <p className='mt-16'>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since.
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since.
                     </p>
                 </div>
             </div>

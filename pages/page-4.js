@@ -3,7 +3,7 @@ import CardImage from '../components/CardImage/CardImage'
 import Header from '../components/Header/Header'
 import Sitebanner from '../components/Sitebanner/Sitebanner'
 
-export default function pageFour() {
+export default function PageFour() {
     useEffect(() => {
         document.body.classList.add("rest__pages");
         document.body.classList.remove("home__page");

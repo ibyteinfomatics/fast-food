@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import Header from '../components/Header/Header'
 
-export default function pageThree() {
+export default function PageThree() {
     useEffect(() =>{
         document.body.classList.add("home__page")
         document.body.classList.remove("pageFour")

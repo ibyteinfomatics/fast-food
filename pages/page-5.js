@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import CardImage from '../components/CardImage/CardImage'
 import Header from '../components/Header/Header'
 
-export default function pageSix() {
+export default function PageSix() {
   useEffect(() => {
       document.body.classList.add("rest__pages");
       document.body.classList.remove("home__page");
