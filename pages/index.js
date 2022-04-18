@@ -54,7 +54,7 @@ export default function HomePage(){
                             </div>
                             <ul className= {showMe?'searchList searchList_active':'searchList'}>
                                 <li>
-                                    <Link href="/page-3">
+                                    <Link href="/restra-lists">
                                         <a>SE1 0FH, London, England, United Kingdom</a>
                                     </Link>
                                 </li>

@@ -7,7 +7,7 @@ export default function PageFour() {
     useEffect(() => {
         document.body.classList.add("rest__pages");
         document.body.classList.remove("home__page");
-        document.body.classList.remove("step__1");
+        document.body.classList.remove("steps");
     });
 
     return (
@@ -22,80 +22,67 @@ export default function PageFour() {
                 {/* Product grids */}
                 <div className='product__lists'>
                     <CardImage 
+                        cardItem='/restraMenus/burgers--wraps'
                         cardImg="/images/burgers.png"
                         cardTitle="Burgers & Wraps"
                     />
                     
                     <CardImage 
+                        cardItem='/restraMenus/starters'
                         cardImg="/images/starters.png"
                         cardTitle="Starters"
                     />
                     
                     <CardImage 
+                        cardItem='#'
                         cardImg="/images/chicken.png"
                         cardTitle="Chicken"
                     />
                     
                     <CardImage 
+                        cardItem='#'
                         cardImg="/images/salads.png"
                         cardTitle="Salads"
                     />
                     
                     <CardImage 
+                        cardItem='#'
                         cardImg="/images/platters.png"
                         cardTitle="Platters"
                     />
                     
                     <CardImage 
+                        cardItem='#'
                         cardImg="/images/veggie.png"
                         cardTitle="Veggie"
                     />
                     
                     <CardImage 
+                        cardItem='#'
                         cardImg="/images/for-kids.png"
                         cardTitle="For Kids"
                     />
                     
                     <CardImage 
+                        cardItem='#'
                         cardImg="/images/sides-extra.png"
                         cardTitle="Sides & Extra"
                     />
                     
                     <CardImage 
+                        cardItem='#'
                         cardImg="/images/drinks.png"
                         cardTitle="Drinks"
                     />
                     
                     <CardImage 
+                        cardItem='#'
                         cardImg="/images/desserts.png"
                         cardTitle="Desserts"
                     />
                 </div>
             </div>
 
-{/*             
-            <div className='pageWrapper'>
-                <div className='siteWidth'>
-                    <div className='contentWrapper'>
-                    <Sitebanner />
-                        <h2 className='pageTitle'>Starters</h2>
-                        <div className='gridBlockFour'>
-                            <div className='cardBlock'>
-                                <div className='card card--img'>
-                                    <div className='cardImg'>
-                                        <img src='images/bg.png' alt='Food Product Image' />
-                                    </div>
-                                </div>
-                                <div className='card--img--detail'>
-                                    <div className='flexBlockTwo'>
-                                        <h4 className='name font-18'>Sunset Burger</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> */}
         </React.Fragment>
     )
 }

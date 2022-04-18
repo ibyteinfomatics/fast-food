@@ -3,13 +3,15 @@ import Link from 'next/link'
 import Image from 'next/image'
 import Header from '../components/Header/Header'
 
-export default function PageThree() {
+export default function RestraLists() {
     useEffect(() =>{
-        document.body.classList.add("home__page")
-        document.body.classList.remove("pageFour")
+        document.body.classList.add("home__page");
+        document.body.classList.remove("steps");
+        document.body.classList.remove("rest__pages");
     }, []);
     
     const [showMe, setShowMe] = useState(false);
+    
     function toggle(){
         setShowMe(!showMe);
     }
@@ -100,7 +102,7 @@ export default function PageThree() {
                                         </div>
                                         <div className='flexBlockTwo'>
                                             <div className='flexBlockLeft'>
-                                                <Link href="/page-4">
+                                                <Link href="/restra--menus">
                                                     <a className='collect'>Click & Collect</a>
                                                 </Link>
                                                 <p className='openStatus'>
@@ -108,11 +110,9 @@ export default function PageThree() {
                                                 </p>
                                             </div>
                                             <div className='orderStatus'>
-                                                <div className='btnRed style1'>
-                                                    <Link href="/page-4">
-                                                        <a className='btn'>Order Online</a>
-                                                    </Link>
-                                                </div>
+                                                <Link href="/restra--menus">
+                                                    <a className='btnRed btn'>Order Online</a>
+                                                </Link>
                                             </div>
                                         </div>
                                     </div>
@@ -137,7 +137,7 @@ export default function PageThree() {
                                         </div>
                                         <div className='flexBlockTwo'>
                                             <div className='flexBlockLeft'>
-                                                <Link href="#">
+                                                <Link href="/restra--menus">
                                                     <a className='collect'>Click & Collect</a>
                                                 </Link>
                                                 <p className='openStatus'>
@@ -145,11 +145,9 @@ export default function PageThree() {
                                                 </p>
                                             </div>
                                             <div className='orderStatus'>
-                                                <div className='btnRed style1'>
-                                                    <Link href="#">
-                                                        <a className='btn'>Order Online</a>
-                                                    </Link>
-                                                </div>
+                                                <Link href="/restra--menus">
+                                                    <a className='btnRed btn'>Order Online</a>
+                                                </Link>
                                             </div>
                                         </div>
                                     </div>
