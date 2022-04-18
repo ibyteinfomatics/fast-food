@@ -8,6 +8,7 @@ export default function StepSelection() {
         document.body.classList.add("steps");
         document.body.classList.remove("home__page");
         document.body.classList.remove("rest__pages");
+        document.body.classList.remove('login__form');
     })
     return (
         <React.Fragment>

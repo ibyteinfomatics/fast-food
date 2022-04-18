@@ -6,7 +6,8 @@ export default function HomePage(){
     useEffect(() =>{
         document.body.classList.add("home__page");
         document.body.classList.remove("rest__pages");
-        document.body.classList.remove('steps')
+        document.body.classList.remove('steps');
+        document.body.classList.remove('login__form');
     }, []);
     
     const [showMe, setShowMe] = useState(false);

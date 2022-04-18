@@ -30,24 +30,10 @@ export default function Header(){
                             </Link>
                         </div>
                         <div className='restra__name--links'>
-                            <p onClick={toggle}>
-                                <span className="map_icon"><Image src="/images/map-pin.svg" alt="Map Pin Icon" layout="fill" quality={100} /></span>
-                                Fastfood Elephant Cas..
+                            <p>
+                                <Link href="/restra-lists"><a><span className="map_icon"><Image src="/images/map-pin.svg" alt="Map Pin Icon" layout="fill" quality={100} /></span>
+                                Fastfood Elephant Cas..</a></Link>
                             </p>
-                            <ul className={showMe ? 'restra__name--lists restra__name--lists--active' : 'restra__name--lists'}>
-                                <li>
-                                    <Link href="#"><a>Restraurent 1</a></Link>
-                                </li>
-                                <li>
-                                    <Link href="#"><a>Restraurent 2</a></Link>
-                                </li>
-                                <li>
-                                    <Link href="#"><a>Restraurent 3</a></Link>
-                                </li>
-                                <li>
-                                    <Link href="#"><a>Restraurent 4</a></Link>
-                                </li>
-                            </ul>
                         </div>
                     </div>
                     <div className="header__right">

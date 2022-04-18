@@ -4,7 +4,10 @@ import Image from 'next/image'
 
 export default function Login() {
     useEffect(() => {
-        document.body.classList.add('login__form')
+        document.body.classList.add('login__form');
+        document.body.classList.remove("steps");
+        document.body.classList.remove("home__page");
+        document.body.classList.remove("rest__pages");
     })
     return (
         <React.Fragment>

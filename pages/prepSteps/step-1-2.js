@@ -8,6 +8,7 @@ export default function StepOne() {
         document.body.classList.add("steps");
         document.body.classList.remove("home__page");
         document.body.classList.remove("rest__pages");
+        document.body.classList.remove("login__pages");
     })
 
     return (
