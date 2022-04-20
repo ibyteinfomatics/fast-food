@@ -9,6 +9,7 @@ export default function StepSelection() {
         document.body.classList.remove("home__page");
         document.body.classList.remove("rest__pages");
         document.body.classList.remove('login__form');
+        document.body.classList.remove('cart__page');
     })
     return (
         <React.Fragment>
@@ -102,9 +103,9 @@ export default function StepSelection() {
                                     </div>
                                 </div>
                             </div>
-                            <div className='btnBlack rightBtn'>
+                            <div className='rightBtn'>
                                 <Link href="/prepSteps/your-selection">
-                                <a className='btn'>Update Meal</a>
+                                <a className='btnBlack btn'>Update Meal</a>
                                 </Link>
                             </div>
                         </div>

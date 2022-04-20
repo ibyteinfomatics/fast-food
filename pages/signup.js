@@ -25,18 +25,22 @@ export default function SignUp() {
                     <div className='form--item'>
                         <label className='form--label' htmlFor='username'>Username</label>
                         <input className='form--control' type="text" id="username" />
+                        <span className='form--icon'><Image src="/images/user-icon-red.svg" alt="form icon" layout="fill" quality={100} /></span>
                     </div>
                     <div className='form--item'>
                         <label className='form--label' htmlFor='email'>Email</label>
                         <input className='form--control' type="email" id="email" />
+                        <span className='form--icon'><Image src="/images/envelope-icon-red.svg" alt="form icon" layout="fill" quality={100} /></span>
                     </div>
                     <div className='form--item'>
                         <label className='form--label' htmlFor='pwd'>Password</label>
                         <input className='form--control' type="password" id="pwd" />
+                        <span className='form--icon'><Image src="/images/key-icon-red.svg" alt="form icon" layout="fill" quality={100} /></span>
                     </div>
                     <div className='form--item'>
-                        <label className='form--label' htmlFor='cnfpwd'>Password</label>
+                        <label className='form--label' htmlFor='cnfpwd'>Confirm Password</label>
                         <input className='form--control' type="password" id="cnfpwd" />
+                        <span className='form--icon'><Image src="/images/key-icon-red.svg" alt="form icon" layout="fill" quality={100} /></span>
                     </div>
                     <div className='form--actions'>
                         <button className='btn btnBlack' type="submit">Signup</button>

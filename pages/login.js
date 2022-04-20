@@ -7,6 +7,7 @@ export default function Login() {
         document.body.classList.add('login__form');
         document.body.classList.remove("steps");
         document.body.classList.remove("home__page");
+        document.body.classList.remove("cart__page");
         document.body.classList.remove("rest__pages");
     })
     return (
@@ -25,10 +26,12 @@ export default function Login() {
                     <div className='form--item'>
                         <label className='form--label' htmlFor='email'>Email</label>
                         <input className='form--control' type="email" id="email" />
+                        <span className='form--icon'><Image src="/images/envelope-icon-red.svg" alt="form icon" layout="fill" quality={100} /></span>
                     </div>
                     <div className='form--item'>
                         <label className='form--label' htmlFor='pwd'>Password</label>
                         <input className='form--control' type="password" id="pwd" />
+                        <span className='form--icon'><Image src="/images/key-icon-red.svg" alt="form icon" layout="fill" quality={100} /></span>
                     </div>
                     <div className='form--group--flex'>
                         <div className='form--item--checkbox'>

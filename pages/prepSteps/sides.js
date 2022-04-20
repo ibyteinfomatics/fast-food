@@ -12,6 +12,7 @@ export default function Sides() {
         document.body.classList.remove("home__page");
         document.body.classList.remove("rest__pages");
         document.body.classList.remove('login__form');
+        document.body.classList.remove('checkout__page');
     })
     return (
         <React.Fragment>
@@ -63,9 +64,9 @@ export default function Sides() {
                                 </form>
                             </div>
 
-                            <div className='btnBlack rightBtn'>
+                            <div className='rightBtn'>
                                 <Link href="#">
-                                <a className='btn'>Update Meal</a>
+                                    <a className='btn btnBlack'>Update Meal</a>
                                 </Link>
                             </div>
                         </div>

@@ -161,12 +161,12 @@ span.map_icon {
 .rest__pages .restra__name--links{
   @apply block cursor-pointer;
 }
-.restra__name--links p {
+.restra__name--links p a{
   @apply flex items-center leading-none py-5 px-6 site_font--600;
   background: #F3F3F3;
   border-radius: 2rem;
 }
-.restra__name--links p:after {
+.restra__name--links p a:after {
   content: '';
   height: 0;
   width: 0;
@@ -222,7 +222,7 @@ ul.restra__name--lists li:not(:last-child) {
   @apply site_font--700 leading-none;
 }
 .header__wrap--inner.prepSteps li a.back--menu--icon{
-  @apply block w-10 h-6 bg-no-repeat bg-cover p-0;
+  @apply block w-10 h-8 bg-no-repeat bg-cover p-0;
   background-image: url('../public/images/left-big-arrow.svg');
 }
 
@@ -389,6 +389,7 @@ a{
   background-image: url('../public/images/location.png');
   left: -2rem;
   width: 1.25rem;
+  background-size: contain;
   height: 1.688rem;
 }
 .collect, .open, .time, .close{
@@ -681,8 +682,8 @@ body.steps .cardImg{
   @apply text-white text-center;
   border-radius: 2rem;
 }
-.btnBlack.rightBtn{
-  float: right;
+.rightBtn{
+  @apply text-right;
 }
 .step--title{
   @apply font-26 site_font--700;
@@ -823,7 +824,7 @@ span.offer__price span {font-family: 'Camren Sans 300';text-decoration: line-thr
   @apply flex items-center py-6;
   background: #e5e5e5;
 }
-.user__form {width: 40rem;margin: auto;background: #fff;padding: 3rem;border-radius: 1.875rem;box-shadow: 0px 16px 32px rgba(201, 201, 201, 0.25), 0px 0px 2px rgba(175, 175, 175, 0.25);}
+.user__form {width: 40rem;margin: auto;background: #fff;padding: 2rem 3rem 3rem;border-radius: 1.875rem;box-shadow: 0px 16px 32px rgba(201, 201, 201, 0.25), 0px 0px 2px rgba(175, 175, 175, 0.25);}
 
 .form__title .site__logo{
   @apply mx-auto;
@@ -835,9 +836,9 @@ form {margin-top: 1.5rem;}
 
 label.form--label {font-family: 'Camren Sans 700';font-size: 1.125rem;margin-bottom: 0.75rem;}
 
-input.form--control {background: #F9F9F9;border-radius: 0.5rem;font-size: 1.125rem;width: 100%;border: 1px solid #EFEFEF;padding: 1.25rem 1rem;}
+input.form--control {background: #F9F9F9;border-radius: 0.5rem;font-size: 1.125rem;width: calc(100% - 3rem);border: 1px solid #EFEFEF;padding: 1.25rem 1rem;margin-left: 3rem;}
 
-.form--item {margin-bottom: 1.5rem;}
+.form--item {margin-bottom: 1.5rem;position: relative;}
 
 .form--group--flex {display: flex;flex-wrap: wrap;justify-content: space-between;gap: 1rem;margin-bottom: 1.5rem;}
 
@@ -849,11 +850,20 @@ input[type="checkbox"] {border: 0.125rem solid #000;height: 1.6875rem;width: 1.6
 
 .forgot--pwd a {font-size: 1.125rem;font-family: 'Camren Sans 700';}
 
-.form--actions .btn {border-radius: .5rem;width: 100%;margin-bottom: 1.5rem;}
+.form--actions .btn {border-radius: .5rem;width: 100%;margin-bottom: 1.5rem;font-family: 'Camren Sans 700';font-size: 1.125rem;}
 
 .form--link--desc {text-align: center;font-size: 1.125rem;font-family: 'Camren Sans 700';}
 
 .form--link--desc a {color: #D64444}
+
+span.form--icon {
+  position: absolute;
+  width: 2rem;
+  height: 1.5rem;
+  display: block;
+  bottom: 1.25rem;
+  left: 0;
+}
 
 
 /* Responsive styling */

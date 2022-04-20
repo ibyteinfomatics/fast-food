@@ -40,7 +40,7 @@ export default function Header(){
                         <nav className="site__navigation">
                             <ul>
                                 <li>
-                                    <Link href="#">
+                                    <Link href="/login">
                                         <a>Login</a>
                                     </Link>
                                 </li>
