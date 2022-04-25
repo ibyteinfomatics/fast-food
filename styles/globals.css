@@ -408,6 +408,10 @@ a{
   border-radius: 2rem;
   @apply text-white p-4 text-center;
 }
+
+.add--order {
+  @apply flex items-center gap-6;
+}
 .menu__srch .btn,
 .add--order .btn{
   @apply leading-none block text-xl pr-4 pt-2.5 pb-3.5 pl-12 bg-no-repeat;
@@ -704,7 +708,7 @@ body.steps .cardImg{
   border-color: #D64444; 
 }
 span.side__image {
-  @apply block mt-5;
+  @apply block mb-5;
 }
 span.side__header h3 {
   @apply site_font--700;
@@ -817,6 +821,14 @@ span.offer__price span {font-family: 'Camren Sans 300';text-decoration: line-thr
   min-width: 13rem;
   line-height: 1;
 }
+.cart__page .add--order .btn{
+  @apply pl-4 bg-none;
+  min-width: 13rem;
+}
+a.conti--order{
+  @apply underline;
+  text-underline-offset: 0.3125rem;
+}
 
 /* Login Page Css */
 .signup__form .site__wrapper,
@@ -866,6 +878,368 @@ span.form--icon {
 }
 
 
+/* Checkout Styling */
+.successIcon svg{
+  @apply m-auto;
+}
+.successMsg {
+  margin-bottom: 1.75rem;
+  font-size: 1.563rem;
+  @apply font-semibold;
+}
+.orderCheckout {
+  max-width: 32.813rem;
+  @apply m-auto w-full;
+}
+.successIcon svg {
+  max-width: 6.75rem;
+}
+.successIcon {
+  margin-bottom: 1.75rem;
+  width: 6rem;
+  height: 6rem;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 1.75rem;
+}
+.orderDetail .card-block{
+  @apply bg-white;
+  border-radius: 0.625rem 0.625rem 0px 0px;
+}
+.orderDetail .card-block ul{
+  box-shadow: 0px 8px 16px rgba(196, 196, 196, 0.24);
+  padding-top: 0.625rem;
+}
+.orderDetail .innerBlock span {
+  @apply text-black text-xs;
+}
+.orderDetail .orderId {
+  font-size: 0.938rem;
+  @apply site_font--700;
+}
+.orderDetail ul li:not(:last-child){
+  border-bottom: 1px solid #E1E1E1;
+}
+.orderDetail ul li{
+  @apply px-4 pt-0 pb-2;
+}
+.orderDetail .innerBlock{
+  @apply pt-2 flex justify-between items-center;
+  font-family: 'Montserrat';
+}
+.orderDetail .instructions{
+  @apply text-base my-8 site_font--600 text-center;
+  color: #181E27;
+}
+.orderDetail .btnRed.btn{
+  min-width: 17.438rem;
+  background: #FE0435;
+  display: inline-block;
+  @apply text-white text-xl;
+}
+.orderDetail .myOrders{
+  @apply text-center mb-8;
+}
+.card-block ul:last-child {
+  border-bottom-left-radius: 0.688rem;
+  border-bottom-right-radius: 0.688rem;
+}
+.fontBold{
+  @apply font-bold;
+}
+.fontNormal{
+  @apply font-normal;
+}
+span.user__pic {width: 2.875rem;height: 2.875rem;background: #C4C4C4;display: block;position: relative;border-radius: 50%;overflow: hidden;}
+.checkout__page .add--order .btn {display: flex;align-items: center;gap: 0.5rem;padding: 0;}
+
+
+.checkout__page .header__wrap--inner:not(.prepSteps),
+.cart__page .header__wrap--inner:not(.prepSteps),
+.profile__page .header__wrap--inner:not(.prepSteps){
+  @apply hidden;
+}
+
+/* Profile Pages Css Start */
+.profile__page .site__wrapper{
+  @apply bgGray;
+}
+.settingPageALign {
+  @apply flex gap-7;
+  padding: 1.75rem 0;
+  min-height: calc(100% - 6.25rem);
+}
+.settingPageALign .user__sideBar{
+  @apply bg-white w-full;
+  max-width: 21.313rem;
+  border-radius: 0.938rem;
+  box-shadow: 0px 7.7004px 15.4008px rgba(196, 196, 196, 0.24);
+}
+.settingPageALign .user__sideBar ul li{
+  border-bottom: 1px solid #E3E3E3;
+}
+.settingPageALign .user__sideBar ul li a{
+  @apply px-4 py-6 w-full text-xl site_font--700;
+  display: inline-block;
+}
+.settingPageALign .sideBarContent{
+  @apply bg-white w-full;
+  border-radius: 0.938rem;
+  box-shadow: 0px 7.7004px 15.4008px rgba(196, 196, 196, 0.24);
+}
+.myProfileForm{
+  max-width: 54rem;
+}
+.settingPageALign form.userProfileEditForm {
+  @apply m-0 w-full;
+  max-width: 55.188rem;
+  padding: 2.188rem 3.313rem;
+}
+.settingPageALign form.userProfileEditForm input.form--control{
+  @apply m-0 w-full;  
+  border: 0.0625rem solid #cdcdcd;
+  background: none;
+}
+.settingPageALign .editProfile .fileUpload input[type="file"] {
+  display: none;
+}
+.settingPageALign .editProfile{
+  @apply text-center;
+}
+.settingPageALign .changeImg {
+  @apply flex items-center justify-center m-auto site_font--700 text-xl;
+  padding-top: 1.188rem;
+  max-width: 14rem;
+}
+.settingPageALign .formData{
+  @apply mt-8;
+}
+.settingPageALign .changeImg svg{
+  @apply mr-3;
+}
+.settingPageALign .uploadedImg {
+  @apply relative overflow-hidden m-auto w-full;
+  max-width: 13.5rem;
+  height: 13.5rem;
+  border-radius: 0.625rem;
+  box-shadow: 0px 16px 32px rgba(201, 201, 201, 0.25), 0px 0px 2px rgba(175, 175, 175, 0.25);
+}
+.settingPageALign .uploadedImg img{
+  @apply w-full h-auto ;
+  /* left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%); */
+}
+.settingPageALign .active{
+  color: #FE0435;
+}
+/* Orders List page */
+.sideBarContent .orderDetail {
+  @apply main__grid gap-6 p-6;
+}
+.sideBarContent .orderDetail .orderId{
+  @apply border-none;
+}
+
+
+/* New Css */
+.sideBarContent .orderDetail .card-block {
+  border-width: 0.313rem;
+  border-radius: 0.75rem;
+  @apply p-4;
+}
+.sideBarContent .orderDetail .order--ready {
+  border-color: #83DC64;
+}
+.sideBarContent .orderDetail .order--delayed{
+  border-color: #BB3E56;
+}
+.sideBarContent .orderDetail .order--processing{
+  border-color: #FCBB3E;
+}
+.sideBarContent .orderDetail .order--accepted{
+  border-color: #3EB3BB;
+}
+.orderBtn .btnFullW:not(:last-child){
+  @apply my-4;
+}
+.orderBtn .btnFullW{
+  @apply w-full flex items-center justify-center text-white;
+  border-radius: 0.313rem;
+  padding: 1.25rem;
+  font-size: 1.313rem;
+}
+.sideBarContent .orderDetail .order--ready .orderBtn .btnFullW{
+  background: #83DC64;
+}
+.sideBarContent .orderDetail .order--accepted .orderBtn .btnFullW{
+  background: #3EB3BB;
+}
+.sideBarContent .orderDetail .order--delayed .orderBtn .btnFullW{
+  background: #BB3E56;
+}
+.sideBarContent .orderDetail .order--processing .orderBtn .btnFullW{
+  background: #FCBB3E;
+}
+.orderBtn .btnFullW.black svg{
+  @apply mr-3;
+}
+.sideBarContent .orderDetail .orderBtn .btnFullW.black{
+  @apply bg-black;
+}
+.sideBarContent .orderDetail.hasBorder .card-block {
+  padding: 0;
+}
+.sideBarContent .orderDetail .orderBtn {
+  padding: 0 1rem 1rem;
+}
+.sideBarContent.inProgressContent .orderDetail {
+  grid-template-columns: repeat(4, 1fr);
+}
+.sideBarContent.inProgressContent .orderDetail .card-block-hasBg{
+  background: #F1F1F1;
+  padding: 1.25rem 0.625rem;
+  border-radius: 0.625rem;
+  height: 100vh;
+}
+.sideBarContent .progressTitle{
+  @apply text-lg site_font--600;
+}
+.sideBarContent.inProgressContent .orderDetail .haNoBorder{
+  border: none;
+  margin-top: 1.438rem;
+}
+.sideBarContent.orderInvoicePage {
+  box-shadow: none;
+}
+.orderInvoicePage .orderId span{
+  font-size: 1.063rem;
+}
+.orderInvoicePage .innerBlock .prdctTitle{
+  color: #888888;
+  font-size: 1.063rem;
+}
+.orderInvoicePage .innerBlock .prdctDes{
+  color: #000;
+  font-size: 1.063rem;
+}
+.sideBarContent.orderInvoicePage .orderDetail .card-block {
+  border: none;
+  box-shadow: 0px 8px 16px rgb(196 196 196 / 24%);
+  border-radius: 0.688rem;
+}
+.sideBarContent.orderInvoicePage .orderDetail {
+  @apply w-full block;
+  max-width: 80rem;
+}
+.sideBarContent.orderInvoicePage .orderDetail ul li:not(:first-child){
+  border-bottom: none;
+}
+.sideBarContent.orderInvoicePage .orderDetail ul li{
+  @apply p-3;
+}
+.sideBarContent.orderInvoicePage .orderDetail .orderId{
+  border-bottom: 0.0625rem solid #E1E1E1;
+}
+.sideBarContent.orderInvoicePage .orderDetail ul{
+  padding-bottom: 0.625rem;
+}
+.sideBarContent.orderInvoicePage .orderDetail .card-block + .card-block {
+  margin-top: 2.563rem;
+}
+.sideBarContent.orderInvoicePage .orderDetail .card-block table tr{
+  @apply border-none;
+}
+.sideBarContent.orderInvoicePage .orderDetail .card-block table tr:first-child{
+  border-bottom: 0.0625rem solid #E1E1E1;
+}
+.sideBarContent.orderInvoicePage .orderDetail .card-block table tr:last-child{
+  border-top: 0.0625rem solid #E1E1E1;
+}
+.sideBarContent.orderInvoicePage .orderDetail .card-block table tr td{
+  padding: 1.188rem;
+}
+.sideBarContent.orderInvoicePage .orderDetail .card-block table tr th{
+  font-size: 1.063rem
+}
+.sideBarContent.orderInvoicePage .orderDetail .card-block table tr, .sideBarContent.orderInvoicePage .orderDetail .card-block table td{
+  @apply text-left;
+  font-size: 1.063rem;
+}
+.sideBarContent.orderInvoicePage .orderDetail .card-block table .total{
+  @apply site_font--600;
+}
+.total .subTotal {
+  @apply flex justify-between w-full float-right clear-both mb-3;
+  max-width: 30rem;
+}
+.total .subTotal:last-child{
+  @apply mb-0;
+}
+.sideBarContent.orderInvoicePage .orderDetail .card-block table tr th:last-child, .sideBarContent.orderInvoicePage .orderDetail .card-block table tr td:last-child{
+  @apply text-right;
+}
+.cardVerify {
+  max-width: 70.438rem;
+  @apply w-full p-8;
+  margin: 1.438rem auto;
+}
+.cardVerify form{
+  @apply m-0;
+}
+.cardVerify .card-block {
+  @apply bg-white;
+  padding: 1.75rem 2.438rem;
+}
+.cardTitle{
+  @apply text-xl site_font--700;
+  margin-bottom: 1.313rem;
+}
+.cardVerify .form--control {
+  background: #F9F9F9;
+  border-radius: 0.5rem;
+  font-size: 1.125rem;
+  width: calc(100% - 3rem);
+  border: 0.0625rem solid #EFEFEF;
+  padding: 1.25rem 1rem;
+  @apply m-0;
+}
+.cardVerify .card-block + .card-block{
+  margin-top: 1.438rem;
+}
+.cardVerify .formWidth{
+  max-width: 31.813rem;
+  @apply w-full;
+}
+.cardVerify .formSubTitle{
+  @apply text-xl site_font--700;
+}
+.form--item p{
+  @apply text-lg site_font--600;
+  color: #181E27;
+}
+.mt--44{
+  margin-top: 2.75rem;
+}
+.location .firstRow {
+  @apply flex items-center;
+}
+.cardVerify .locationAdd{
+  @apply flex flex-col;
+  margin-left: 1.313rem;
+}
+.regularChoice .stepSelection ul {
+  @apply mt-0;
+}
+.regularChoice .stepSelection ul li label{
+  @apply px-0 pt-0;
+}
+.regularChoice span.side__image * {
+  width: 100% !important;
+  max-width: inherit !important;
+}
+
 /* Responsive styling */
 @media screen and (max-width: 39.999rem) {
   /* .desktop__header{
@@ -908,6 +1282,9 @@ span.form--icon {
   .bannerSubTitle h3{
     font-size: 2.75rem;
   }
+  .sideBarContent .orderDetail {
+    @apply grid__2;
+  }
 }
 @media screen and (min-width: 60rem){
   .product__lists{
@@ -920,7 +1297,7 @@ span.form--icon {
     @apply grid__4;
   }
   .stepGridTwo{
-    grid-template-columns: 33.33333% auto;
+    grid-template-columns: 33.33333% calc(66.66667% - 2rem);
   }
   .stepSelection ul{
     @apply grid__3;
@@ -950,9 +1327,12 @@ span.form--icon {
   .stepSelection ul{
     @apply grid__5;
   }
+  .sideBarContent .orderDetail {
+    @apply grid__3;
+  }
 }
-@media screen and (min-width: 121rem){
+/* @media screen and (min-width: 121rem){
   html{
       font-size: 1vw;
   }
-}
+} */

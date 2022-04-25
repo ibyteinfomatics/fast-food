@@ -12,6 +12,7 @@ export default function Sides() {
         document.body.classList.remove("home__page");
         document.body.classList.remove("rest__pages");
         document.body.classList.remove('login__form');
+        document.body.classList.remove('cart__page');
         document.body.classList.remove('checkout__page');
     })
     return (

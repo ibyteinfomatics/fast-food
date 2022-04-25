@@ -10,6 +10,7 @@ export default function StepSelection() {
         document.body.classList.remove("rest__pages");
         document.body.classList.remove('login__form');
         document.body.classList.remove('cart__page');
+        document.body.classList.remove('checkout__page');
     })
     return (
         <React.Fragment>

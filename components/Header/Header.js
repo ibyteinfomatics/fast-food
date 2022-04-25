@@ -13,7 +13,7 @@ export default function Header(){
     function toggle(){
         setShowMe(!showMe);
     }
-    // console.log(router)
+    console.log(route)
 
     return(
         <React.Fragment>
@@ -51,7 +51,7 @@ export default function Header(){
 
                 }
 
-                {route == 'restraMenus' &&
+                {route == 'restra--menus' &&
 
                 <div className='header__wrap--inner restra__menu'>
                     <ul>
@@ -133,6 +133,58 @@ export default function Header(){
                     <div className='add--order'>
                         <Link href="/cart">
                             <a className='btnRed btn'>Add to Order</a>
+                        </Link>
+                    </div>
+                </div>
+                }
+
+                {route == "cart" && 
+                <div className='header__wrap--inner prepSteps'>
+                    <ul>
+                        <li>
+                            <Link href="/restra--menus">
+                                <a className='back--menu--icon'></a>
+                            </Link>
+                        </li>
+                        <li>Your Cart</li>
+                    </ul>
+                    <div className='add--order'>
+                        <Link href="/restra--menus">
+                            <a className='conti--order'>Continue Ordering</a>
+                        </Link>
+                        <Link href="/checkout">
+                            <a className='btnRed btn'>Checkout</a>
+                        </Link>
+                    </div>
+                </div>
+                }
+
+                {route == "userProfile" && 
+                <div className='header__wrap--inner prepSteps'>
+                    <ul>
+                        <li>
+                            <Link href="/restra--menus">
+                                <a className='back--menu--icon'></a>
+                            </Link>
+                        </li>
+                        <li>Your Profile</li>
+                    </ul>
+                </div>
+                }
+
+                {route == "checkout" && 
+                <div className='header__wrap--inner prepSteps'>
+                    <ul>
+                        <li>
+                            <Link href="/restra--menus">
+                                <a className='back--menu--icon'></a>
+                            </Link>
+                        </li>
+                        <li>Checkout</li>
+                    </ul>
+                    <div className='add--order'>
+                        <Link href="/settings">
+                            <a className='btn'><span className='user__pic'><Image src="/images/user_pic.png" alt="user pic" layout='fill' quality={100} /></span> Username</a>
                         </Link>
                     </div>
                 </div>

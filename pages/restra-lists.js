@@ -9,6 +9,8 @@ export default function RestraLists() {
         document.body.classList.remove("steps");
         document.body.classList.remove("rest__pages");
         document.body.classList.remove('login__form');
+        document.body.classList.remove('cart__page');
+        document.body.classList.remove('checkout__page');
     }, []);
     
     const [showMe, setShowMe] = useState(false);

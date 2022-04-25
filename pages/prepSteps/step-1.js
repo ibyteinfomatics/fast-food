@@ -9,6 +9,8 @@ export default function StepOne() {
         document.body.classList.remove("home__page");
         document.body.classList.remove("rest__pages");
         document.body.classList.remove("login__pages");
+        document.body.classList.remove('cart__page');
+        document.body.classList.remove('checkout__page');
     })
 
     return (

@@ -11,6 +11,7 @@ export default function CartView() {
         document.body.classList.remove("home__page");
         document.body.classList.remove("rest__pages");
         document.body.classList.remove('login__form');
+        document.body.classList.remove('checkout__page');
     })
     const listLength = Cartlists.length;
     console.log(listLength);

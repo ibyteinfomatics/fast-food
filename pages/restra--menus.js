@@ -9,6 +9,8 @@ export default function PageFour() {
         document.body.classList.remove("home__page");
         document.body.classList.remove("steps");
         document.body.classList.remove('login__form');
+        document.body.classList.remove('cart__page');
+        document.body.classList.remove('checkout__page');
     });
 
     return (

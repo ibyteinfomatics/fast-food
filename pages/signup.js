@@ -8,6 +8,8 @@ export default function SignUp() {
         document.body.classList.remove("steps");
         document.body.classList.remove("home__page");
         document.body.classList.remove("rest__pages");
+        document.body.classList.remove('cart__page');
+        document.body.classList.remove('checkout__page');
     })
     return (
         <React.Fragment>
