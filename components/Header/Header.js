@@ -189,6 +189,14 @@ export default function Header(){
                     </div>
                 </div>
                 }
+
+                {router.pathname == "/userProfile/in-progress" && 
+                <div className='header__wrap--inner progress--header'>
+                    <ul>
+                        <li className='color__red'>In Progress Orders</li>
+                    </ul>
+                </div>
+                }
             </div>
 
             {/* Mobile Header Wrapper */}

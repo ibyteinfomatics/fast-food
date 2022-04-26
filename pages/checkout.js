@@ -82,9 +82,9 @@ export default function Checkout() {
                         You can check your order progress in our panel also or visit my orders section under your profile
                     </p>
                     <div className='myOrders'>
-                    <Link href="#">
-                    <a className='btnRed btn'>My orders</a>
-                    </Link>
+                        <Link href="/userProfile/my-orders">
+                            <a className='btnRed btn'>My orders</a>
+                        </Link>
                     </div>
                 </div>
             </div>
