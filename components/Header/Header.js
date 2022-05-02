@@ -1,4 +1,4 @@
-// import { elastic as Menu } from 'react-burger-menu'
+import { elastic as Menu } from 'react-burger-menu'
 import Link from 'next/link'
 import Image from 'next/image'
 import React, {useState} from "react"
@@ -18,7 +18,7 @@ export default function Header(){
     return(
         <React.Fragment>
             <div className="desktop__header header__wrapper">
-                {route != "prepSteps" &&
+                {route != 'prepSteps' &&
                 
                 <div className="header__wrap--inner">
                     <div className="header__left">
@@ -51,10 +51,10 @@ export default function Header(){
 
                 }
 
-                {route == 'restra--menus' &&
+                {(route == 'restra--menus' || route == 'restraMenus') &&
 
                 <div className='header__wrap--inner restra__menu'>
-                    <ul>
+                    <ul className='desktop__menu'>
                         <li className='burgur__icon'>
                             <Link href="/restra--menus">
                                 <a></a>
@@ -111,6 +111,73 @@ export default function Header(){
                             </Link>
                         </li>
                     </ul>
+
+                    {/* Mobile Menus */}
+
+                    <div className="mobile__header header__wrapper">
+                        <div className="header__left">
+                            <Menu right>
+                                <ul>
+                                    <li className='burgur__icon'>
+                                        <Link href="/restra--menus">
+                                            <a></a>
+                                        </Link>
+                                    </li>
+                                    <li className={rout[2] == 'burgers--wraps' ? "active__link" : ""}>
+                                        <Link href="/restraMenus/burgers--wraps">
+                                            <a>Burgers & Wraps</a>
+                                        </Link>
+                                    </li>
+                                    <li className={rout[2] == 'starters' ? "active__link" : ""}>
+                                        <Link href="/restraMenus/starters">
+                                            <a>Starters</a>
+                                        </Link>
+                                    </li>
+                                    <li className={rout[2] == 'chickens' ? "active__link" : ""}>
+                                        <Link href="#">
+                                            <a>Chickens</a>
+                                        </Link>
+                                    </li>
+                                    <li className={rout[2] == 'salads' ? "active__link" : ""}>
+                                        <Link href="#">
+                                            <a>Salads</a>
+                                        </Link>
+                                    </li>
+                                    <li className={rout[2] == 'platters' ? "active__link" : ""}>
+                                        <Link href="#">
+                                            <a>Platters</a>
+                                        </Link>
+                                    </li>
+                                    <li className={rout[2] == 'veggie' ? "active__link" : ""}>
+                                        <Link href="#">
+                                            <a>Veggie</a>
+                                        </Link>
+                                    </li>
+                                    <li className={rout[2] == 'for-kids' ? "active__link" : ""}>
+                                        <Link href="#">
+                                            <a>For Kids</a>
+                                        </Link>
+                                    </li>
+                                    <li className={rout[2] == 'sides--extras' ? "active__link" : ""}>
+                                        <Link href="#">
+                                            <a>Sides & Extras</a>
+                                        </Link>
+                                    </li>
+                                    <li className={rout[2] == 'drinks' ? "active__link" : ""}>
+                                        <Link href="#">
+                                            <a>Drinks</a>
+                                        </Link>
+                                    </li>
+                                    <li className={rout[2] == 'desserts' ? "active__link" : ""}>
+                                        <Link href="#">
+                                            <a>Desserts</a>
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </Menu>
+                        </div>
+                    </div>
+
                     <div className='menu__srch'>
                         <Link href="#">
                             <a className='btnRed btn'>Search</a>
@@ -183,7 +250,7 @@ export default function Header(){
                         <li>Checkout</li>
                     </ul>
                     <div className='add--order'>
-                        <Link href="/settings">
+                        <Link href="/userProfile/my-profile">
                             <a className='btn'><span className='user__pic'><Image src="/images/user_pic.png" alt="user pic" layout='fill' quality={100} /></span> Username</a>
                         </Link>
                     </div>

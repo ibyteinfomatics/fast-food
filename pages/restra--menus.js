@@ -11,6 +11,7 @@ export default function PageFour() {
         document.body.classList.remove('login__form');
         document.body.classList.remove('cart__page');
         document.body.classList.remove('checkout__page');
+        document.body.classList.remove('profile__page');
     });
 
     return (
