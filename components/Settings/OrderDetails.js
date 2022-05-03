@@ -42,7 +42,7 @@ export default function OrderDetails() {
                         </ul>
                     </div>
                     <div className='card-block'>
-                        <table>
+                        <table className='order--table'>
                             <tr>
                                 <th>Items</th>
                                 <th>Options</th>

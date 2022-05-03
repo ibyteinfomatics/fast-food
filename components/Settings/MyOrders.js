@@ -107,7 +107,7 @@ export default function MyOrders() {
                         </li>
                     </ul>
                     <div className='orderBtn'>
-                        <Link href="#">
+                        <Link href="/userProfile/in-progress">
                             <a className='btn btnFullW'>
                             Processing
                             </a>

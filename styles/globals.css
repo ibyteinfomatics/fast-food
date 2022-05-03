@@ -195,9 +195,9 @@ ul.restra__name--lists li a:hover{
 ul.restra__name--lists li:not(:last-child) {
   border-bottom: 0.0625rem solid #e5e5e5;
 }
-.header__wrap--inner.restra__menu{
+/* .header__wrap--inner.restra__menu{
   @apply pb-6;
-}
+} */
 .header__wrap--inner.restra__menu ul,
 .header__wrap--inner.prepSteps ul{
   @apply flex flex-wrap;  
@@ -238,6 +238,9 @@ ul.restra__name--lists li:not(:last-child) {
 .gridBlogTwo{
   @apply grid;
   min-height: calc(100vh - 6.25rem);
+}
+.cardVerify .gridBlogTwo{
+  min-height: inherit;
 }
 .gridCol {
   @apply pb-12 text-color-light;
@@ -793,9 +796,15 @@ tr td:not(:first-child) {
   @apply text-right;
   min-width: 6rem;
 }
+.order--table tr td{
+  text-align: right;
+  min-height: 4rem;
+}
+.order--table tr:not(:last-child) td,
 .cart--table tr:not(:last-child) td{
   @apply pl-48;
 }
+.order--table tr:not(:last-child) td:before,
 .cart--table tr:not(:last-child) td:before{
   content: '';
   @apply w-40 mr-2 site_font--600 absolute left-5 text-left;
@@ -808,6 +817,22 @@ tr td:not(:first-child) {
 }
 .cart--table tr:not(:last-child) td:last-child:before{
   content: 'Price';
+}
+
+.order--table tr:not(:last-child) td:first-child:before{
+  content: 'Items';
+}
+.order--table tr:not(:last-child) td:nth-child(2):before{
+  content: 'Options';
+}
+.order--table tr:not(:last-child) td:nth-child(3):before{
+  content: 'Qty';
+}
+.order--table tr:not(:last-child) td:nth-child(4):before{
+  content: 'Price';
+}
+.order--table tr:not(:last-child) td:last-child:before{
+  content: 'Total Price';
 }
 .cart__title {
   @apply text-2xl site_font--700;
@@ -1121,14 +1146,10 @@ span.user__pic {width: 2.875rem;height: 2.875rem;background: #C4C4C4;display: bl
 .sideBarContent .orderDetail .orderBtn {
   padding: 0 1rem 1rem;
 }
-.sideBarContent.inProgressContent .orderDetail {
-  grid-template-columns: repeat(4, 1fr);
-}
 .sideBarContent.inProgressContent .orderDetail .card-block-hasBg{
   background: #F1F1F1;
   padding: 1.25rem 0.625rem;
   border-radius: 0.625rem;
-  height: 100vh;
 }
 .sideBarContent .progressTitle{
   @apply text-lg site_font--600;
@@ -1175,26 +1196,26 @@ span.user__pic {width: 2.875rem;height: 2.875rem;background: #C4C4C4;display: bl
 .sideBarContent.orderInvoicePage .orderDetail .card-block + .card-block {
   margin-top: 2.563rem;
 }
-.sideBarContent.orderInvoicePage .orderDetail .card-block table tr{
+.order--table tr{
   @apply border-none;
 }
-.sideBarContent.orderInvoicePage .orderDetail .card-block table tr:first-child{
+.order--table tr:first-child{
   border-bottom: 0.0625rem solid #E1E1E1;
 }
-.sideBarContent.orderInvoicePage .orderDetail .card-block table tr:last-child{
+.order--table tr:last-child{
   border-top: 0.0625rem solid #E1E1E1;
 }
-.sideBarContent.orderInvoicePage .orderDetail .card-block table tr td{
+.order--table tr td{
   padding: 1.188rem;
 }
-.sideBarContent.orderInvoicePage .orderDetail .card-block table tr th{
+.order--table tr th{
   font-size: 1.063rem
 }
-.sideBarContent.orderInvoicePage .orderDetail .card-block table tr, .sideBarContent.orderInvoicePage .orderDetail .card-block table td{
+.order--table tr, .order--table td{
   @apply text-left;
   font-size: 1.063rem;
 }
-.sideBarContent.orderInvoicePage .orderDetail .card-block table .total{
+.order--table .total{
   @apply site_font--600;
 }
 .total .subTotal {
@@ -1204,7 +1225,7 @@ span.user__pic {width: 2.875rem;height: 2.875rem;background: #C4C4C4;display: bl
 .total .subTotal:last-child{
   @apply mb-0;
 }
-.sideBarContent.orderInvoicePage .orderDetail .card-block table tr th:last-child, .sideBarContent.orderInvoicePage .orderDetail .card-block table tr td:last-child{
+.order--table tr th:last-child, .order--table tr td:last-child{
   @apply text-right;
 }
 .cardVerify {
@@ -1274,6 +1295,11 @@ span.user__pic {width: 2.875rem;height: 2.875rem;background: #C4C4C4;display: bl
   font-weight: 700;
   font-family: 'Montserrat';
 }
+td.total:after {
+  content: '';
+  display: block;
+  clear: both;
+}
 
 /* Responsive styling */
 @media screen and (max-width: 39.999rem) {
@@ -1327,7 +1353,8 @@ span.user__pic {width: 2.875rem;height: 2.875rem;background: #C4C4C4;display: bl
   .settingPageALign .user__sideBar ul{
     @apply flex flex-wrap items-center gap-6; 
   }
-  .settingPageALign .user__sideBar ul{
+  .settingPageALign .user__sideBar ul,
+  .order--table tr:not(:last-child){
     border-bottom: 0.0625rem solid #E3E3E3;
   }
 }
@@ -1353,8 +1380,12 @@ span.user__pic {width: 2.875rem;height: 2.875rem;background: #C4C4C4;display: bl
   td{
     @apply table-cell p-5;
   }
+  .order--table tr:not(:last-child) td,
   .cart--table tr:not(:last-child) td{
-    @apply pl-5;
+    @apply pl-5 text-left;
+  }
+  .order--table tr:not(:last-child) td{
+    @apply pt-5;
   }
   .cart__actions {
     @apply w-36 flex gap-6;
@@ -1382,6 +1413,9 @@ span.user__pic {width: 2.875rem;height: 2.875rem;background: #C4C4C4;display: bl
     border-radius: 0.938rem;
     box-shadow: 0px 7.7004px 15.4008px rgba(196, 196, 196, 0.24);
   }
+  /* .sideBarContent.inProgressContent .orderDetail .card-block-hasBg{
+    min-height: calc(100vh - 12.25rem);
+  } */
 }
 @media screen and (min-width: 60rem){
   .product__lists{
@@ -1453,6 +1487,9 @@ span.user__pic {width: 2.875rem;height: 2.875rem;background: #C4C4C4;display: bl
   }
   .sideBarContent .orderDetail {
     @apply grid__3;
+  }
+  .sideBarContent.inProgressContent .orderDetail{
+    @apply grid__4;
   }
   .settingPageALign .user__sideBar ul li{
     border-bottom: 0.0625rem solid #E3E3E3;
