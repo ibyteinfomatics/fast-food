@@ -54,7 +54,7 @@ export default function Header(){
                 {(route == 'restra--menus' || route == 'restraMenus') &&
 
                 <div className='header__wrap--inner restra__menu'>
-                    <ul className='desktop__menu'>
+                    <ul className='desktop__menu-not-used'>
                         <li className='burgur__icon'>
                             <Link href="/restra--menus">
                                 <a></a>
@@ -114,7 +114,7 @@ export default function Header(){
 
                     {/* Mobile Menus */}
 
-                    <div className="mobile__header header__wrapper">
+                    {/* <div className="mobile__header header__wrapper">
                         <div className="header__left">
                             <Menu right>
                                 <ul>
@@ -182,7 +182,7 @@ export default function Header(){
                         <Link href="#">
                             <a className='btnRed btn'>Search</a>
                         </Link>
-                    </div>
+                    </div> */}
                 </div>
 
                 }

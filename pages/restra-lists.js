@@ -11,6 +11,8 @@ export default function RestraLists() {
         document.body.classList.remove('login__form');
         document.body.classList.remove('cart__page');
         document.body.classList.remove('checkout__page');
+        document.body.classList.remove("progress__page");
+        document.body.classList.remove("profile__pages");
     }, []);
     
     const [showMe, setShowMe] = useState(false);
@@ -45,19 +47,8 @@ export default function RestraLists() {
                                     </svg>
                                 </span>
                             </div>
-                            <div className='location__link'>
-                                <Link href="#">
-                                    <a>
-                                        <span className='useLocation font-21'>
-                                        <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M12.25 0V3.54102C7.64258 3.96484 3.96484 7.64258 3.54102 12.25H0V14H3.54102C3.96484 18.6074 7.64258 22.2852 12.25 22.7021V26.25H14V22.7021C18.6074 22.2852 22.2852 18.6074 22.7021 14H26.25V12.25H22.7021C22.2852 7.64258 18.6074 3.96484 14 3.54102V0H12.25ZM13.125 5.25C17.4863 5.25 21 8.76367 21 13.125C21 17.4863 17.4863 21 13.125 21C8.76367 21 5.25 17.4863 5.25 13.125C5.25 8.76367 8.76367 5.25 13.125 5.25ZM13.125 10.5C11.6758 10.5 10.5 11.6758 10.5 13.125C10.5 14.5742 11.6758 15.75 13.125 15.75C14.5742 15.75 15.75 14.5742 15.75 13.125C15.75 11.6758 14.5742 10.5 13.125 10.5Z" fill="#181E27" />
-                                        </svg>
-                                        Use my location
-                                        </span>
-                                    </a>
-                                </Link>
-                            </div>
-                            <ul className= {showMe?'searchList searchList_active':'searchList'}>
+                            
+                            <ul className= {showMe?'searchList searchList_active':'searchList'} style={{marginTop:0}}>
                                 <li>
                                     <Link href="#">
                                         <a>SE1 0FH, London, England, United Kingdom</a>

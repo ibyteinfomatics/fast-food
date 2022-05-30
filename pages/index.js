@@ -10,6 +10,8 @@ export default function HomePage(){
         document.body.classList.remove('login__form');
         document.body.classList.remove('cart__page');
         document.body.classList.remove('checkout__page');
+        document.body.classList.remove("progress__page");
+        document.body.classList.remove("profile__pages");
     }, []);
     
     const [showMe, setShowMe] = useState(false);

@@ -24,6 +24,7 @@ export default function CardImage(props) {
                         <Image src={props.cardImg} alt='Food Product Image' layout='fill' quality={100} />
                     </div>
                     }
+                    {props.cardTitle &&
                     <div className='card--img--detail'>
                         <div className='flexBlockTwo'>
                             {props.cardTitle &&
@@ -34,6 +35,7 @@ export default function CardImage(props) {
                             }
                         </div>
                     </div>
+                    }
                 </div>
                 {props.cardDesc &&
                 <div className='card--img--desc'>

@@ -4,7 +4,6 @@ import Image from 'next/image'
 import Header from '../../components/Header/Header'
 import CardImage from '../../components/CardImage/CardImage'
 import { Sidelist } from '../api/Sideslist'
-import { faCropSimple } from '@fortawesome/free-solid-svg-icons'
 
 export default function Sides() {
     useEffect(() => {
@@ -14,6 +13,8 @@ export default function Sides() {
         document.body.classList.remove('login__form');
         document.body.classList.remove('cart__page');
         document.body.classList.remove('checkout__page');
+        document.body.classList.remove("progress__page");
+        document.body.classList.remove("profile__pages");
     })
     return (
         <React.Fragment>
@@ -66,7 +67,7 @@ export default function Sides() {
                             </div>
 
                             <div className='rightBtn'>
-                                <Link href="#">
+                                <Link href="/prepSteps/your-selection">
                                     <a className='btn btnBlack'>Update Meal</a>
                                 </Link>
                             </div>

@@ -12,78 +12,93 @@ export default function PageFour() {
         document.body.classList.remove('cart__page');
         document.body.classList.remove('checkout__page');
         document.body.classList.remove('profile__page');
+        document.body.classList.remove("progress__page");
     });
 
     return (
         <React.Fragment>
             {/* Header */}
             <Header />
-
+            
+            {/* Top Banner */}
+            <Sitebanner />
+            
             <div className='siteWidth'>
-                {/* Top Banner */}
-                <Sitebanner />
 
                 {/* Product grids */}
-                <div className='product__lists'>
+                <div className='product__lists rest--pages__lists'>
                     <CardImage 
                         cardItem='/restraMenus/burgers--wraps'
-                        cardImg="/images/burgers.png"
-                        cardTitle="Burgers & Wraps"
+                        cardImg="/images/new_images/salads.jpg"
+                        // cardTitle="Burgers & Wraps"
                     />
                     
                     <CardImage 
                         cardItem='/restraMenus/starters'
-                        cardImg="/images/starters.png"
-                        cardTitle="Starters"
+                        cardImg="/images/new_images/burgers.jpg"
+                        // cardTitle="Starters"
                     />
                     
                     <CardImage 
                         cardItem='#'
-                        cardImg="/images/chicken.png"
-                        cardTitle="Chicken"
+                        cardImg="/images/new_images/fries-slaws.jpg"
+                        // cardTitle="Chicken"
                     />
                     
                     <CardImage 
                         cardItem='#'
-                        cardImg="/images/salads.png"
-                        cardTitle="Salads"
+                        cardImg="/images/new_images/hot-boxes.jpg"
+                        // cardTitle="Salads"
                     />
                     
                     <CardImage 
                         cardItem='#'
-                        cardImg="/images/platters.png"
-                        cardTitle="Platters"
+                        cardImg="/images/new_images/grilled-wraps.jpg"
+                        // cardTitle="Platters"
                     />
                     
                     <CardImage 
                         cardItem='#'
-                        cardImg="/images/veggie.png"
-                        cardTitle="Veggie"
+                        cardImg="/images/new_images/hot-drinks.jpg"
+                        // cardTitle="Veggie"
                     />
                     
                     <CardImage 
                         cardItem='#'
-                        cardImg="/images/for-kids.png"
-                        cardTitle="For Kids"
+                        cardImg="/images/new_images/cold-drinks.jpg"
+                        // cardTitle="For Kids"
                     />
                     
                     <CardImage 
                         cardItem='#'
-                        cardImg="/images/sides-extra.png"
-                        cardTitle="Sides & Extra"
+                        cardImg="/images/new_images/vegan-shakes.jpg"
+                        // cardTitle="For Kids"
                     />
                     
                     <CardImage 
                         cardItem='#'
-                        cardImg="/images/drinks.png"
-                        cardTitle="Drinks"
+                        cardImg="/images/new_images/kids.jpg"
+                        // cardTitle="For Kids"
                     />
                     
                     <CardImage 
                         cardItem='#'
-                        cardImg="/images/desserts.png"
-                        cardTitle="Desserts"
+                        cardImg="/images/new_images/cookies-cakes.jpg"
+                        // cardTitle="For Kids"
                     />
+                    
+                    <CardImage 
+                        cardItem='#'
+                        cardImg="/images/new_images/sauces.jpg"
+                        // cardTitle="For Kids"
+                    />
+                    
+                    <CardImage 
+                        cardItem='#'
+                        cardImg="/images/new_images/drinks.jpg"
+                        // cardTitle="For Kids"
+                    />
+                    
                 </div>
             </div>
 

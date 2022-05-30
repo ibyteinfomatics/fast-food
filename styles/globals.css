@@ -75,6 +75,9 @@
 .grid-lg{
   grid-template-columns: 57.392% 42.308%;
 }
+.grid__1{
+  grid-template-columns: repeat(1, 1fr);
+}
 .grid__2{
   grid-template-columns: repeat(2, 1fr);
 }
@@ -106,6 +109,20 @@ body {
 ::-webkit-scrollbar{
   display: none;
 }
+.desktop__menu-not-used::-webkit-scrollbar{
+  display: block;
+  height: 5px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #e10904;
+}
+
 .font-21{
   font-size: 1.3125rem;
 }
@@ -126,7 +143,8 @@ body {
   @apply flex items-center justify-between siteWidth;
 }
 .site__logo{
-  @apply w-40 h-24 relative -ml-2 mr-3;
+  @apply w-32 relative -ml-2 mr-3;
+  height: 4.25rem;
 }
 .site__logo:hover{
   opacity: .65;
@@ -200,7 +218,7 @@ ul.restra__name--lists li:not(:last-child) {
 } */
 .header__wrap--inner.restra__menu ul,
 .header__wrap--inner.prepSteps ul{
-  @apply flex flex-wrap;  
+  @apply flex whitespace-nowrap overflow-x-auto items-center;  
 }
 .header__wrap--inner.restra__menu li a {
   @apply block pt-2.5 pb-3.5 px-6 text-xl site_font--900 leading-none;
@@ -214,7 +232,8 @@ ul.restra__name--lists li:not(:last-child) {
 }
 .header__wrap--inner.restra__menu ul li.burgur__icon a{
   @apply w-9 h-9 bg-no-repeat bg-cover p-0;
-  background-image: url('../public/images/left-big-arrow--white.svg');
+  /* background-image: url('../public/images/left-big-arrow--white.svg'); */
+  background-image: url('../public/images/burger_menu--icon.svg');
 }
 .header__wrap--inner.prepSteps ul{
   @apply gap-3;
@@ -272,21 +291,25 @@ a{
   @apply mt-8 relative;
 }
 .searchBox input {
-  @apply w-full py-4 px-8;
+  @apply w-full py-4 px-10;
   border: 0.0625rem solid hsl(216, 24%, 12%);
   cursor: pointer;
   border-radius: 0.438rem;
 }
 .searchBox .leftIcon{
-  @apply absolute;
+  @apply absolute w-6;
   left: 0.5rem;
 }
 .useLocation{
   @apply font-semibold;
 }
 .searchBox .rightIcon{
-  @apply absolute;
+  @apply absolute w-6;
   right: 0.5rem;
+}
+.searchBox .leftIcon svg,
+.searchBox .rightIcon svg{
+  @apply w-full;
 }
 .searchList{
   @apply opacity-0 h-0 bg-white transition-opacity overflow-hidden absolute inset-x-0 z-50;
@@ -419,6 +442,9 @@ a{
 .add--order {
   @apply flex items-center gap-6;
 }
+.menu__srch{
+  @apply hidden;
+}
 .menu__srch .btn,
 .add--order .btn{
   @apply leading-none block text-xl pr-4 pt-2.5 pb-3.5 pl-12 bg-no-repeat;
@@ -447,8 +473,8 @@ a{
   transform: translateY(-50%);
 }
 .bannerImage {
-  @apply relative mt-2.5 mb-3 overflow-hidden h-80;
-  border-radius: 1.875rem;
+  @apply relative mt-2.5 mb-3 overflow-hidden;
+  /* border-radius: 1.875rem; */
 }
 .bannerImage > span {
   @apply block;
@@ -486,7 +512,7 @@ a{
 
 /* Product lists Card blocks styling */
 .product__lists {
-  @apply main__grid my-12 gap-10;
+  @apply main__grid grid__2 my-12 gap-10;
 }
 body:not(.steps) .cardBlock{
   @apply rounded-3xl overflow-hidden relative;
@@ -502,7 +528,9 @@ body:not(.steps) .cardBlock{
   background-color: rgb(0 0 0 /0.1);
 }
 .cardImg {
-  @apply relative w-full h-80;
+  @apply relative w-full;
+  height: 0;
+  padding-bottom: 100%;
 }
 .cardImg img{
   width: auto !important;
@@ -886,10 +914,9 @@ a.conti--order{
 /* Login Page Css */
 .signup__form .site__wrapper,
 .login__form .site__wrapper{
-  @apply flex items-center py-6;
-  background: #e5e5e5;
+  @apply flex py-6;
 }
-.user__form {width: 40rem;margin: auto;background: #fff;padding: 2rem 3rem 3rem;border-radius: 1.875rem;box-shadow: 0px 16px 32px rgba(201, 201, 201, 0.25), 0px 0px 2px rgba(175, 175, 175, 0.25);}
+.user__form {width: 40rem;margin: 0 auto;background: #fff;padding: 2rem 3rem 3rem;border-radius: 1.875rem;box-shadow: 0px 16px 32px rgba(201, 201, 201, 0.25), 0px 0px 2px rgba(175, 175, 175, 0.25);}
 
 .form__title .site__logo{
   @apply mx-auto;
@@ -1011,7 +1038,8 @@ span.user__pic {width: 2.875rem;height: 2.875rem;background: #C4C4C4;display: bl
 .checkout__page .header__wrap--inner:not(.prepSteps),
 .cart__page .header__wrap--inner:not(.prepSteps),
 .profile__page .header__wrap--inner:not(.prepSteps),
-.progress__page .header__wrap--inner:not(.progress--header){
+.progress__page .header__wrap--inner:not(.progress--header),
+.profile__pages .header__wrap--inner:not(.prepSteps){
   @apply hidden;
 }
 
@@ -1301,6 +1329,24 @@ td.total:after {
   clear: both;
 }
 
+
+/* rest__pages */
+.rest__pages .product__lists.rest--pages__lists .cardBlock{
+  grid-column: span 1 / auto;
+}
+.rest__pages .product__lists.rest--pages__lists .cardBlock:first-of-type{
+  grid-area: 1 / 1 / 1 / 3;
+}
+.rest__pages .product__lists.rest--pages__lists .cardBlock:nth-child(4),
+.rest__pages .product__lists.rest--pages__lists .cardBlock:nth-child(5){
+  grid-column: span 2 / auto;
+}
+.rest__pages .product__lists.rest--pages__lists .cardBlock:first-of-type .cardImg,
+.rest__pages .product__lists.rest--pages__lists .cardBlock:nth-child(4) .cardImg,
+.rest__pages .product__lists.rest--pages__lists .cardBlock:nth-child(5) .cardImg{
+  padding-bottom: calc(100% / 2 - 2.5rem / 2);
+}
+
 /* Responsive styling */
 @media screen and (max-width: 39.999rem) {
   /* .desktop__header{
@@ -1362,8 +1408,8 @@ td.total:after {
   .bannerSubTitle h3{
     font-size: 2.75rem;
   }
-  .sideBarContent .orderDetail {
-    @apply grid__2;
+  .product__lists{
+    @apply grid__4;
   }
   .stepGridTwo{
     @apply grid__2;
@@ -1413,14 +1459,18 @@ td.total:after {
     border-radius: 0.938rem;
     box-shadow: 0px 7.7004px 15.4008px rgba(196, 196, 196, 0.24);
   }
-  /* .sideBarContent.inProgressContent .orderDetail .card-block-hasBg{
-    min-height: calc(100vh - 12.25rem);
-  } */
+  .signup__form .site__wrapper, .login__form .site__wrapper{
+    @apply items-center;
+    background-color: #e5e5e5;
+  }
+  .user__form{
+    @apply my-auto;
+  }
 }
 @media screen and (min-width: 60rem){
-  .product__lists{
+  /* .product__lists{
       @apply grid__3;
-  }
+  } */
   .bannerSubTitle h3{
     font-size: 3.998rem;
   }
@@ -1430,6 +1480,12 @@ td.total:after {
   .stepSelection ul{
     @apply grid__3;
   }
+  .sideBarContent .orderDetail {
+    @apply grid__2;
+  }
+  .profile__page .sideBarContent .orderDetail {
+    @apply grid__1;
+  }
 }
 @media screen and (min-width: 64rem) {
   .gridBlogTwo{
@@ -1437,6 +1493,9 @@ td.total:after {
   }
   .gridCol{
       @apply bg-white;
+  }
+  .profile__page .sideBarContent .orderDetail {
+    @apply grid__2;
   }
 }
 @media screen and (max-width: 74.999rem){
@@ -1470,11 +1529,11 @@ td.total:after {
   .mobile__header{
       @apply hidden;
   }
-  .product__lists{
+  /* .product__lists{
     @apply grid__4;
-  }
+  } */
   .bannerImage{
-    height: 31.625rem;
+    /* height: 26.6875rem; */
   }
   .heatOption{
     @apply grid__4;

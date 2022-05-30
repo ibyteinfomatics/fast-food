@@ -11,6 +11,8 @@ export default function StepOne() {
         document.body.classList.remove("login__pages");
         document.body.classList.remove('cart__page');
         document.body.classList.remove('checkout__page');
+        document.body.classList.remove("progress__page");
+        document.body.classList.remove("profile__pages");
     })
 
     return (

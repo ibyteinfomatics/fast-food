@@ -5,14 +5,14 @@ import Header from '../components/Header/Header'
 import { Cartlists } from './api/Cartlists'
 
 export default function CartView() {
-    useEffect(() => {
-        document.body.classList.add("cart__page");
-        document.body.classList.remove("steps");
-        document.body.classList.remove("home__page");
-        document.body.classList.remove("rest__pages");
-        document.body.classList.remove('login__form');
-        document.body.classList.remove('checkout__page');
-    })
+    // useEffect(() => {
+    //     document.body.classList.add("cart__page");
+    //     document.body.classList.remove("steps");
+    //     document.body.classList.remove("home__page");
+    //     document.body.classList.remove("rest__pages");
+    //     document.body.classList.remove('login__form');
+    //     document.body.classList.remove('checkout__page');
+    // })
     const listLength = Cartlists.length;
     console.log(listLength);
     return(

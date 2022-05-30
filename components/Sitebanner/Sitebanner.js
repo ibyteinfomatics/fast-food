@@ -4,12 +4,12 @@ import Image from 'next/image'
 export default function Sitebanner() {
     return (
         <div className='bannerImage'>
-            <Image src="/images/banner-img.png" alt='Banner Image' layout='fill' width={1760} height={503} />
-            <div className='bannerContent'>
+            <Image src="/images/new_images/rest_banner.jpg" alt='Banner Image' layout='responsive' height={427} width={1920} />
+            {/* <div className='bannerContent'>
                 <div className='bannerSubTitle textWhite'>
                     <h3>Fastfood Elephant & Castle</h3>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }

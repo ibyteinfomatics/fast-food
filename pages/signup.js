@@ -10,6 +10,8 @@ export default function SignUp() {
         document.body.classList.remove("rest__pages");
         document.body.classList.remove('cart__page');
         document.body.classList.remove('checkout__page');
+        document.body.classList.remove("progress__page");
+        document.body.classList.remove("profile__pages");
     })
     return (
         <React.Fragment>
@@ -23,7 +25,7 @@ export default function SignUp() {
                     </a>
                 </Link>
                 </div>
-                <form>
+                <form method="POST" >
                     <div className='form--item'>
                         <label className='form--label' htmlFor='username'>Username</label>
                         <input className='form--control' type="text" id="username" />

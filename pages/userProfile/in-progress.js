@@ -11,6 +11,7 @@ export default function InProgressPage() {
         document.body.classList.remove("home__page");
         document.body.classList.remove("cart__page");
         document.body.classList.remove("rest__pages");
+        document.body.classList.remove("profile__pages");
     })
     return (
         <React.Fragment>
