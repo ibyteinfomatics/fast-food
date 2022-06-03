@@ -1,18 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: false,
+  reactStrictMode: true,
   images: {
-      loader: 'imgix',
-      path: 'http://fastfood.ibyteworkshop.com',
-    },
-  trailingSlash: true,
-}
-
-module.exports = {
-  env: {
-    baseApiUrl: "http://fastfoodadmin.ibyteworkshop.com",
+    loader: 'imgix',
+    path: 'http://fastfood.ibyteworkshop.com',
+    domains: ["fastfoodadmin.ibyteworkshop.com"]
   },
-  images: {
-    domains: ["fastfoodadmin.ibyteworkshop.com"],
+  env: {
+    baseApiUrl: 'http://fastfoodadmin.ibyteworkshop.com',
   },
 };
+
+module.exports = nextConfig;
+
