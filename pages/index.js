@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import Header from '../components/Header/Header';
-import { fetchRestraSearch } from '../restaurant/list';
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import Header from "../components/Header/Header";
+import { fetchRestraSearch } from "../restaurant/list";
 export default function RestraLists() {
   useEffect(() => {
-    document.body.classList.add('home__page');
-    document.body.classList.remove('steps');
-    document.body.classList.remove('rest__pages');
-    document.body.classList.remove('login__form');
-    document.body.classList.remove('cart__page');
-    document.body.classList.remove('checkout__page');
+    document.body.classList.add("home__page");
+    document.body.classList.remove("steps");
+    document.body.classList.remove("rest__pages");
+    document.body.classList.remove("login__form");
+    document.body.classList.remove("cart__page");
+    document.body.classList.remove("checkout__page");
   }, []);
 
   const [showMe, setShowMe] = useState(false);
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState("");
   const [resData, setResData] = useState([]);
 
   function toggle() {
@@ -23,7 +23,7 @@ export default function RestraLists() {
   const restaurantSearch = async (event) => {
     const val = event?.target?.value;
     setUser(val);
-    if (val != '') {
+    if (val != "") {
       const search = { search_item: val };
       const response = await fetchRestraSearch(search);
       if (response.success) {

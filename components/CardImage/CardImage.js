@@ -21,6 +21,7 @@ export default function CardImage(props) {
             <a className="card__link cardStepLink"></a>
           </Link>
         )}
+
         <div className="cardBlock__wrapper">
           {props.cardImg && (
             <div className="cardImg">
