@@ -2,17 +2,16 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-      loader: 'imgix',
-      path: 'http://fastfood.ibyteworkshop.com',
-    },
-  trailingSlash: true,
-}
+    loader: "imgix",
+    path: "http://fastfood.ibyteworkshop.com",
+  },
+};
 
 module.exports = {
   env: {
-    baseApiUrl: "http://fastfoodadmin.ibyteworkshop.com",
+    baseApiUrl: "http://fastfoodadmin.ibyteworkshop.com/",
   },
   images: {
-    domains: ["fastfoodadmin.ibyteworkshop.com"],
+    domains: ["fastfood.ibyteworkshop.com"],
   },
 };
