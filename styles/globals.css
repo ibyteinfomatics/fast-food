@@ -605,6 +605,7 @@ body.steps .cardImg{
 .optionTitle {
   margin: 1.563rem 0;
 }
+
 .optionRow .font-26 {
   @apply site_font--700;
 }
@@ -955,6 +956,7 @@ span.form--icon {
   display: block;
   bottom: 1.25rem;
   left: 0;
+  top: 50%;
 }
 
 
@@ -1565,3 +1567,8 @@ td.total:after {
       font-size: 1vw;
   }
 } */
+
+.invalid-feedback.danger {
+  color: #f00;
+  margin-left: 3rem;
+}
