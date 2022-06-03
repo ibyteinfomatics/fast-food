@@ -388,8 +388,10 @@ a{
   @apply w-full block;
 }
 .restroGroup .colLeft .prdtImg img{
-  width: auto !important;
-  max-width: inherit !important;
+  height: 100%;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 }
 /* .restroGroup{
   @apply flex;
@@ -532,13 +534,18 @@ body:not(.steps) .cardBlock{
   height: 0;
   padding-bottom: 100%;
 }
+.prod__lists--content .cardImg,
+.stepLeftData .cardImg{
+  padding-bottom: 76.25%;
+}
+
 .cardImg img{
-  width: auto !important;
+  /* width: auto !important;
   height: 100% !important;
   max-width: inherit !important;
   border-radius: 0.831rem;
   left: 50% !important;
-  transform: translateX(-50%);
+  transform: translateX(-50%); */
 }
 body:not(.steps) .card--img--detail{ 
   @apply p-6 bg-white rounded-t-2xl absolute inset-x-0 bottom-0;

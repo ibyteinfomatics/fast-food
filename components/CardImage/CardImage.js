@@ -25,7 +25,7 @@ export default function CardImage(props) {
         <div className="cardBlock__wrapper">
           {props.cardImg && (
             <div className="cardImg">
-              <Image
+              <img
                 src={props.cardImg}
                 alt="Food Product Image"
                 layout="fill"
