@@ -146,7 +146,7 @@ export default function RestraLists() {
                       <div className="restroGroup">
                         <div className="colLeft">
                           <div className="prdtImg">
-                            <Image
+                            <img
                               src={`${process.env.baseApiUrl}${resList.store_image.attachment_url}`}
                               alt="Food Image"
                               layout="fill"
