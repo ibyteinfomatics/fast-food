@@ -4,7 +4,8 @@ const nextConfig = {
   images: {
       loader: 'imgix',
       path: 'http://fastfood.ibyteworkshop.com',
-    }
+    },
+  trailingSlash: true,
 }
 
 module.exports = nextConfig
