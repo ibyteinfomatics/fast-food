@@ -1,33 +1,33 @@
-import React, { useEffect, useState } from "react";
-import CardImage from "../../components/CardImage/CardImage";
-import Header from "../../components/Header/Header";
-import { useRouter } from "next/router";
+import React, { useEffect, useState } from 'react';
+import CardImage from '../../components/CardImage/CardImage';
+import Header from '../../components/Header/Header';
+import { useRouter } from 'next/router';
 
 export default function BurgersWraps() {
   const router = useRouter();
   const slug_url = router.query.slug;
   useEffect(() => {
-    if (slug_url && slug_url !== "") {
+    if (slug_url && slug_url !== '') {
       subCategoryList(slug_url);
     }
-    document.body.classList.add("rest__pages");
-    document.body.classList.remove("home__page");
-    document.body.classList.remove("steps");
-    document.body.classList.remove("login__form");
-    document.body.classList.remove("cart__page");
-    document.body.classList.remove("checkout__page");
-    document.body.classList.remove("progress__page");
-    document.body.classList.remove("profile__pages");
+    document.body.classList.add('rest__pages');
+    document.body.classList.remove('home__page');
+    document.body.classList.remove('steps');
+    document.body.classList.remove('login__form');
+    document.body.classList.remove('cart__page');
+    document.body.classList.remove('checkout__page');
+    document.body.classList.remove('progress__page');
+    document.body.classList.remove('profile__pages');
   }, [slug_url]);
   const [subCategoryData, setSubCategoryData] = useState([]);
   const subCategoryList = async (slug_url) => {
     const result = await fetch(
       `${process.env.baseApiUrl}/api/get/sub/categories?slug=${slug_url}`,
       {
-        method: "GET",
+        method: 'GET',
         headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          Accept: "application/json",
+          'Content-Type': 'application/json; charset=utf-8',
+          Accept: 'application/json',
         },
       }
     );
@@ -38,7 +38,7 @@ export default function BurgersWraps() {
       return response;
     }
   };
-  console.log(subCategoryData, "SubcategoryData");
+  console.log(subCategoryData, 'SubcategoryData');
   return (
     <React.Fragment>
       {/* Header */}
@@ -50,7 +50,7 @@ export default function BurgersWraps() {
           subCategoryData.length > 0 &&
           subCategoryData.map((subCatList) => {
             return (
-              <div className="product__cate">
+              <div className="product__cate" key={subCatList.name}>
                 <div className="prod_cate--name">
                   <h2 className="cateTitle">{`${subCatList.name}`}</h2>
                 </div>

@@ -1,28 +1,28 @@
-import { elastic as Menu } from "react-burger-menu";
-import Link from "next/link";
-import Image from "next/image";
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import { ToastContainer } from "react-toastify";
+import { elastic as Menu } from 'react-burger-menu';
+import Link from 'next/link';
+import Image from 'next/image';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { ToastContainer } from 'react-toastify';
 
 export default function Header() {
   const router = useRouter();
   const slug_url = router.query.slug;
-  const [isToken, setIsToken] = useState("");
-  const rout = router.pathname.split("/");
+  const [isToken, setIsToken] = useState('');
+  const rout = router.pathname.split('/');
   const route = rout[1];
   const [showMe, setShowMe] = useState(false);
   const [menuListData, setMenuData] = useState([]);
   function toggle() {
     setShowMe(!showMe);
   }
-  console.log(slug_url, "slug_url");
+  console.log(slug_url, 'slug_url');
   useEffect(() => {
     // Perform localStorage action
-    if (slug_url && slug_url !== "") {
+    if (slug_url && slug_url !== '') {
       menuList(slug_url);
     }
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     if (token != null) {
       setIsToken(token);
     }
@@ -31,10 +31,10 @@ export default function Header() {
     const result = await fetch(
       `${process.env.baseApiUrl}/api/get/categories?store_url=restra--menus`,
       {
-        method: "GET",
+        method: 'GET',
         headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          Accept: "application/json",
+          'Content-Type': 'application/json; charset=utf-8',
+          Accept: 'application/json',
         },
       }
     );
@@ -48,9 +48,9 @@ export default function Header() {
   const logout = (e, path) => {
     console.log(e);
     localStorage.clear();
-    router.push("/login");
+    router.push('/login');
   };
-  console.log(route, "Routing");
+  console.log(route, 'Routing');
   return (
     <>
       <ToastContainer
@@ -66,7 +66,7 @@ export default function Header() {
       />
       <React.Fragment>
         <div className="desktop__header header__wrapper">
-          {route != "prepSteps" && (
+          {route != 'prepSteps' && (
             <div className="header__wrap--inner">
               <div className="header__left">
                 <div className="site__logo">
@@ -102,11 +102,11 @@ export default function Header() {
               <div className="header__right">
                 <nav className="site__navigation">
                   <ul>
-                    {isToken != "" ? (
+                    {isToken != '' ? (
                       <li>
                         <Link href="login">
-                          <a onClick={(e) => logout(e, "/logout")}>Logout</a>
-                        </Link>{" "}
+                          <a onClick={(e) => logout(e, '/logout')}>Logout</a>
+                        </Link>{' '}
                       </li>
                     ) : (
                       <li>
@@ -120,7 +120,7 @@ export default function Header() {
               </div>
             </div>
           )}
-          {(route == "menu" || route == "submenu") && (
+          {(route == 'menu' || route == 'submenu') && (
             <div className="header__wrap--inner restra__menu">
               <ul className="desktop__menu">
                 <li className="burgur__icon">
@@ -134,8 +134,9 @@ export default function Header() {
                     return (
                       <li
                         className={
-                          rout[2] == "burgers--wraps" ? "active__link" : ""
+                          rout[2] == 'burgers--wraps' ? 'active__link' : ''
                         }
+                        key={menuList.slug}
                       >
                         <Link href={`/submenu/${menuList.slug}`}>
                           <a>{menuList.name}</a>
@@ -217,7 +218,7 @@ export default function Header() {
                     </div> */}
             </div>
           )}
-          {route == "prepSteps" && (
+          {route == 'prepSteps' && (
             <div className="header__wrap--inner prepSteps">
               <ul>
                 <li>
@@ -234,7 +235,7 @@ export default function Header() {
               </div>
             </div>
           )}
-          {route == "cart" && (
+          {route == 'cart' && (
             <div className="header__wrap--inner prepSteps">
               <ul>
                 <li>
@@ -254,7 +255,7 @@ export default function Header() {
               </div>
             </div>
           )}
-          {route == "userProfile" && (
+          {route == 'userProfile' && (
             <div className="header__wrap--inner prepSteps">
               <ul>
                 <li>
@@ -266,7 +267,7 @@ export default function Header() {
               </ul>
             </div>
           )}
-          {route == "checkout" && (
+          {route == 'checkout' && (
             <div className="header__wrap--inner prepSteps">
               <ul>
                 <li>
@@ -286,14 +287,14 @@ export default function Header() {
                         layout="fill"
                         quality={100}
                       />
-                    </span>{" "}
+                    </span>{' '}
                     Username
                   </a>
                 </Link>
               </div>
             </div>
           )}
-          {router.pathname == "/userProfile/in-progress" && (
+          {router.pathname == '/userProfile/in-progress' && (
             <div className="header__wrap--inner progress--header">
               <ul>
                 <li className="color__red">In Progress Orders</li>
