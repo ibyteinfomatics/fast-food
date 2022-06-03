@@ -1,30 +1,30 @@
-import React, { useEffect } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as Yup from "yup";
-import axios from "axios";
-import { useRouter } from "next/router";
-import { toast } from "react-toastify";
-import { ToastContainer } from "react-toastify";
-import wait from "wait";
+import React, { useEffect } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import wait from 'wait';
 
 export default function Login() {
   useEffect(() => {
-    document.body.classList.add("login__form");
-    document.body.classList.remove("steps");
-    document.body.classList.remove("home__page");
-    document.body.classList.remove("cart__page");
-    document.body.classList.remove("rest__pages");
-    document.body.classList.remove("cart__page");
-    document.body.classList.remove("checkout__page");
+    document.body.classList.add('login__form');
+    document.body.classList.remove('steps');
+    document.body.classList.remove('home__page');
+    document.body.classList.remove('cart__page');
+    document.body.classList.remove('rest__pages');
+    document.body.classList.remove('cart__page');
+    document.body.classList.remove('checkout__page');
   });
   const validationSchema = Yup.object().shape({
     email: Yup.string()
-      .required("Email is required")
-      .email("Email Id is invalid"),
-    password: Yup.string().required("Password is required"),
+      .required('Email is required')
+      .email('Email Id is invalid'),
+    password: Yup.string().required('Password is required'),
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
   const { register, handleSubmit, reset, formState } = useForm(formOptions);
@@ -36,20 +36,20 @@ export default function Login() {
       form_data.append(key, data[key]);
     }
     var config = {
-      method: "POST",
+      method: 'POST',
       url: `${process.env.baseApiUrl}/api/login`,
       data: form_data,
     };
     axios(config)
       .then(async function (response) {
         if (response.data.success === true) {
-          localStorage.setItem("token", response.data.token);
-          localStorage.setItem("userName", response.data.data.name);
+          localStorage.setItem('token', response.data.token);
+          localStorage.setItem('userName', response.data.data.name);
           toast.success(response.data.message, {
             position: toast.POSITION.TOP_RIGHT,
           });
           await wait(1000);
-          router.push("/");
+          router.push('/');
         } else {
           toast.error(response.data.message, {
             position: toast.POSITION.TOP_RIGHT,
@@ -97,10 +97,10 @@ export default function Login() {
                 Email
               </label>
               <input
-                className={`form--control ${errors.email ? "is-invalid" : ""}`}
+                className={`form--control ${errors.email ? 'is-invalid' : ''}`}
                 type="email"
                 id="email"
-                {...register("email")}
+                {...register('email')}
               />
               <div className="invalid-feedback danger">
                 {errors.email?.message}
@@ -120,11 +120,11 @@ export default function Login() {
               </label>
               <input
                 className={`form--control ${
-                  errors.password ? "is-invalid" : ""
+                  errors.password ? 'is-invalid' : ''
                 }`}
                 type="password"
                 id="pwd"
-                {...register("password")}
+                {...register('password')}
               />
               <div className="invalid-feedback danger">
                 {errors.password?.message}
@@ -156,7 +156,7 @@ export default function Login() {
             </div>
             <div className="form--link--desc">
               <p>
-                Don&apos;t have an account?{" "}
+                Don&apos;t have an account?{' '}
                 <Link href="/signup">
                   <a>Sign up</a>
                 </Link>

@@ -9,9 +9,10 @@ const nextConfig = {
 
 module.exports = {
   env: {
-    baseApiUrl: "http://fastfoodadmin.ibyteworkshop.com/",
+    baseApiUrl: "http://fastfoodadmin.ibyteworkshop.com",
   },
   images: {
-    domains: ["fastfood.ibyteworkshop.com"],
+    domains: ["fastfoodadmin.ibyteworkshop.com"],
   },
+  nextConfig,
 };
