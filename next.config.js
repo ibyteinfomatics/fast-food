@@ -8,5 +8,11 @@ const nextConfig = {
   trailingSlash: true,
 }
 
-module.exports = nextConfig
-
+module.exports = {
+  env: {
+    baseApiUrl: "http://fastfoodadmin.ibyteworkshop.com",
+  },
+  images: {
+    domains: ["fastfoodadmin.ibyteworkshop.com"],
+  },
+};
