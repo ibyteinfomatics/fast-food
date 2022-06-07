@@ -144,7 +144,7 @@ export default function Login() {
                 <label htmlFor="keptsigned">Sign me in</label>
               </div>
               <div className="forgot--pwd">
-                <Link href="#">
+                <Link href="/forgot-password">
                   <a>Forgot Password?</a>
                 </Link>
               </div>
