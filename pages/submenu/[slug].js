@@ -38,7 +38,7 @@ export default function BurgersWraps() {
       return response;
     }
   };
-  console.log(subCategoryData, "SubcategoryData");
+  console.log(subCategoryData, "Subcategory");
   return (
     <React.Fragment>
       {/* Header */}
@@ -55,37 +55,20 @@ export default function BurgersWraps() {
                   <h2 className="cateTitle">{`${subCatList.name}`}</h2>
                 </div>
                 <div className="product__lists prod__lists--content">
-                  <CardImage
-                    cardStepLink="yes"
-                    cardImg="/images/bg.png"
-                    cardTitle="Sunset Burgers"
-                    cardPrice="$8.25"
-                    cardDesc="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since."
-                  />
-
-                  <CardImage
-                    cardStepLink="yes"
-                    cardImg="/images/bg.png"
-                    cardTitle="Starters"
-                    cardPrice="$8.25"
-                    cardDesc="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since."
-                  />
-
-                  <CardImage
-                    cardStepLink="yes"
-                    cardImg="/images/bg.png"
-                    cardTitle="Chicken"
-                    cardPrice="$8.25"
-                    cardDesc="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since."
-                  />
-
-                  <CardImage
-                    cardStepLink="yes"
-                    cardImg="/images/bg.png"
-                    cardTitle="Salads"
-                    cardPrice="$8.25"
-                    cardDesc="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since."
-                  />
+                  {subCatList.item_data &&
+                    subCatList.item_data.length > 0 &&
+                    subCatList.item_data.map((itemList) => {
+                      return (
+                        <CardImage
+                          cardStepLink="yes"
+                          cardImg={`${process.env.baseApiUrl}${itemList.item_attachment.attachment_url}`}
+                          cardTitle={itemList.name}
+                          cardPrice={`$` + itemList.price}
+                          cardDesc={itemList.description}
+                          key={itemList.item_id}
+                        />
+                      );
+                    })}
                 </div>
               </div>
             );

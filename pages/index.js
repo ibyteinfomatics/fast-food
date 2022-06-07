@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Header from "../components/Header/Header";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import { fetchRestraSearch } from "../restaurant/list";
 export default function RestraLists() {
   useEffect(() => {
@@ -15,8 +17,8 @@ export default function RestraLists() {
 
   const [showMe, setShowMe] = useState(false);
   const [user, setUser] = useState("");
+  const [checked, setCheceked] = useState(false);
   const [resData, setResData] = useState([]);
-
   function toggle() {
     setShowMe(!showMe);
   }
@@ -25,16 +27,20 @@ export default function RestraLists() {
     setUser(val);
     if (val != "") {
       const search = { search_item: val };
+      setCheceked(true);
       const response = await fetchRestraSearch(search);
       if (response.success) {
         setResData(response.store_data.data);
+        setCheceked(false);
       } else {
         setResData([]);
+        setCheceked(false);
       }
     } else {
       setResData([]);
     }
   };
+  console.log(checked.length, "CheckedValue");
   return (
     <React.Fragment>
       {/* Header */}
@@ -138,8 +144,9 @@ export default function RestraLists() {
                             </ul> */}
             </form>
             <div className="search__detail--lists">
-              {resData &&
-                resData.length > 0 &&
+              {checked ? (
+                <Skeleton count={5} circle="true" />
+              ) : resData && resData.length > 0 ? (
                 resData.map((resList) => {
                   return (
                     <div className="restroDetail" key={resList.postal_code}>
@@ -186,7 +193,10 @@ export default function RestraLists() {
                       </div>
                     </div>
                   );
-                })}
+                })
+              ) : (
+                "Restaurant not found"
+              )}
             </div>
           </div>
         </div>

@@ -1579,3 +1579,7 @@ td.total:after {
   color: #f00;
   margin-left: 3rem;
 }
+.read-more-button {
+  cursor: pointer;
+  color: #f00;
+}
