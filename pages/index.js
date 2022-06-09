@@ -5,6 +5,8 @@ import Header from "../components/Header/Header";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { fetchRestraSearch } from "../restaurant/list";
+import Geocode from "react-geocode";
+
 export default function RestraLists() {
   useEffect(() => {
     document.body.classList.add("home__page");
@@ -14,33 +16,64 @@ export default function RestraLists() {
     document.body.classList.remove("cart__page");
     document.body.classList.remove("checkout__page");
   }, []);
-
   const [showMe, setShowMe] = useState(false);
-  const [user, setUser] = useState("");
+  // const [user, setUser] = useState();
+  const [currentAddress, setAddress] = useState("");
   const [checked, setCheceked] = useState(false);
   const [resData, setResData] = useState([]);
+  Geocode.setApiKey("AIzaSyD5ff_0k1vyeWp5NO0OXPMIlnkd2HzMhFM");
+  Geocode.setLanguage("en");
+  const handleClick = async (path) => {
+    if (path === "/useMylocation") {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        const search = {
+          search_item: "",
+          longitude: position.coords.longitude,
+          latitude: position.coords.latitude,
+        };
+        setCheceked(true);
+        searchRestraResult(search);
+        Geocode.fromLatLng(
+          position.coords.latitude,
+          position.coords.longitude
+        ).then(
+          (response) => {
+            const address = response.results[0].formatted_address;
+            setAddress(address);
+          },
+          (error) => {
+            console.error(error);
+          }
+        );
+      });
+    }
+  };
+  console.log(resData, "responseAddress");
   function toggle() {
     setShowMe(!showMe);
   }
   const restaurantSearch = async (event) => {
     const val = event?.target?.value;
-    setUser(val);
+    setAddress(val);
     if (val != "") {
-      const search = { search_item: val };
+      const search = { search_item: val, longitude: "", latitude: "" };
       setCheceked(true);
-      const response = await fetchRestraSearch(search);
-      if (response.success) {
-        setResData(response.store_data.data);
-        setCheceked(false);
-      } else {
-        setResData([]);
-        setCheceked(false);
-      }
+      searchRestraResult(search);
     } else {
       setResData([]);
     }
   };
-  console.log(checked.length, "CheckedValue");
+
+  const searchRestraResult = async (data) => {
+    const response = await fetchRestraSearch(data);
+    if (response.success) {
+      setResData(response.store_data.data);
+      setCheceked(false);
+    } else {
+      setResData([]);
+      setCheceked(false);
+    }
+  };
   return (
     <React.Fragment>
       {/* Header */}
@@ -74,7 +107,7 @@ export default function RestraLists() {
                 <input
                   type="text"
                   placeholder="Enter your postcode, address or city."
-                  value={user}
+                  value={currentAddress}
                   onClick={toggle}
                   onChange={(e) => restaurantSearch(e)}
                   autoFocus
@@ -95,8 +128,8 @@ export default function RestraLists() {
                 </span>
               </div>
               <div className="location__link">
-                <Link href="#">
-                  <a>
+                <Link href="/">
+                  <a onClick={() => handleClick("/useMylocation")}>
                     <span className="useLocation font-21">
                       <svg
                         width="27"
@@ -149,7 +182,7 @@ export default function RestraLists() {
               ) : resData && resData.length > 0 ? (
                 resData.map((resList) => {
                   return (
-                    <div className="restroDetail" key={resList.postal_code}>
+                    <div className="restroDetail" key={resList.store_id}>
                       <div className="restroGroup">
                         <div className="colLeft">
                           <div className="prdtImg">

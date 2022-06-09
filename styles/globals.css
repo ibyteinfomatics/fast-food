@@ -1583,3 +1583,7 @@ td.total:after {
   cursor: pointer;
   color: #f00;
 }
+.otpView {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
