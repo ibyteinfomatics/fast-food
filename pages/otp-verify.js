@@ -93,7 +93,7 @@ export default function ForgotPassword() {
               </a>
             </Link>
           </div>
-          <form onSubmit={(event) => verifyPwdOtp(event)}>
+          <form onSubmit={(event) => verifyPwdOtp(event)} className="OTP--form">
             <div className="form--item">
               <label className="form--label" htmlFor="otp">
                 OTP

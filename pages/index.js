@@ -48,7 +48,10 @@ export default function RestraLists() {
       });
     }
   };
-  console.log(resData, "responseAddress");
+  const handleRemove = async (e) => {
+    setAddress("");
+    setResData([]);
+  };
   function toggle() {
     setShowMe(!showMe);
   }
@@ -119,6 +122,7 @@ export default function RestraLists() {
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
+                    onClick={() => handleRemove("/remove")}
                   >
                     <path
                       d="M12 0.625C5.73145 0.625 0.625 5.73145 0.625 12C0.625 18.2686 5.73145 23.375 12 23.375C18.2686 23.375 23.375 18.2686 23.375 12C23.375 5.73145 18.2686 0.625 12 0.625ZM12 2.375C17.3252 2.375 21.625 6.6748 21.625 12C21.625 17.3252 17.3252 21.625 12 21.625C6.6748 21.625 2.375 17.3252 2.375 12C2.375 6.6748 6.6748 2.375 12 2.375ZM8.5 7.2627L7.2627 8.5L7.88477 9.11524L10.7627 12L7.88477 14.8848L7.2627 15.5L8.5 16.7373L9.11524 16.1152L12 13.2373L14.8848 16.1152L15.5 16.7373L16.7373 15.5L16.1152 14.8848L13.2373 12L16.1152 9.11524L16.7373 8.5L15.5 7.2627L14.8848 7.88477L12 10.7627L9.11524 7.88477L8.5 7.2627Z"
@@ -178,7 +182,7 @@ export default function RestraLists() {
             </form>
             <div className="search__detail--lists">
               {checked ? (
-                <Skeleton count={5} circle="true" />
+                <Skeleton count={1} />
               ) : resData && resData.length > 0 ? (
                 resData.map((resList) => {
                   return (

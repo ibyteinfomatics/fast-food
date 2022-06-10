@@ -3,10 +3,13 @@ import Link from "next/link";
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
+import { setHeaderData } from "./header-reducer";
 
 export default function Header() {
   const router = useRouter();
+  const dispatch = useDispatch();
   const slug_url = router.query.slug;
   const [isToken, setIsToken] = useState("");
   const rout = router.pathname.split("/");
@@ -41,6 +44,7 @@ export default function Header() {
     let response = await result.json();
     if (response.success) {
       setMenuData(response.category_data);
+      await dispatch(setHeaderData(response.category_data));
     } else {
       return response;
     }
