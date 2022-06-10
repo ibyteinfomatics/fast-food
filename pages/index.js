@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Header from "../components/Header/Header";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import { fetchRestraSearch } from "../restaurant/list";
+import Geocode from "react-geocode";
+
 export default function RestraLists() {
   useEffect(() => {
     document.body.classList.add("home__page");
@@ -12,27 +16,65 @@ export default function RestraLists() {
     document.body.classList.remove("cart__page");
     document.body.classList.remove("checkout__page");
   }, []);
-
   const [showMe, setShowMe] = useState(false);
-  const [user, setUser] = useState("");
+  // const [user, setUser] = useState();
+  const [currentAddress, setAddress] = useState("");
+  const [checked, setCheceked] = useState(false);
   const [resData, setResData] = useState([]);
-
+  Geocode.setApiKey("AIzaSyD5ff_0k1vyeWp5NO0OXPMIlnkd2HzMhFM");
+  Geocode.setLanguage("en");
+  const handleClick = async (path) => {
+    if (path === "/useMylocation") {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        const search = {
+          search_item: "",
+          longitude: position.coords.longitude,
+          latitude: position.coords.latitude,
+        };
+        setCheceked(true);
+        searchRestraResult(search);
+        Geocode.fromLatLng(
+          position.coords.latitude,
+          position.coords.longitude
+        ).then(
+          (response) => {
+            const address = response.results[0].formatted_address;
+            setAddress(address);
+          },
+          (error) => {
+            console.error(error);
+          }
+        );
+      });
+    }
+  };
+  const handleRemove = async (e) => {
+    setAddress("");
+    setResData([]);
+  };
   function toggle() {
     setShowMe(!showMe);
   }
   const restaurantSearch = async (event) => {
     const val = event?.target?.value;
-    setUser(val);
+    setAddress(val);
     if (val != "") {
-      const search = { search_item: val };
-      const response = await fetchRestraSearch(search);
-      if (response.success) {
-        setResData(response.store_data.data);
-      } else {
-        setResData([]);
-      }
+      const search = { search_item: val, longitude: "", latitude: "" };
+      setCheceked(true);
+      searchRestraResult(search);
     } else {
       setResData([]);
+    }
+  };
+
+  const searchRestraResult = async (data) => {
+    const response = await fetchRestraSearch(data);
+    if (response.success) {
+      setResData(response.store_data.data);
+      setCheceked(false);
+    } else {
+      setResData([]);
+      setCheceked(false);
     }
   };
   return (
@@ -68,7 +110,7 @@ export default function RestraLists() {
                 <input
                   type="text"
                   placeholder="Enter your postcode, address or city."
-                  value={user}
+                  value={currentAddress}
                   onClick={toggle}
                   onChange={(e) => restaurantSearch(e)}
                   autoFocus
@@ -80,6 +122,7 @@ export default function RestraLists() {
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
+                    onClick={() => handleRemove("/remove")}
                   >
                     <path
                       d="M12 0.625C5.73145 0.625 0.625 5.73145 0.625 12C0.625 18.2686 5.73145 23.375 12 23.375C18.2686 23.375 23.375 18.2686 23.375 12C23.375 5.73145 18.2686 0.625 12 0.625ZM12 2.375C17.3252 2.375 21.625 6.6748 21.625 12C21.625 17.3252 17.3252 21.625 12 21.625C6.6748 21.625 2.375 17.3252 2.375 12C2.375 6.6748 6.6748 2.375 12 2.375ZM8.5 7.2627L7.2627 8.5L7.88477 9.11524L10.7627 12L7.88477 14.8848L7.2627 15.5L8.5 16.7373L9.11524 16.1152L12 13.2373L14.8848 16.1152L15.5 16.7373L16.7373 15.5L16.1152 14.8848L13.2373 12L16.1152 9.11524L16.7373 8.5L15.5 7.2627L14.8848 7.88477L12 10.7627L9.11524 7.88477L8.5 7.2627Z"
@@ -89,8 +132,8 @@ export default function RestraLists() {
                 </span>
               </div>
               <div className="location__link">
-                <Link href="#">
-                  <a>
+                <Link href="/">
+                  <a onClick={() => handleClick("/useMylocation")}>
                     <span className="useLocation font-21">
                       <svg
                         width="27"
@@ -138,11 +181,12 @@ export default function RestraLists() {
                             </ul> */}
             </form>
             <div className="search__detail--lists">
-              {resData &&
-                resData.length > 0 &&
+              {checked ? (
+                <Skeleton count={1} />
+              ) : resData && resData.length > 0 ? (
                 resData.map((resList) => {
                   return (
-                    <div className="restroDetail" key={resList.postal_code}>
+                    <div className="restroDetail" key={resList.store_id}>
                       <div className="restroGroup">
                         <div className="colLeft">
                           <div className="prdtImg">
@@ -186,7 +230,10 @@ export default function RestraLists() {
                       </div>
                     </div>
                   );
-                })}
+                })
+              ) : (
+                "Restaurant not found"
+              )}
             </div>
           </div>
         </div>

@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import ReadMoreReact from "read-more-react";
 
 export default function CardImage(props) {
   const router = useRouter();
@@ -46,7 +47,13 @@ export default function CardImage(props) {
         </div>
         {props.cardDesc && (
           <div className="card--img--desc">
-            <p className="mt-16">{props.cardDesc}</p>
+            <ReadMoreReact
+              text={props.cardDesc}
+              min={80}
+              ideal={100}
+              max={200}
+              readMoreText="Read more"
+            />
           </div>
         )}
       </div>
