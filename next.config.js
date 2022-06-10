@@ -8,6 +8,6 @@ module.exports = {
     path: ["http://fastfood.ibyteworkshop.com"],
   },
   env: {
-    baseApiUrl: "http://fast-food.localhost",
+    baseApiUrl: "http://fastfoodadmin.ibyteworkshop.com",
   },
 };
