@@ -23,6 +23,7 @@ export default function RestraLists() {
   const [resData, setResData] = useState([]);
   Geocode.setApiKey("AIzaSyD5ff_0k1vyeWp5NO0OXPMIlnkd2HzMhFM");
   Geocode.setLanguage("en");
+  Geocode.enableDebug();
   const handleClick = async (path) => {
     if (path === "/useMylocation") {
       navigator.geolocation.getCurrentPosition(function (position) {
