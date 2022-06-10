@@ -31,6 +31,8 @@ export default function RestraLists() {
           longitude: position.coords.longitude,
           latitude: position.coords.latitude,
         };
+        console.log(position.coords.longitude, "Longitude");
+        console.log(position.coords.latitude, "Latitude");
         setCheceked(true);
         searchRestraResult(search);
         Geocode.fromLatLng(
