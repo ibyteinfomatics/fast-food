@@ -12,7 +12,7 @@ export default function CardImage(props) {
   return (
     <React.Fragment>
       <div className="cardBlock">
-        {rout[1] == "menu" && (
+        {rout[1] == "store" && (
           <Link href={props.cardItem}>
             <a className="card__link cardLink"></a>
           </Link>

@@ -213,7 +213,7 @@ export default function RestraLists() {
                           </div>
                           <div className="flexBlockTwo">
                             <div className="flexBlockLeft">
-                              <Link href={`/menu/${resList.store_url}`}>
+                              <Link href={`/store/${resList.store_url}`}>
                                 <a className="collect">Click & Collect</a>
                               </Link>
                               <p className="openStatus">
@@ -224,7 +224,7 @@ export default function RestraLists() {
                               </p>
                             </div>
                             <div className="orderStatus">
-                              <Link href={`/menu/${resList.store_url}`}>
+                              <Link href={`/store/${resList.store_url}`}>
                                 <a className="btnRed btn">Order Online</a>
                               </Link>
                             </div>

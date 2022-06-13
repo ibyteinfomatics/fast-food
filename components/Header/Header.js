@@ -32,7 +32,7 @@ export default function Header() {
   }, [slug_url]);
   const menuList = async (slug_url) => {
     const result = await fetch(
-      `${process.env.baseApiUrl}/api/get/categories?store_url=restra--menus`,
+      `${process.env.baseApiUrl}/api/get/categories?store_url=37e50546f8938bebeaa2d13f159fde5bc947c745`,
       {
         method: "GET",
         headers: {
@@ -54,7 +54,8 @@ export default function Header() {
     localStorage.clear();
     router.push("/login");
   };
-  console.log(route, "Routing");
+  console.log(route, "Route");
+  console.log(menuListData, "menuListData");
   return (
     <>
       <ToastContainer
@@ -106,6 +107,18 @@ export default function Header() {
               <div className="header__right">
                 <nav className="site__navigation">
                   <ul>
+                    <div className="add--order">
+                      <Link href="/cart">
+                        <img
+                          src="/images/cart.jpg"
+                          alt="Cart"
+                          layout="fill"
+                          quality={100}
+                          width="50px"
+                          height="50px"
+                        />
+                      </Link>
+                    </div>
                     {isToken != "" ? (
                       <li>
                         <Link href="login">
@@ -124,7 +137,7 @@ export default function Header() {
               </div>
             </div>
           )}
-          {(route == "menu" || route == "submenu") && (
+          {route == "submenu" && (
             <div className="header__wrap--inner restra__menu">
               <ul className="desktop__menu">
                 {/* <li className="burgur__icon">
@@ -226,7 +239,7 @@ export default function Header() {
             <div className="header__wrap--inner prepSteps">
               <ul>
                 <li>
-                  <Link href="/menu/restra--menus">
+                  <Link href="/store/restra--menus">
                     <a className="back--menu--icon"></a>
                   </Link>
                 </li>
@@ -243,14 +256,14 @@ export default function Header() {
             <div className="header__wrap--inner prepSteps">
               <ul>
                 <li>
-                  <Link href="/menu/restra--menus">
+                  <Link href="/store/restra--menus">
                     <a className="back--menu--icon"></a>
                   </Link>
                 </li>
                 <li>Your Cart</li>
               </ul>
               <div className="add--order">
-                <Link href="/menu/restra--menus">
+                <Link href="/store/restra--menus">
                   <a className="conti--order">Continue Ordering</a>
                 </Link>
                 <Link href="/checkout">
@@ -263,7 +276,7 @@ export default function Header() {
             <div className="header__wrap--inner prepSteps">
               <ul>
                 <li>
-                  <Link href="/menu/restra--menus">
+                  <Link href="/store/restra--menus">
                     <a className="back--menu--icon"></a>
                   </Link>
                 </li>
@@ -275,7 +288,7 @@ export default function Header() {
             <div className="header__wrap--inner prepSteps">
               <ul>
                 <li>
-                  <Link href="/menu/restra--menus">
+                  <Link href="/store/restra--menus">
                     <a className="back--menu--icon"></a>
                   </Link>
                 </li>

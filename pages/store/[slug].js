@@ -20,6 +20,7 @@ export default function PageFour() {
     document.body.classList.remove("profile__page");
     document.body.classList.remove("progress__page");
   }, [slug_url]);
+  console.log(slug_url, "SlugUrl");
   const [categoryData, setCategoryData] = useState([]);
   const categoryList = async (slug_url) => {
     const result = await fetch(
