@@ -42,7 +42,7 @@ export default function CardImage(props) {
         position: toast.POSITION.TOP_RIGHT,
       });
       } else {
-        router.push(`/prepSteps/step-1/?item_id=${props.item_id}`)
+        router.push(`/prepSteps/step-1/?item_id=${singleItemData.item_id}`)
 
       }
   }
