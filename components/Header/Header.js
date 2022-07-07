@@ -1,36 +1,47 @@
 import { elastic as Menu } from "react-burger-menu";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import { setHeaderData } from "./header-reducer";
+import {useNavigate} from 'react-router-dom'
 
-export default function Header() {
+export default function Header(props) {
+  // console.log(props.price)
   const router = useRouter();
+  // const navigate = useNavigate();
   const dispatch = useDispatch();
   const slug_url = router.query.slug;
   const [isToken, setIsToken] = useState("");
   const rout = router.pathname.split("/");
+  
   const route = rout[1];
+  // console.log(route)
   const [showMe, setShowMe] = useState(false);
   const [menuListData, setMenuData] = useState([]);
   function toggle() {
     setShowMe(!showMe);
   }
-  console.log(slug_url, "slug_url");
   useEffect(() => {
     // Perform localStorage action
     if (slug_url && slug_url !== "") {
       menuList(slug_url);
+      
     }
     const token = localStorage.getItem("token");
     if (token != null) {
       setIsToken(token);
     }
   }, [slug_url]);
+  const setRouter = () => {
+    localStorage.setItem("url", router.asPath)
+    console.log(router)
+  }
   const menuList = async (slug_url) => {
+    console.log(slug_url)
     const result = await fetch(
       `${process.env.baseApiUrl}/api/get/categories?store_url=37e50546f8938bebeaa2d13f159fde5bc947c745`,
       {
@@ -43,19 +54,44 @@ export default function Header() {
     );
     let response = await result.json();
     if (response.success) {
+      console.log(response )
       setMenuData(response.category_data);
+     console.log( slug_url)
+     if( route === 'submenu') {
+      const categoryId = response.category_data.find( (item) =>
+      item.slug === slug_url
+      )
+    //  localStorage.setItem("categoryId", categoryId?.category_id)
+    //  localStorage.setItem("categoryItem", JSON.stringify([{'categoryId': categoryId.category_id , 'item': [null]}]))
+     }
+     
       await dispatch(setHeaderData(response.category_data));
     } else {
       return response;
     }
   };
-  const logout = (e, path) => {
-    console.log(e);
-    localStorage.clear();
-    router.push("/login");
+  const itemId = () => {
+    if(localStorage.getItem("itemId")) {
+    const items = localStorage.getItem("itemId");
+    const allItems = [items]
+    allItems.push(props.item_id)
+    localStorage.setItem("itemId", allItems)
+    } else {
+      localStorage.setItem("itemId", props.item_id)
+    }
+    
+    
+  }
+  
+  const logout = () => {
+    
+    localStorage.removeItem("token");
+    if(router.asPath === '/' ) {
+      window.location.reload()
+    }
+    router.push('/')
+    
   };
-  console.log(route, "Route");
-  console.log(menuListData, "menuListData");
   return (
     <>
       <ToastContainer
@@ -98,7 +134,7 @@ export default function Header() {
                             quality={100}
                           />
                         </span>
-                        Fastfood Elephant Cas..
+                        Mcdonalds..
                       </a>
                     </Link>
                   </p>
@@ -121,14 +157,14 @@ export default function Header() {
                     </div>
                     {isToken != "" ? (
                       <li>
-                        <Link href="login">
-                          <a onClick={(e) => logout(e, "/logout")}>Logout</a>
+                        <Link href="/">
+                          <a onClick={() => logout()}>Logout</a>
                         </Link>{" "}
                       </li>
                     ) : (
                       <li>
                         <Link href="/login">
-                          <a>Login</a>
+                          <a onClick={setRouter}> Login</a>
                         </Link>
                       </li>
                     )}
@@ -151,12 +187,15 @@ export default function Header() {
                     return (
                       <li
                         className={
-                          rout[2] == "burgers--wraps" ? "active__link" : ""
+                          slug_url == menuList.slug ? "menu-active" : "" 
+                          
                         }
+                        
                         key={menuList.slug}
+                        
                       >
-                        <Link href={`/submenu/${menuList.slug}`}>
-                          <a>{menuList.name}</a>
+                        <Link  href={`/submenu/${menuList.slug}`}>
+                          <a className="">{menuList.name}</a>
                         </Link>
                       </li>
                     );
@@ -239,36 +278,63 @@ export default function Header() {
             <div className="header__wrap--inner prepSteps">
               <ul>
                 <li>
-                  <Link href="/store/restra--menus">
-                    <a className="back--menu--icon"></a>
-                  </Link>
+                  {/* <Link href="/store/restra--menus"> */}
+                    <a className="back--menu--icon" href="/submenu/burger-wraps/"
+                    // onClick={() => navigate(-1)}
+                    ></a>
+                  {/* </Link> */}
                 </li>
                 <li>Burgers & Wraps</li>
               </ul>
               <div className="add--order">
-                <Link href="/cart">
-                  <a className="btnRed btn">Add to Order</a>
-                </Link>
-              </div>
+                      <Link href="/cart">
+                        <img
+                          src="/images/cart.jpg"
+                          alt="Cart"
+                          layout="fill"
+                          quality={100}
+                          width="50px"
+                          height="50px"
+                        />
+                      </Link>
+                    </div>
             </div>
           )}
           {route == "cart" && (
             <div className="header__wrap--inner prepSteps">
+              
               <ul>
                 <li>
-                  <Link href="/store/restra--menus">
-                    <a className="back--menu--icon"></a>
+                <div className="site__logo">
+                  <Link href="/">
+                    <a className="logo__link">
+                      <Image
+                        src="/images/logo.svg"
+                        alt="Fast Food Logo"
+                        layout="fill"
+                        quality={100}
+                      />
+                    </a>
                   </Link>
+                </div>
                 </li>
+                {/* <li>
+                  
+                    <a className="back--menu--icon" href="/submenu/burger-wraps/"></a>
+                  
+                </li> */}
                 <li>Your Cart</li>
               </ul>
               <div className="add--order">
-                <Link href="/store/restra--menus">
+                <Link href="/submenu/burger-wraps">
+                {/* <Link href="submenu/burger-wraps/"> */}
                   <a className="conti--order">Continue Ordering</a>
                 </Link>
-                <Link href="/checkout">
+                {isToken &&
+                <Link href="/card-checkout">
                   <a className="btnRed btn">Checkout</a>
                 </Link>
+                }
               </div>
             </div>
           )}
@@ -276,20 +342,20 @@ export default function Header() {
             <div className="header__wrap--inner prepSteps">
               <ul>
                 <li>
-                  <Link href="/store/restra--menus">
-                    <a className="back--menu--icon"></a>
+                  <Link href="/submenu/burger-wraps/">
+                    <a className="back--menu--icon" ></a>
                   </Link>
                 </li>
                 <li>Your Profile</li>
               </ul>
             </div>
           )}
-          {route == "checkout" && (
+          {route === "checkout" && (
             <div className="header__wrap--inner prepSteps">
               <ul>
                 <li>
-                  <Link href="/store/restra--menus">
-                    <a className="back--menu--icon"></a>
+                  <Link href="/submenu/burger-wraps/">
+                    <a className="back--menu--icon" ></a>
                   </Link>
                 </li>
                 <li>Checkout</li>
@@ -311,6 +377,35 @@ export default function Header() {
               </div>
             </div>
           )}
+          {/* {route == "card-checkout" && (
+            <div className="header__wrap--inner prepSteps">
+              <ul>
+                <li>
+                  <Link href="/submenu/burger-wraps/">
+                    <a className="back--menu--icon" ></a>
+                  </Link>
+                </li>
+                <li>Checkout</li>
+              </ul>
+              <div className="add--order">
+                <ul>
+              {isToken != "" ? (
+                      <li>
+                        <Link href="/">
+                          <a onClick={() => logout()}>Logout</a>
+                        </Link>{" "}
+                      </li>
+                    ) : (
+                      <li>
+                        <Link href="/login">
+                          <a onClick={setRouter}> Login</a>
+                        </Link>
+                      </li>
+                    )}
+              </div>
+            </div>
+          )} */}
+          
           {router.pathname == "/userProfile/in-progress" && (
             <div className="header__wrap--inner progress--header">
               <ul>
@@ -349,3 +444,5 @@ export default function Header() {
     </>
   );
 }
+
+

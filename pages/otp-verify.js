@@ -10,9 +10,11 @@ import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import wait from "wait";
 import OtpInput from "react-otp-input";
+import ClipLoader from "react-spinners/ClipLoader";
 
 export default function ForgotPassword() {
   useEffect(() => {
+   
     const email = localStorage.getItem("email");
     if (email != null) {
       userEmail(email);
@@ -31,7 +33,42 @@ export default function ForgotPassword() {
   const { register, handleSubmit, formState } = useForm();
   const router = useRouter();
   const { errors } = formState;
+  const [loading ,setLoading] = useState(false)
+  const [verifyLoading, setVerifyLoading] = useState(false)
+  const resend = async (data) => {
+    console.log(data)
+    setLoading(true)
+    var config = {
+      method: "POST",
+      url: `${process.env.baseApiUrl}/api/forgot-password`,
+      data: {email: email},
+    };
+    axios(config)
+      .then(async function (response) {
+        
+        if (response.data.success === true) {
+          // localStorage.setItem("email", response.data.email);
+          
+          toast.success(response.data.message, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+          await wait(2000);
+          setLoading(false)
+          router.push("/otp-verify");
+        } else {
+          toast.error(response.data.message, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        }
+      })
+      .catch((error) => {
+        toast.error(error, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      });
+  };
   const verifyPwdOtp = async (event) => {
+    setVerifyLoading(true)
     event.preventDefault();
     await setIsEmailAndOtpTrue(true);
     const data = {
@@ -51,14 +88,17 @@ export default function ForgotPassword() {
             position: toast.POSITION.TOP_RIGHT,
           });
           await wait(2000);
+          setVerifyLoading(false)
           router.push("/reset-password");
         } else {
+          setVerifyLoading(false)
           toast.error(response.data.message, {
             position: toast.POSITION.TOP_RIGHT,
           });
         }
       })
       .catch((error) => {
+        setVerifyLoading(false)
         toast.error(error, {
           position: toast.POSITION.TOP_RIGHT,
         });
@@ -98,6 +138,7 @@ export default function ForgotPassword() {
               <label className="form--label" htmlFor="otp">
                 OTP
               </label>
+              
               <div>
                 <OtpInput
                   value={otp}
@@ -116,21 +157,40 @@ export default function ForgotPassword() {
                 />
               </span> */}
             </div>
+            {!loading && 
             <div
               className="form--link--desc"
               style={{ marginBottom: "1.5rem" }}
             >
               <p>
-                <Link href="#">
-                  <a>Resend OTP</a>
+                <Link href="">
+                  <a onClick={()=> resend()}>Resend OTP</a>
                 </Link>
               </p>
             </div>
+            }
+            {loading &&
+                    <>
+                        <div style={{ 'display': 'flex', 'justifyContent': 'center' }}>
+                            <ClipLoader color='red' loading={loading} size={30} />
+                        </div>
+                    </>
+                }
+            {!verifyLoading && 
             <div className="form--actions">
+            
               <button className="btn btnBlack" type="submit">
                 Verify OTP
               </button>
             </div>
+            }
+            {verifyLoading &&
+            <div style={{ 'display': 'flex', 'justifyContent': 'center' }}>
+                            <ClipLoader color='red' loading={verifyLoading} size={40} />
+                        </div>
+            }
+
+            
           </form>
         </div>
       </>

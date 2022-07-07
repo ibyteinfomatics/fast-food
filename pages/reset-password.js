@@ -9,8 +9,11 @@ import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import wait from "wait";
+import ClipLoader from "react-spinners/ClipLoader";
 
 export default function ForgotPassword() {
+  const [email, userEmail] = useState();
+  const [loading, setLoading] = useState(false)
   useEffect(() => {
     const email = localStorage.getItem("email");
     if (email != null) {
@@ -37,9 +40,11 @@ export default function ForgotPassword() {
   const router = useRouter();
   const { register, handleSubmit, reset, formState } = useForm(formOptions);
   const { errors } = formState;
-  const [email, userEmail] = useState();
+  
   const onSubmit = (data) => {
-    console.log(data, "data");
+    setLoading(true)
+    data['email'] = email 
+    console.log(data );
     var form_data = new FormData();
     for (var key in data) {
       form_data.append(key, data[key]);
@@ -56,14 +61,18 @@ export default function ForgotPassword() {
             position: toast.POSITION.TOP_RIGHT,
           });
           await wait(2000);
-          router.push("/");
+          const previousUrl = localStorage.getItem("url")
+          router.push(previousUrl);
+          setLoading(false)
         } else {
+          setLoading(false)
           toast.error(response.data.message, {
             position: toast.POSITION.TOP_RIGHT,
           });
         }
       })
       .catch((error) => {
+        setLoading(false)
         toast.error(error, {
           position: toast.POSITION.TOP_RIGHT,
         });
@@ -170,11 +179,20 @@ export default function ForgotPassword() {
                 />
               </span>
             </div>
+            {!loading &&
             <div className="form--actions">
               <button className="btn btnBlack" type="submit">
                 Submit
               </button>
             </div>
+}
+            {loading &&
+                    <>
+                        <div style={{ 'display': 'flex', 'justifyContent': 'center' }}>
+                            <ClipLoader color='red' loading={loading} size={40} />
+                        </div>
+                    </>
+                }
           </form>
         </div>
       </>

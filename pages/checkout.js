@@ -5,6 +5,8 @@ import Header from '../components/Header/Header';
 
 export default function Checkout() {
     useEffect(() => {
+        // localStorage.removeItem("itemId");
+        // localStorage.removeItem("categoryId")
         document.body.classList.add('checkout__page');
         document.body.classList.remove('login__form');
         document.body.classList.remove("steps");
@@ -77,6 +79,13 @@ export default function Checkout() {
                                     <span className='fontBold'>Coca-Cola Classic 330ml</span>
                                     <span className='fontNormal'>$1.75</span>
                                 </p>
+                            </li>
+                            <li className='orderNm'>
+                                <p className='innerBlock'>
+                                    <span className='fontBold'>Total Price</span>
+                                    <span className='fontBold'>$28.25</span>
+                                </p>
+                                
                             </li>
                         </ul>
                     </div>

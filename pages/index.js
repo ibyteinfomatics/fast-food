@@ -6,25 +6,32 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { fetchRestraSearch } from "../restaurant/list";
 import Geocode from "react-geocode";
+import ReactPaginate from 'react-paginate';
+import Layout from "../components/layout";
 
 export default function RestraLists() {
   useEffect(() => {
+    
     document.body.classList.add("home__page");
     document.body.classList.remove("steps");
     document.body.classList.remove("rest__pages");
     document.body.classList.remove("login__form");
     document.body.classList.remove("cart__page");
     document.body.classList.remove("checkout__page");
+    
   }, []);
+
   const [showMe, setShowMe] = useState(false);
-  // const [user, setUser] = useState();
   const [currentAddress, setAddress] = useState("");
-  const [checked, setCheceked] = useState(false);
-  const [resData, setResData] = useState([]);
+  const [checked, setChecked] = useState(false);
+  const [currentData, setCurrentData] = useState([]);
   Geocode.setApiKey("AIzaSyD5ff_0k1vyeWp5NO0OXPMIlnkd2HzMhFM");
   Geocode.setLanguage("en");
   Geocode.enableDebug();
+  const [page, setPage] = useState(1);
+
   const handleClick = async (path) => {
+    
     if (path === "/useMylocation") {
       navigator.geolocation.getCurrentPosition(function (position) {
         const search = {
@@ -34,7 +41,7 @@ export default function RestraLists() {
         };
         console.log(position.coords.longitude, "Longitude");
         console.log(position.coords.latitude, "Latitude");
-        setCheceked(true);
+        setChecked(true);
         searchRestraResult(search);
         Geocode.fromLatLng(
           position.coords.latitude,
@@ -53,32 +60,45 @@ export default function RestraLists() {
   };
   const handleRemove = async (e) => {
     setAddress("");
-    setResData([]);
+    setCurrentData([]);
   };
   function toggle() {
     setShowMe(!showMe);
   }
   const restaurantSearch = async (event) => {
+    console.log( event );
+    
     const val = event?.target?.value;
     setAddress(val);
     if (val != "") {
       const search = { search_item: val, longitude: "", latitude: "" };
-      setCheceked(true);
+      setChecked(true);
       searchRestraResult(search);
+
     } else {
-      setResData([]);
+      setCurrentData([]);
     }
   };
-
-  const searchRestraResult = async (data) => {
-    const response = await fetchRestraSearch(data);
+  const searchRestraResult = async (data,page) => {
+    const response = await fetchRestraSearch(data,page);
     if (response.success) {
-      setResData(response.store_data.data);
-      setCheceked(false);
+      console.log(response)
+      setCurrentData(response.store_data)
+      
+      setChecked(false);
     } else {
-      setResData([]);
-      setCheceked(false);
+      setCurrentData([]);
+      setChecked(false);
     }
+  };
+  const handlePageClick = async (e) => {
+    // console.log( e );
+    let pageNo = e.selected + 1
+    await setPage(page);
+
+    const searchStr = { search_item: currentAddress, longitude: "", latitude: "" };
+    setChecked(true);
+    await searchRestraResult(searchStr,pageNo);
   };
   return (
     <React.Fragment>
@@ -94,6 +114,7 @@ export default function RestraLists() {
               Have an allergy? Unfortunately, we can’t cater for allergens on
               Click & Collect - head to one of our restaurants to order.
             </p>
+            
             <form className="searchForm">
               <div className="searchBox">
                 <span className="leftIcon">
@@ -155,39 +176,12 @@ export default function RestraLists() {
                   </a>
                 </Link>
               </div>
-              {/* <ul className= {showMe?'searchList searchList_active':'searchList'}>
-                                <li>
-                                    <Link href="#">
-                                        <a>SE1 0FH, London, England, United Kingdom</a>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="#">
-                                        <a>SE1 0FH, London, England, United Kingdom</a>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="#">
-                                        <a>SE1 0FH, London, England, United Kingdom</a>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="#">
-                                        <a>SE1 0FH, London, England, United Kingdom</a>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="#">
-                                        <a>SE1 0FH, London, England, United Kingdom</a>
-                                    </Link>
-                                </li>
-                            </ul> */}
             </form>
             <div className="search__detail--lists">
               {checked ? (
                 <Skeleton count={1} />
-              ) : resData && resData.length > 0 ? (
-                resData.map((resList) => {
+              ) : currentData.data && currentData.data.length > 0 ? (
+                currentData.data.map((resList) => {
                   return (
                     <div className="restroDetail" key={resList.store_id}>
                       <div className="restroGroup">
@@ -214,6 +208,7 @@ export default function RestraLists() {
                           <div className="flexBlockTwo">
                             <div className="flexBlockLeft">
                               <Link href={`/store/${resList.store_url}`}>
+                                
                                 <a className="collect">Click & Collect</a>
                               </Link>
                               <p className="openStatus">
@@ -225,22 +220,51 @@ export default function RestraLists() {
                             </div>
                             <div className="orderStatus">
                               <Link href={`/store/${resList.store_url}`}>
+                              {/* <Link href="/store/:[pid]" as={`/store/${resList.store_url}`}> */}
                                 <a className="btnRed btn">Order Online</a>
                               </Link>
                             </div>
                           </div>
                         </div>
                       </div>
+                      
                     </div>
+                    
                   );
                 })
-              ) : (
+                
+              )
+               : (
                 "Restaurant not found"
               )}
+              {currentData?.total > 5 &&
+                  <ReactPaginate
+                    previousLabel={"prev"}
+                    nextLabel={"next"}
+                    breakLabel={"..."}
+                    breakClassName={"break-me"}
+                    pageCount={Math.ceil((currentData?.total) / (currentData?.per_page))}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={handlePageClick}
+                    containerClassName={"pagination"}
+                    subContainerClassName={"pages pagination"}
+                    activeClassName={"active"} />}
+              
             </div>
+            
           </div>
         </div>
       </div>
     </React.Fragment>
   );
+  
 }
+// RestraLists.getLayout = (page) => {
+//   return(
+//       <Layout>
+//           { page }
+//       </Layout>
+//   )
+// }
+

@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import Link from 'next/link'
 import Header from '../../components/Header/Header'
-import CardImage from '../../components/CardImage/CardImage'
+import CardImage from '../../components/CardImage/CardImage';
 
 export default function StepOne() {
     useEffect(() => {

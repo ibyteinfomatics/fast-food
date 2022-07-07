@@ -1,6 +1,6 @@
-export const fetchRestraSearch = async (search) => {
+export const fetchRestraSearch = async (search,page) => {
   const result = await fetch(
-    `${process.env.baseApiUrl}/api/store/list?search_item=${search.search_item}&longitude=${search.longitude}&latitude=${search.latitude}`,
+    `${process.env.baseApiUrl}/api/store/list?search_item=${search.search_item}&longitude=${search.longitude}&latitude=${search.latitude}&page=${page}`,
     {
       method: "GET",
       headers: {

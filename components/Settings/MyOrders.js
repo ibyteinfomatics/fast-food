@@ -67,7 +67,7 @@ export default function MyOrders() {
                 </div>
                 <div className='card-block order--processing'>
                     <ul>
-                        <li className='orderId'>Order #121</li>
+                        <li className='orderId'>Order #122</li>
                     </ul>
                     <ul>
                         <li className='orderNm'>
@@ -126,7 +126,7 @@ export default function MyOrders() {
                 </div>
                 <div className='card-block order--delayed'>
                     <ul>
-                        <li className='orderId'>Order #121</li>
+                        <li className='orderId'>Order #123</li>
                     </ul>
                     <ul>
                         <li className='orderNm'>
@@ -185,7 +185,7 @@ export default function MyOrders() {
                 </div>
                 <div className='card-block order--accepted'>
                     <ul>
-                        <li className='orderId'>Order #121</li>
+                        <li className='orderId'>Order #124</li>
                     </ul>
                     <ul>
                         <li className='orderNm'>

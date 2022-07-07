@@ -22,9 +22,9 @@ export default function SettingsPage() {
             <div className='settingPageALign siteWidth'>
                 {/* User Sidebar */}
                 <UserSidebar />
-
+        
                 <div className="sideBarContent">   
-
+                <p style={{fontSize: "15px", textAlign: 'center'}}>Nothing in your Settings</p>
                 </div>
             </div>
         </React.Fragment>

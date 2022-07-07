@@ -1,7 +1,13 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image';
 import Link from 'next/link';
 export default function MyProfile() {
+    const[email, setEmail ] = useState();
+    const[username, setUsername] = useState();
+    useEffect(() => {
+        setEmail(localStorage.getItem("email"));
+        setUsername(localStorage.getItem("userName"))
+    })
   return (
     <React.Fragment>                             
         <form className='userProfileEditForm'>
@@ -25,15 +31,15 @@ export default function MyProfile() {
             <div className='formData'>
                 <div className='form--item'>
                     <label className='form--label' htmlFor='name'>Name</label>
-                    <input className='form--control' type="name" id="name" placeholder='Username' />
+                    <input className='form--control' type="name" id="name" placeholder='Username' value={username} readOnly/>
                 </div>
                 <div className='form--item'>
-                    <label className='form--label' htmlFor='number'>Contact</label>
-                    <input className='form--control' type="number" id="number" placeholder='+1 123 456 7890' />
+                    <label className='form--label' htmlFor='number'>Contact Number</label>
+                    <input className='form--control' type="number" id="number" placeholder='+1 123 456 7890' readOnly/>
                 </div>
                 <div className='form--item'>
                     <label className='form--label' htmlFor='email'>Email</label>
-                    <input className='form--control' type="email" id="email" placeholder='myemail@gmail.com' />
+                    <input className='form--control' type="email" id="email" placeholder='myemail@gmail.com' value={email} readOnly />
                 </div>
             </div>
         </form>  

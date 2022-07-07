@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import wait from 'wait';
+import ClipLoader from "react-spinners/ClipLoader";
 
 export default function Login() {
   useEffect(() => {
@@ -20,6 +21,7 @@ export default function Login() {
     document.body.classList.remove('cart__page');
     document.body.classList.remove('checkout__page');
   });
+  const [loading, setLoading] = useState(false)
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .required('Email is required')
@@ -31,6 +33,7 @@ export default function Login() {
   const router = useRouter();
   const { errors } = formState;
   const onSubmit = async (data) => {
+    setLoading(true)
     var form_data = new FormData();
     for (var key in data) {
       form_data.append(key, data[key]);
@@ -43,21 +46,29 @@ export default function Login() {
     axios(config)
       .then(async function (response) {
         if (response.data.success === true) {
+          console.log( response )
           localStorage.setItem('token', response.data.token);
+          localStorage.setItem("userId", response.data.data.user_id)
           localStorage.setItem('userName', response.data.data.name);
+          localStorage.setItem('theme', "theme1");
           toast.success(response.data.message, {
             position: toast.POSITION.TOP_RIGHT,
           });
           await wait(1000);
-          router.push('/');
+          setLoading(false)
+          const previousUrl = localStorage.getItem("url")
+          router.push(previousUrl);
         } else {
+          setLoading(false)
           toast.error(response.data.message, {
             position: toast.POSITION.TOP_RIGHT,
           });
         }
       })
-      .catch((error) => {
-        toast.error(error, {
+      .catch((err) => {
+        console.log(err)
+        setLoading(false)
+        toast.error(err.response.data.message, {
           position: toast.POSITION.TOP_RIGHT,
         });
       });
@@ -149,11 +160,23 @@ export default function Login() {
                 </Link>
               </div>
             </div>
-            <div className="form--actions">
-              <button className="btn btnBlack" type="submit">
-                Login
-              </button>
-            </div>
+            {!loading &&
+              <div className="form--actions">
+                <Link href="/">
+                
+                <button className="btn btnBlack" type="submit" onClick={handleSubmit(onSubmit)}>
+                  Login
+                </button>
+                </Link>
+              </div>
+            }
+            {loading &&
+                    <>
+                        <div style={{ 'display': 'flex', 'justifyContent': 'center' }}>
+                            <ClipLoader color='red' loading={loading} size={40} />
+                        </div>
+                    </>
+            }
             <div className="form--link--desc">
               <p>
                 Don&apos;t have an account?{' '}

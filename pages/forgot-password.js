@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import wait from "wait";
+import ClipLoader from "react-spinners/ClipLoader";
 
 export default function ForgotPassword() {
   useEffect(() => {
@@ -20,6 +21,7 @@ export default function ForgotPassword() {
     document.body.classList.remove("cart__page");
     document.body.classList.remove("checkout__page");
   });
+  const [loading, setLoading] = useState(false)
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .required("Email is required")
@@ -30,6 +32,8 @@ export default function ForgotPassword() {
   const router = useRouter();
   const { errors } = formState;
   const onSubmit = async (data) => {
+    console.log(data)
+    setLoading(true)
     var form_data = new FormData();
     for (var key in data) {
       form_data.append(key, data[key]);
@@ -41,12 +45,15 @@ export default function ForgotPassword() {
     };
     axios(config)
       .then(async function (response) {
+        
         if (response.data.success === true) {
           localStorage.setItem("email", response.data.email);
+          
           toast.success(response.data.message, {
             position: toast.POSITION.TOP_RIGHT,
           });
           await wait(2000);
+          setLoading(false)
           router.push("/otp-verify");
         } else {
           toast.error(response.data.message, {
@@ -112,11 +119,20 @@ export default function ForgotPassword() {
                 />
               </span>
             </div>
+            {!loading && 
             <div className="form--actions">
               <button className="btn btnBlack" type="submit">
                 Submit
               </button>
             </div>
+}
+            {loading &&
+                    <>
+                        <div style={{ 'display': 'flex', 'justifyContent': 'center' }}>
+                            <ClipLoader color='red' loading={loading} size={60} />
+                        </div>
+                    </>
+                }
           </form>
         </div>
       </>

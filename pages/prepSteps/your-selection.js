@@ -42,7 +42,7 @@ export default function Yourselection() {
                                             <Image src="/images/bg.png" alt="image" layout='fill' quality={100} />
                                         </div>
                                         <div className='list--options'>
-                                            <span className='opt-title'>Plain, No Cheese</span>
+                                            <span className='opt-title'>Extra Hot, No Lettuce</span>
                                             <span className='opt-edit'>
                                                 <Link href="/prepSteps/step1-selection">
                                                     <a><Image src="/images/edit-icon.svg" alt="image" layout='fill' quality={100} /></a>

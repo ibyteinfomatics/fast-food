@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import wait from 'wait';
+import ClipLoader from "react-spinners/ClipLoader";
 
 export default function SignUp() {
   useEffect(() => {
@@ -21,6 +22,7 @@ export default function SignUp() {
     document.body.classList.remove('progress__page');
     document.body.classList.remove('profile__pages');
   });
+  const [loading, setLodaing] = useState(false)
   const validationSchema = Yup.object().shape({
     user_name: Yup.string().max(15).required('Name is required'),
     email: Yup.string()
@@ -40,6 +42,7 @@ export default function SignUp() {
   const { errors } = formState;
 
   const onSubmit = (data) => {
+    setLodaing(true)
     var form_data = new FormData();
     for (var key in data) {
       form_data.append(key, data[key]);
@@ -58,14 +61,17 @@ export default function SignUp() {
             position: toast.POSITION.TOP_RIGHT,
           });
           await wait(1000);
+          setLodaing(false);
           router.push('/');
         } else {
+          setLoading(false)
           toast.error(response.data.message, {
             position: toast.POSITION.TOP_RIGHT,
           });
         }
       })
       .catch((error) => {
+        setLoading(false)
         toast.error(error, {
           position: toast.POSITION.TOP_RIGHT,
         });
@@ -196,11 +202,20 @@ export default function SignUp() {
                 />
               </span>
             </div>
+            {!loading &&
             <div className="form--actions">
               <button className="btn btnBlack" type="submit">
                 Signup
               </button>
             </div>
+            }
+            {loading &&
+                    <>
+                        <div style={{ 'display': 'flex', 'justifyContent': 'center' }}>
+                            <ClipLoader color='red' loading={loading} size={40} />
+                        </div>
+                    </>
+            }
             <div className="form--link--desc">
               <p>
                 Already have an account?{' '}

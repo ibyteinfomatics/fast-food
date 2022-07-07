@@ -44,7 +44,7 @@ export default function Sides() {
                                     }
                                     {console.log(Sidelist)} */}
                                     {Sidelist.map((data, index) => {
-                                        console.log(data);
+                                        // console.log(data);
                                         return(
                                             <li key={index}>
                                                 <div className='form--item'>
