@@ -278,11 +278,10 @@ export default function Header(props) {
             <div className="header__wrap--inner prepSteps">
               <ul>
                 <li>
-                  {/* <Link href="/store/restra--menus"> */}
-                    <a className="back--menu--icon" href="/submenu/burger-wraps/"
-                    // onClick={() => navigate(-1)}
+                  <Link href="/submenu/burger-wraps/">
+                    <a className="back--menu--icon" 
                     ></a>
-                  {/* </Link> */}
+                  </Link>
                 </li>
                 <li>Burgers & Wraps</li>
               </ul>

@@ -174,13 +174,13 @@ export default function CartView() {
                                 <td>
                                     <div className='cart__actions'>
                                         <Link href={`/prepSteps/step-1/?item_id=${cart.item_id}`}>
-                                            <a><Image src="/images/edit-icon--black.svg" alt="edit" layout='fill' quality={100} /></a>
+                                            <a><img src="/images/edit-icon--black.svg" alt="edit" layout='fill' quality={100} /></a>
                                         </Link>
                                         {/* <Link href="#"> */}
-                                            <a><Image src="/images/bin-icon.svg" alt="delete" layout='fill' quality={100} onClick={() => {deleteItem(cart)}}/></a>
+                                            <a><img src="/images/bin-icon.svg" alt="delete" layout='fill' quality={100} onClick={() => {deleteItem(cart)}}/></a>
                                         {/* </Link> */}
                                         <Link href="#">
-                                            <a><Image src="/images/add-item-icon.svg" alt="add item" layout='fill' quality={100} /></a>
+                                            <a><img src="/images/add-item-icon.svg" alt="add item" layout='fill' quality={100} /></a>
                                         </Link>
                                     </div>
                                 </td>
