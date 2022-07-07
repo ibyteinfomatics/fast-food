@@ -6,7 +6,6 @@ import "@fortawesome/fontawesome-svg-core/styles.css"; // import Font Awesome CS
 import { config } from "@fortawesome/fontawesome-svg-core";
 config.autoAddCss = false; // Tell Font Awesome to skip adding the CSS automatically since it's being imported above
 import "react-toastify/dist/ReactToastify.css";
-import { HashRouter } from 'react-router-dom';
 import { Provider } from "react-redux";
 import store from "../store";
 function MyApp({ Component, pageProps }) {

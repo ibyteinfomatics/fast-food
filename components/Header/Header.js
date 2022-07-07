@@ -7,7 +7,6 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import { setHeaderData } from "./header-reducer";
-import {useNavigate} from 'react-router-dom'
 
 export default function Header(props) {
   // console.log(props.price)
