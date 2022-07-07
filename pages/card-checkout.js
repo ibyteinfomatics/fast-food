@@ -25,7 +25,6 @@ export default function CardCheckout() {
             'Time': time,
             'Save Card': saveCard
         }
-        console.log(frmdetails);
         router.push('/checkout')
     }
     const formatString = (e) => {

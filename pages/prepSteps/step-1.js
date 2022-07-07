@@ -145,7 +145,7 @@ export default function StepOne(props) {
                                                                             
                                                                             <label htmlFor={optionData.item_step_option_id}>
                                                                                 <span className='heatIcon'>
-                                                                                <img src={`${process.env.baseApiUrl}${optionData.step_attachment.attachment_url}`}/>
+                                                                                <img src={`${process.env.baseApiUrl}${optionData?.step_attachment?.attachment_url}`}/>
                                                                                     
                                                                                 </span>
                                                                                 <p className='font-21'>{optionData.title}</p>
@@ -237,7 +237,7 @@ export default function StepOne(props) {
                                                                             <input type="checkbox" id={data1.item_id} name="sides" />
                                                                             <label htmlFor={data1.item_id}>
                                                                                 <span className='side__image'>
-                                                                                    <img src={`${process.env.baseApiUrl}${data1.item_attachment.attachment_url}`} alt="side image" width="215" height="195" />
+                                                                                    <img src={`${process.env.baseApiUrl}${data1?.item_attachment?.attachment_url}`} alt="side image" width="215" height="195" />
                                                                                 </span>
                                                                                 <span className='side__header'>
                                                                                     <h3>{data1.name}</h3>

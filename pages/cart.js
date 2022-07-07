@@ -30,9 +30,7 @@ export default function CartView() {
 
     const itemData = async () => {
         const itemId = localStorage.getItem("itemId")
-        console.log(itemId)
         const myArray = itemId.split(",");
-        console.log(myArray[0])
         setLoading(true)
         const result = await fetch(
             `${process.env.baseApiUrl}/api/item/list/by/Id?item_id=${myArray.at(-1)}`,
@@ -50,7 +48,7 @@ export default function CartView() {
             setLoading(false);
             // console.log(response.item_data[0].price)
             setCart(response.item_data);
-            console.log(cart)
+            
         } else {
             setLoading(false)
             setCart([]);

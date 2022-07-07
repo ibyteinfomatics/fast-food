@@ -24,10 +24,10 @@ export default function CardImage(props) {
   const singleItemData = {
     item_id: props.item_id ? props.item_id : props.itemId,
   };
-  console.log(singleItemData)
+  //console.log(singleItemData)
 
   const directAddToCart = (data) => {
-    console.log(data)
+    //console.log(data)
       if(data.customize_status === 0) {
         if(localStorage.getItem("itemId")) {
           const items = localStorage.getItem("itemId");

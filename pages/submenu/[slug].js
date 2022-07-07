@@ -67,7 +67,7 @@ export default function BurgersWraps() {
                       return (
                         <CardImage
                           cardStepLink="yes"
-                          cardImg={`${process.env.baseApiUrl}${itemList.item_attachment.attachment_url}`}
+                          cardImg={`${process.env.baseApiUrl}${itemList?.item_attachment?.attachment_url}`}
                           cardTitle={itemList.name}
                           cardPrice={`$` + itemList.price}
                           cardDesc={itemList.description}

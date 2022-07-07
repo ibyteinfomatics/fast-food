@@ -4,7 +4,6 @@ import store from '../store'
 import Header from './Header/Header'
 
 export default function Layout({ children }) {
-    console.log(children)
   return (
     <>
     <Provider store={store}>
