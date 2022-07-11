@@ -10,34 +10,36 @@ import ReactReadMoreReadLess from "react-read-more-read-less";
 export default function CardImage(props) {
   const router = useRouter();
   const slug_url = router.query.slug;
-
-  // console.log( slug_url );
-  // if(props.menu_id){
-  //   localStorage.setItem("categoryId", props.menu_id)
-  // }
-  // const menu_id = props.menu_id;
-  // console.log(menu_id);
   const rout = router.pathname.split("/");
   const route = rout[1];
   
-  // const item_id = props.item_id
   const singleItemData = {
     item_id: props.item_id ? props.item_id : props.itemId,
   };
-  //console.log(singleItemData)
 
   const directAddToCart = (data) => {
-    //console.log(data)
+    console.log(data)
       if(data.customize_status === 0) {
-        if(localStorage.getItem("itemId")) {
-          const items = localStorage.getItem("itemId");
-          items = [items, singleItemData.item_id]
+        if(localStorage.getItem("items")) {
+          const items = JSON.parse(localStorage.getItem("items"))
+          console.log(items)
+          items.push(data.item)
+          console.log(items)
           
-          localStorage.setItem("itemId", items)
-          
-      } else {
-        localStorage.setItem("itemId", singleItemData.item_id)
+          localStorage.setItem("items",JSON.stringify(items))
+      }else {
+          const array = [data.item]
+          localStorage.setItem("items", JSON.stringify(array))
       }
+      //   if(localStorage.getItem("itemId")) {
+      //     const items = localStorage.getItem("itemId");
+      //     items = [items, singleItemData.item_id]
+          
+      //     localStorage.setItem("itemId", items)
+          
+      // } else {
+      //   localStorage.setItem("itemId", singleItemData.item_id)
+      // }
       toast.success("1 Item Added In Cart", {
         position: toast.POSITION.TOP_RIGHT,
       });

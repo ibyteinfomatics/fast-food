@@ -44,7 +44,7 @@ export default function ForgotPassword() {
   const onSubmit = (data) => {
     setLoading(true)
     data['email'] = email 
-    console.log(data );
+    // console.log(data );
     var form_data = new FormData();
     for (var key in data) {
       form_data.append(key, data[key]);

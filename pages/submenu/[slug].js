@@ -38,7 +38,7 @@ export default function BurgersWraps() {
     let response = await result.json();
     if (response.success) {
       setLoading(false);
-      console.log( response );
+      // console.log( response );
       setSubCategoryData(response.sub_category_data);
     } else {
       return response;
@@ -72,6 +72,7 @@ export default function BurgersWraps() {
                           cardPrice={`$` + itemList.price}
                           cardDesc={itemList.description}
                           item_id={itemList.item_id}
+                          item={itemList}
                           customize_status={itemList.customize_status}
                           key={itemList.item_id}
                         />

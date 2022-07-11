@@ -12,42 +12,93 @@ import Image from 'next/image';
 
 
 export default function StepOne(props) {
-    console.log(props)
+    
     const router = useRouter();
+    const [token, setToken ] = useState("")
     const id = router.asPath.substring(router.asPath.indexOf('=') + 1);
     const [item, setItem] = useState([]);
     const [loading, setLoading] = useState(false);
     const [options, setOptions] = useState(true);
     const [heatOptions, setHeatOptions] = useState("");
     const [tweak, setTweak] = useState([]);
+    const [stepOptionId, setStepOptionId] = useState([]);
+    const [categoryId, setCategoryId] = useState([])
 
 
+    
     const handleClick = (data, tweakData) => {
         
         setTweak(tweakData);
         setHeatOptions(data);
-        console.log(heatOptions, tweak)
-        // setOptions(false)
     };
-    const addToCart = () => {
-           
-            console.log(heatOptions, tweak)
-            if(localStorage.getItem("itemId")) {
-                const items = localStorage.getItem("itemId");
-                items = [items, id]
+    const addToCart =() => {
+        console.log(item)
+        item['selecteOptions'] = stepOptionId
+        item['selectedCategory'] = categoryId
+        console.log(item)
+        if(localStorage.getItem("items")) {
+            const items = JSON.parse(localStorage.getItem("items"))
+            console.log(items)
+            items.push(item)
+            console.log(items)
+            
+            localStorage.setItem("items",JSON.stringify(items))
+        }else {
+            const array = [item]
+            localStorage.setItem("items", JSON.stringify(array))
+        }
+        router.push("/cart")
+        
+    }
+    // const addToCart = () => {
+    //     if(!token) {
+    //         localStorage.setItem("url", router.asPath)
+    //         console.log(categoryId)
+    //     const sub = stepOptionId.map((item) => {
+    //         return item.item_step_option_id
+    //     });
+        
+    //        localStorage.setItem("subCatgeoryId", categoryId)
+    //        localStorage.setItem("stepOptions", sub)
+    //         if(localStorage.getItem("itemId")) {
+    //             const items = localStorage.getItem("itemId");
+    //             items = [items, id]
                 
-                localStorage.setItem("itemId", items)
-            // allItems.push(id)
-            // localStorage.setItem("itemId", JSON.stringify(item))
-            } else {
-              localStorage.setItem("itemId", id)
-            }
-            router.push("/cart")
+    //             localStorage.setItem("itemId", items)
+            
+    //         } else {
+    //           localStorage.setItem("itemId", id)
+    //         }
+    //         router.push("/login")
+    //     }
+    //     else {
+            
+    //         console.log(categoryId)
+    //     const sub = stepOptionId.map((item) => {
+    //         return item.item_step_option_id
+    //     });
+        
+    //        localStorage.setItem("subCatgeoryId", categoryId)
+    //        localStorage.setItem("stepOptions", sub)
+    //         if(localStorage.getItem("itemId")) {
+    //             const items = localStorage.getItem("itemId");
+    //             items = [items, id]
+                
+    //             localStorage.setItem("itemId", items)
+            
+    //         } else {
+    //           localStorage.setItem("itemId", id)
+    //         }
+    //         router.push("/cart")
+    //     }
+        
             
           
-    }
+    // }
     const itemData = async () => {
+        // window.location.reload();
         setLoading(true);
+        
         const result = await fetch(
             `${process.env.baseApiUrl}/api/item/list/by/Id?item_id=${id}`,
             {
@@ -61,21 +112,51 @@ export default function StepOne(props) {
 
         let response = await result.json();
         if (response.success) {
-            console.log(response)
             setItem(response.item_data);
             setLoading(false);
         } else {
             return response;
         }
     };
-    const getOptionData = (e,data) => {
-        // console.log(data)
-        // console.log(e.target.checked)
+    const getOptionData = async (data) => {
+        console.log(data)
+        const steps = [...stepOptionId];
+        const find = stepOptionId.find((e) => e.step_id === data.step_id)
+        console.log(find)
+        if(find) {
+            console.log(steps)
+            const stepIndex = stepOptionId.indexOf(find)
+            steps.splice(stepIndex, 1)
+            steps.push(data)
+            console.log(steps)
+            setStepOptionId(steps)
+        } else {
+            steps.push(data)
+        setStepOptionId(steps)
+        console.log(steps)
+        }
+        
     }
-    // const openEdit = () => {
-    //     setOptions(!options)
-    // }
+    const getSubData = async (e,data) => {
+        console.log(data)
+        
+            if(e.target.checked) {
+            const category = [...categoryId, data]
+            await setCategoryId(category)
+        } else {
+            const allCategory = categoryId
+            console.log(allCategory)
+            const index = allCategory.indexOf(data)
+            if( index !== -1 ) {
+                allCategory.splice(index, 1)
+                await setCategoryId(allCategory)
+
+                }
+        }        
+    }
+   
     useEffect(() => {
+        setToken(localStorage.getItem("token"))
         document.body.classList.add("steps");
         document.body.classList.remove("home__page");
         document.body.classList.remove("rest__pages");
@@ -122,7 +203,7 @@ export default function StepOne(props) {
                                                 <div className='chooseList'>
                                                     {item.step_data && item?.step_data?.length > 0 &&
                                                         item?.step_data.map((stepList) => {
-                                                            console.log(stepList)
+                                                            // console.log(stepList)
                                                             return (
                                                                 <div className='optionRow' key={stepList.item_step_id}>
                                                                     <div className='stepRightData bgWhite'>
@@ -140,10 +221,10 @@ export default function StepOne(props) {
                                                                                 return(
                                                                                     
                                                                     
-                                                                                    <div className='chooseOption extraheat' key={optionData.item_step_option_id} onClick={(e) => getOptionData(e, optionData)}>
+                                                                                    <div className='chooseOption extraheat' key={optionData.item_step_option_id} >
                                                                             <input type="radio" id={optionData.item_step_option_id} name={optionData.step_id}/>
                                                                             
-                                                                            <label htmlFor={optionData.item_step_option_id}>
+                                                                            <label htmlFor={optionData.item_step_option_id} onClick={() => getOptionData(optionData)}>
                                                                                 <span className='heatIcon'>
                                                                                 <img src={`${process.env.baseApiUrl}${optionData?.step_attachment?.attachment_url}`}/>
                                                                                     
@@ -216,7 +297,7 @@ export default function StepOne(props) {
                                                         
                                                         { item.sub_category_data && item.sub_category_data.length > 0 &&
                                                 item.sub_category_data.map((side_data) => {
-                                                    console.log(side_data)
+                                                    // console.log(side_data)
                                                     return (
                                                         
                                                         <div className='optionRow' key={side_data.item_step_id}>                                                                
@@ -227,13 +308,13 @@ export default function StepOne(props) {
                                                         <form>
                                                             <ul>
                                                             {side_data.map_item_side.map((data, index) => {
-                                                                console.log(data);
+                                                                // console.log(data);
                                                                 return(
                                                                     <li key={index}>
                                                                         {data.map_item.map((data1, index) => {
-                                                                        console.log(data1);
+                                                                        // console.log(data1);
                                                                         return(
-                                                                        <div className='form--item' key={data1.item_id} onClick={(e) => getOptionData(e,data1)}>
+                                                                        <div className='form--item' key={data1.item_id} onClick={(e) => getSubData(e,data1)}>
                                                                             <input type="checkbox" id={data1.item_id} name="sides" />
                                                                             <label htmlFor={data1.item_id}>
                                                                                 <span className='side__image'>

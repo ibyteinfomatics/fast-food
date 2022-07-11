@@ -8,7 +8,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 export default function PageFour() {
   const router = useRouter();
   const slug_url = router.query.slug;
-  console.log( slug_url )
+  // console.log( slug_url )
   const [loading, setLoading] = useState(false)
   
   useEffect(() => {
@@ -43,7 +43,7 @@ export default function PageFour() {
 
     if (response.success) {
       setLoading(false)
-      console.log( response )
+      // console.log( response )
       setCategoryData(response.category_data);
     } else {
       setLoading(false)

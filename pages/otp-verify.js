@@ -36,7 +36,7 @@ export default function ForgotPassword() {
   const [loading ,setLoading] = useState(false)
   const [verifyLoading, setVerifyLoading] = useState(false)
   const resend = async (data) => {
-    console.log(data)
+    // console.log(data)
     setLoading(true)
     var config = {
       method: "POST",

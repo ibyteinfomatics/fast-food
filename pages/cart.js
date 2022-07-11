@@ -8,9 +8,11 @@ import ClipLoader from "react-spinners/ClipLoader";
 
 export default function CartView() {
     
-    const [ cart, setCart ] = useState([])
+    const [ cart, setCart ] = useState("")
     const [ loading, setLoading ] = useState(false);
     const [token, setToken ] = useState("")
+    const [ logoutCart, setLogoutCart] = useState([])
+    const [price, setPrice] = useState(0)
     const router = useRouter();
     const saveUrl = () => {
         localStorage.setItem("url", router.asPath)
@@ -28,12 +30,24 @@ export default function CartView() {
 
     }
 
+    const withoutLogin = () => {
+        const items = JSON.parse(localStorage.getItem("items"))
+        setLogoutCart(items)
+        items.map((item) => {
+            setPrice(price+item.price)
+        })
+    }
+    console.log(price,'Price');
+
     const itemData = async () => {
-        const itemId = localStorage.getItem("itemId")
-        const myArray = itemId.split(",");
+        const items = JSON.parse(localStorage.getItem("items"))
+        console.log(items)
+        // const itemId = localStorage.getItem("itemId")
+        // const myArray = itemId.split(",");
         setLoading(true)
         const result = await fetch(
-            `${process.env.baseApiUrl}/api/item/list/by/Id?item_id=${myArray.at(-1)}`,
+            // `${process.env.baseApiUrl}/api/item/list/by/Id?item_id=${myArray.at(-1)}`,
+            `${process.env.baseApiUrl}/api/item/list/by/Id?item_id=${items[0].item_id}`,
             {
                 method: "POST",
                 headers: {
@@ -51,7 +65,7 @@ export default function CartView() {
             
         } else {
             setLoading(false)
-            setCart([]);
+            setCart("");
             return response;
         }
     };
@@ -59,6 +73,10 @@ export default function CartView() {
         if( localStorage.getItem("itemId") ) {
             itemData();
         }
+        if( localStorage.getItem("items") ) {
+            withoutLogin();
+        }
+        
         setToken(localStorage.getItem("token"))
         
         document.body.classList.add("cart__page");
@@ -76,7 +94,7 @@ export default function CartView() {
 
             {/* Cart view */}
             <div className='cart__wrapper'>
-                {!token &&
+                {/* {!token && */}
                 <div className='notlogged--in'>
                     <span>
                         <p>Please <b>SIGN IN</b> to continue to checkout</p>
@@ -85,7 +103,7 @@ export default function CartView() {
                         </Link>
                     </span>
                 </div>
-}
+{/* } */}
                 {loading &&
                 <>
                 <div style={{ 'display': 'flex', 'justifyContent': 'center', marginTop: '15px' }}>
@@ -95,7 +113,7 @@ export default function CartView() {
                 }
                 {!loading &&
                 <div className='cart--table'>
-                    {cart ?
+                    {logoutCart.length > 0 ?
                     <table>
                         <tbody></tbody>
                         <thead></thead>
@@ -109,7 +127,14 @@ export default function CartView() {
                         {/* {cart?.map((data, index) =>{
                             console.log(data)
                             return(  */}
-                                {cart &&  
+                            {/* {token &&  */}
+                            <>
+                                {logoutCart && logoutCart.length > 0 &&
+                                    logoutCart.map((cart) => {
+                                        console.log(cart)
+                                        return(
+
+                                        
                                                              
                             <tr>
                                 
@@ -185,7 +210,11 @@ export default function CartView() {
                                 <td className='site_font--700'>1</td>
                                 <td>$ {cart.price}</td>
                             </tr>
+                             )
+                            }) 
                         }
+                        </>
+                    {/* // } */}
                             {/* );
                         })} */}
                         <tr>
@@ -193,17 +222,17 @@ export default function CartView() {
                             <td colSpan='4'>
                                 <div className='cart--subtotal'>
                                     <span>Sub Total</span>
-                                    <span>${cart.price}</span>
+                                    <span>${price}</span>
                                 </div>
                                 <div className='cart--subtotal'>
                                     <span>Tax</span>
-                                    <span>${cart.price * 3/100}</span>
+                                    <span>${price * 3/100}</span>
                                     
                                 </div>
                                 
                                 <div className='cart--subtotal'>
                                     <span>Total</span>
-                                    <span>${cart.price+ cart.price * 3/100}</span>
+                                    <span>${price+ price * 3/100}</span>
                                 </div>
                             </td>
                         </tr>

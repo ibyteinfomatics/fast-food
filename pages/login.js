@@ -13,6 +13,9 @@ import ClipLoader from "react-spinners/ClipLoader";
 
 export default function Login() {
   useEffect(() => {
+    // if(localStorage.getItem("token")) {
+    //   router.push(localStorage.getItem("url"))
+    // }
     document.body.classList.add('login__form');
     document.body.classList.remove('steps');
     document.body.classList.remove('home__page');
@@ -46,11 +49,12 @@ export default function Login() {
     axios(config)
       .then(async function (response) {
         if (response.data.success === true) {
-          console.log( response )
+          // console.log( response )
           localStorage.setItem('token', response.data.token);
           localStorage.setItem("userId", response.data.data.user_id)
           localStorage.setItem('userName', response.data.data.name);
-          localStorage.setItem('theme', "theme1");
+          localStorage.setItem("email", data.email)
+          // localStorage.setItem('theme', "theme1");
           toast.success(response.data.message, {
             position: toast.POSITION.TOP_RIGHT,
           });
@@ -66,7 +70,7 @@ export default function Login() {
         }
       })
       .catch((err) => {
-        console.log(err)
+        // console.log(err)
         setLoading(false)
         toast.error(err.response.data.message, {
           position: toast.POSITION.TOP_RIGHT,

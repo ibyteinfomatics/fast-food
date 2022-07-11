@@ -39,8 +39,8 @@ export default function RestraLists() {
           longitude: position.coords.longitude,
           latitude: position.coords.latitude,
         };
-        console.log(position.coords.longitude, "Longitude");
-        console.log(position.coords.latitude, "Latitude");
+        // console.log(position.coords.longitude, "Longitude");
+        // console.log(position.coords.latitude, "Latitude");
         setChecked(true);
         searchRestraResult(search);
         Geocode.fromLatLng(
@@ -66,7 +66,7 @@ export default function RestraLists() {
     setShowMe(!showMe);
   }
   const restaurantSearch = async (event) => {
-    console.log( event );
+    // console.log( event );
     
     const val = event?.target?.value;
     setAddress(val);
@@ -82,7 +82,7 @@ export default function RestraLists() {
   const searchRestraResult = async (data,page) => {
     const response = await fetchRestraSearch(data,page);
     if (response.success) {
-      console.log(response)
+      // console.log(response)
       setCurrentData(response.store_data)
       
       setChecked(false);

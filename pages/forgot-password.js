@@ -32,7 +32,7 @@ export default function ForgotPassword() {
   const router = useRouter();
   const { errors } = formState;
   const onSubmit = async (data) => {
-    console.log(data)
+    // console.log(data)
     setLoading(true)
     var form_data = new FormData();
     for (var key in data) {

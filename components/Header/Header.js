@@ -37,10 +37,10 @@ export default function Header(props) {
   }, [slug_url]);
   const setRouter = () => {
     localStorage.setItem("url", router.asPath)
-    console.log(router)
+    // console.log(router)
   }
   const menuList = async (slug_url) => {
-    console.log(slug_url)
+    // console.log(slug_url)
     const result = await fetch(
       `${process.env.baseApiUrl}/api/get/categories?store_url=37e50546f8938bebeaa2d13f159fde5bc947c745`,
       {
@@ -53,9 +53,9 @@ export default function Header(props) {
     );
     let response = await result.json();
     if (response.success) {
-      console.log(response )
+      // console.log(response )
       setMenuData(response.category_data);
-     console.log( slug_url)
+    //  console.log( slug_url)
      if( route === 'submenu') {
       const categoryId = response.category_data.find( (item) =>
       item.slug === slug_url
@@ -142,6 +142,7 @@ export default function Header(props) {
               <div className="header__right">
                 <nav className="site__navigation">
                   <ul>
+                    {isToken !== "" &&
                     <div className="add--order">
                       <Link href="/cart">
                         <img
@@ -154,6 +155,7 @@ export default function Header(props) {
                         />
                       </Link>
                     </div>
+                    }
                     {isToken != "" ? (
                       <li>
                         <Link href="/">
@@ -284,6 +286,7 @@ export default function Header(props) {
                 </li>
                 <li>Burgers & Wraps</li>
               </ul>
+              {/* {isToken !== "" && */}
               <div className="add--order">
                       <Link href="/cart">
                         <img
@@ -295,7 +298,22 @@ export default function Header(props) {
                           height="50px"
                         />
                       </Link>
+                      
                     </div>
+                    
+              {/* } */}
+            {/* {isToken == '' &&
+              <ul>
+      
+                <li>
+                  <Link href="/login">
+                    <a onClick={setRouter}> Login</a>
+                  </Link>
+                </li>
+              
+            </ul>
+            } */}
+            
             </div>
           )}
           {route == "cart" && (
@@ -329,9 +347,21 @@ export default function Header(props) {
                   <a className="conti--order">Continue Ordering</a>
                 </Link>
                 {isToken &&
-                <Link href="/card-checkout">
+                <ul>
+                  <li>
+                 <Link href="/card-checkout">
                   <a className="btnRed btn">Checkout</a>
                 </Link>
+                </li>
+               
+                <li>
+                        <Link href="/">
+                          <a onClick={() => logout()}>Logout</a>
+                        </Link>{" "}
+                      </li>
+                </ul>
+               
+              
                 }
               </div>
             </div>

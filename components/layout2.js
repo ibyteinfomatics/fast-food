@@ -5,7 +5,7 @@ import Header from './Header/Header'
 // import "../components/layout.module.css"
 
 export default function Layout2({ children }) {
-    console.log(children)
+    // console.log(children)
   return (
     <>
     <Provider store={store}>
