@@ -34,12 +34,12 @@ export default function CardImage(props) {
         const arrayItem = []
         // item['selectedOptions'] = stepOptionId
         // item['selectedCategory'] = categoryId
-        arrayItem.push({item_id: data.item.item_id, is_customize: 0, selectedOptions: [], selectedCategory: []})
+        arrayItem.push({item_id: data.item.item_id, is_customize: 0, selectedoptions: [], selectedCategory: []})
         console.log(arrayItem)
         if(localStorage.getItem("items") ) {
           const cartItem = JSON.parse(localStorage.getItem("items"))
           cartItem.map((data) => {
-            arrayItem.push({item_id: data.item_id, is_customize: data.selectedCategory || data.selectedOptions ? 1 : 0, selectedOptions: data.selectedOptions ? data.selectedCategory : [], selectedCategory: data.selectedCategory ? data.selectedCategory : []})
+            arrayItem.push({item_id: data.item_id, is_customize: data.selectedCategory || data.selectedoptions ? 1 : 0, selectedoptions: data.selectedoptions ? data.selectedCategory : [], selectedCategory: data.selectedCategory ? data.selectedCategory : []})
           })
         }
         console.log(arrayItem)

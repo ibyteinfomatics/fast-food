@@ -74,7 +74,9 @@ export default function CartView() {
         let response = await result.json();
         if (response.success) {
             cartList()
-            
+            toast.success(response.message, {
+                position: toast.POSITION.TOP_RIGHT,
+              });
         } else {
         
             return response;
@@ -97,7 +99,7 @@ export default function CartView() {
             const storeId = localStorage.getItem("storeId")
         console.log(data)
         const arrayItem = []
-        arrayItem.push({item_id: data.item_id, is_customize: 1 ,selectedOptions: data.selected_options.length >0 ? data.selected_options : [], selectedCategory: data.selected_category.length > 0 ? data.selected_category : []})
+        arrayItem.push({item_id: data.item_id, is_customize: 1 ,selectedoptions: data.selected_options.length >0 ? data.selected_options : [], selectedCategory: data.selected_category.length > 0 ? data.selected_category : []})
         const result = await fetch(
             `${process.env.baseApiUrl}/api/add/to/cart`,
             {
@@ -118,7 +120,7 @@ export default function CartView() {
         //   localStorage.removeItem("items")
         //   setCartListing([])
           cartList()
-          toast.success(response.message, {
+          toast.success("item copied sucessfully", {
             position: toast.POSITION.TOP_RIGHT,
           });
           
@@ -210,7 +212,7 @@ export default function CartView() {
         // item['selectedOptions'] = stepOptionId
         // item['selectedCategory'] = categoryId
         items.map((data) => {
-            arrayItem.push({item_id: data.item_id, is_customize: data.selectedCategory || data.selectedOptions ? 1 : 0, selectedOptions: data.selectedOptions ? data.selectedCategory : [], selectedCategory: data.selectedCategory ? data.selectedCategory : []})
+            arrayItem.push({item_id: data.item_id, is_customize: data.selectedCategory || data.selectedoptions ? 1 : 0, selectedoptions: data.selectedoptions ? data.selectedCategory : [], selectedCategory: data.selectedCategory ? data.selectedCategory : []})
         
         })
         console.log(arrayItem)
@@ -325,8 +327,8 @@ export default function CartView() {
                                             <h3>{cart?.name}</h3>
                                         </div>
                                         }
-                                        {cart.selectedOptions &&
-                                                cart.selectedOptions.map((data, index) => {
+                                        {cart.selectedoptions &&
+                                                cart.selectedoptions.map((data, index) => {
                                                     console.log(data)
                                                     return(
                                                         <div style={{display: "inline-block", padding: '5px'}} key={data.item_step_option_id}>
@@ -391,17 +393,18 @@ export default function CartView() {
                                 </td>
                                 <td>
                                     <div className='cart__actions'>
-                                        {cart.customize_status > 0 &&
-                                        <Link href={`/prepSteps/step-1/?edit_id=${JSON.stringify(cart)}`}>
-                                            <a><img src="/images/edit-icon--black.svg" alt="edit" layout='fill' quality={100} /></a>
-                                        </Link>
-                                    }
+                                        
                                         {/* <Link href="#"> */}
                                             <a><img src="/images/bin-icon.svg" alt="delete" layout='fill' quality={100} onClick={() => { token ? deleteApi(cart)  : deleteItem(index,cart)}}/></a>
                                         {/* </Link> */}
                                         {/* <Link href="#"> */}
                                             <a><img src="/images/add-item-icon.svg" alt="add item" layout='fill' quality={100} onClick={() => duplicate(cart)} /></a>
                                         {/* </Link> */}
+                                        {cart.customize_status > 0 &&
+                                        <Link href={`/prepSteps/step-1/?edit_id=${JSON.stringify(cart)}`}>
+                                            <a><img src="/images/edit-icon--black.svg" alt="edit" layout='fill' quality={100} /></a>
+                                        </Link>
+                                    }
                                     </div>
                                 </td>
                                 <td className='site_font--700'>1</td>

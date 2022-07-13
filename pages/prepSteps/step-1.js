@@ -41,13 +41,49 @@ export default function StepOne(props) {
     };
     const addToCart = async() => {
         if(token) {
-            const storeId = localStorage.getItem("storeId")
+            if(editData) {
+                console.log( editData)
+                console.log(stepOptionId )
+                console.log(categoryId)
+                const arrayItem = {
+                    cart_id: editData.cart_id, selectedoptions: stepOptionId, selectedCategory: categoryId
+                }
+                console.log(arrayItem)
+                const result = await fetch(
+                    `${process.env.baseApiUrl}/api/update/cart`,
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json; charset=utf-8",
+                            Accept: "application/json",
+                            Authorization: `Bearer ${localStorage.getItem("token")}`
+                        },
+                        body: JSON.stringify(arrayItem)
+                    }
+                );
+                let response = await result.json();
+                console.log(response)
+                if (response.success) {
+                    router.push("/cart")
+                toast.success("item updated sucessfully", {
+                    position: toast.POSITION.TOP_RIGHT,
+                });
+          
+          
+          
+      } else {
+    
+          return response;
+      }
+
+            }else {
+                const storeId = localStorage.getItem("storeId")
             console.log("token recieved")
             console.log(item)
             const arrayItem = []
         // item['selectedOptions'] = stepOptionId
         // item['selectedCategory'] = categoryId
-        arrayItem.push({item_id: item.item_id, is_customize: 1, selectedOptions: stepOptionId, selectedCategory: categoryId})
+        arrayItem.push({item_id: item.item_id, is_customize: 1, selectedoptions: stepOptionId, selectedCategory: categoryId})
         console.log(arrayItem)
         const result = await fetch(
             // `${process.env.baseApiUrl}/api/item/list/by/Id?item_id=${myArray.at(-1)}`,
@@ -76,6 +112,8 @@ export default function StepOne(props) {
   
         return response;
     }
+            }
+            
         // if(localStorage.getItem("items") !=[] && localStorage.getItem("items")) {
         //     const items = JSON.parse(localStorage.getItem("items"))
         //     console.log(items)
@@ -111,7 +149,7 @@ export default function StepOne(props) {
         }
         else{
             console.log(item)
-        item['selectedOptions'] = stepOptionId
+        item['selectedoptions'] = stepOptionId
         item['selectedCategory'] = categoryId
         console.log(item)
         if(localStorage.getItem("items") !=[] && localStorage.getItem("items")) {
@@ -177,10 +215,50 @@ export default function StepOne(props) {
           
     // }
     const itemData = async () => {
+        
         // window.location.reload();
         setLoading(true);
         if(router.query.edit_id) {
+            console.log("enter in edit")
             const data= JSON.parse(router.query.edit_id)
+            console.log(data)
+            const changeOptionData = []
+            const changeCategoryData = []
+            data.selected_options.map((data) => {
+                console.log(data)
+                changeOptionData.push({
+                    attachment_id: data.attachment_id,
+                    step_id: data.step_id,
+                    is_option: null,
+                    item_id: data.item_id,
+                    item_step_option_id: data.step_option_id,
+                    price: data.price,
+                    short_description: data.short_description,
+                    step_attachment: data.option_attachment,
+                    title: "test1"
+                })
+            })
+            data.selected_category.map((data) => {
+                console.log(data)
+                changeCategoryData.push({
+                    addon_status: 0,
+                    attachment_id: data.attachment_id,
+                    customize_status: data.customize_status,
+                    description:  data.description,
+                    item_attachment:data.sub_category_attachment ,
+                    item_id: data.item_id,
+                    item_type_id: data.item_type_id,
+                    name: "Combo Meal",
+                    price: 90,
+                    short_description: "",
+                    slug: "combo",
+                    status: 1,
+                    user_id:data.user_id
+                })
+            })
+            setStepOptionId(changeOptionData)
+            setCategoryId(changeCategoryData)
+            // setStepOptionId(data.selected_options)
             setEditData(data)
             const result = await fetch(
                 `${process.env.baseApiUrl}/api/item/list/by/Id?item_id=${data.item_id}`,
@@ -225,7 +303,37 @@ export default function StepOne(props) {
        
     };
     const getOptionData = async (data) => {
-        console.log(data)
+        if(editData) {
+            console.log(data)
+            const steps = [...stepOptionId];
+            console.log(steps)
+            const find = stepOptionId.find((e) => e.step_id === data.step_id)
+            console.log(find)
+        //     const newEditData = {
+        //         attachment_id: find.attachment_id,
+        //         is_option: null,
+        //         item_id: find.item_id,
+        //         item_step_option_id: find.step_option_id,
+        //         price: find.price,
+        //         short_description: find.short_description,
+        //         step_attachment: find.option_attachment,
+        //         step_id: find.step_id,
+        //         title: data.title,
+        //     }
+        // if(find) {
+        //     console.log(steps)
+        //     const stepIndex = stepOptionId.indexOf(find)
+        //     steps.splice(stepIndex, 1)
+        //     steps.push(newEditData)
+        //     console.log(steps)
+        //     setStepOptionId(steps)
+        // } else {
+        //     steps.push(newEditData)
+        // setStepOptionId(steps)
+        // console.log(steps)
+        // }
+        }else{
+            console.log(data)
         const steps = [...stepOptionId];
         const find = stepOptionId.find((e) => e.step_id === data.step_id)
         console.log(find)
@@ -241,27 +349,16 @@ export default function StepOne(props) {
         setStepOptionId(steps)
         console.log(steps)
         }
+        }
+        
         
     }
     const getSubData = async (e,data) => {
-        console.log(data)
-        // if(token) {
-
-        //     if(e.target.checked) {
-        //         const category = [...categoryId, data.item_id]
-        //         await setCategoryId(category)
-        //     } else {
-        //         const allCategory = categoryId
-        //         console.log(allCategory)
-        //         const index = allCategory.indexOf(data.item_id)
-        //         if( index !== -1 ) {
-        //             allCategory.splice(index, 1)
-        //             await setCategoryId(allCategory)
-    
-        //             }
-        //     } 
-        // }
-        // else{
+        if(editData) {
+            console.log(data)
+        }else{
+            console.log(data)
+        
             if(e.target.checked) {
                 const category = [...categoryId, data]
                 await setCategoryId(category)
@@ -275,11 +372,16 @@ export default function StepOne(props) {
     
                     }
             } 
+        }
+        
         // }
                   
     }
    
     useEffect(() => {
+        setStepOptionId([])
+        setCategoryId([])
+        
         setToken(localStorage.getItem("token"))
         document.body.classList.add("steps");
         document.body.classList.remove("home__page");
@@ -342,11 +444,12 @@ export default function StepOne(props) {
                                                                         {stepList.option && stepList.option.length > 0 &&
                                                                             stepList.option.map((optionData) => {
                                                                                 
+                                                                                
                                                                                 return(
                                                                                     
                                                                     
                                                                                     <div className='chooseOption extraheat'  key={optionData.item_step_option_id} >
-                                                                            <input type="radio" id={optionData.item_step_option_id} name={optionData.step_id}/>
+                                                                            <input type="radio" id={optionData.item_step_option_id} defaultChecked={ editData && editData.selected_options.find( (e) => e.step_option_id === optionData.item_step_option_id) ? true: false}   name={optionData.step_id}/>
                                                                             
                                                                             <label htmlFor={optionData.item_step_option_id} onClick={() => getOptionData(optionData)}>
                                                                                 <span className='heatIcon'>
@@ -439,7 +542,7 @@ export default function StepOne(props) {
                                                                         // console.log(data1);
                                                                         return(
                                                                         <div className='form--item' key={data1.item_id} onClick={(e) => getSubData(e,data1)}>
-                                                                            <input type="checkbox" id={data1.item_id} name="sides" />
+                                                                            <input type="checkbox" defaultChecked={ editData&& editData.selected_category.find( (e) => e.item_id === data1.item_id) ? true: false} id={data1.item_id} name="sides" />
                                                                             <label htmlFor={data1.item_id}>
                                                                                 <span className='side__image'>
                                                                                     <img src={`${process.env.baseApiUrl}${data1?.item_attachment?.attachment_url}`} alt="side image" width="215" height="195" />
