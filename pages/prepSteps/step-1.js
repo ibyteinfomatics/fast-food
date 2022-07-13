@@ -64,10 +64,15 @@ export default function StepOne(props) {
                 let response = await result.json();
                 console.log(response)
                 if (response.success) {
-                    router.push("/cart")
+                    
                 toast.success("item updated sucessfully", {
                     position: toast.POSITION.TOP_RIGHT,
+                    
                 });
+                setTimeout(() => {
+                    router.push("/cart")
+                }, 2000)
+                
           
           
           
@@ -303,36 +308,7 @@ export default function StepOne(props) {
        
     };
     const getOptionData = async (data) => {
-        if(editData) {
-            console.log(data)
-            const steps = [...stepOptionId];
-            console.log(steps)
-            const find = stepOptionId.find((e) => e.step_id === data.step_id)
-            console.log(find)
-        //     const newEditData = {
-        //         attachment_id: find.attachment_id,
-        //         is_option: null,
-        //         item_id: find.item_id,
-        //         item_step_option_id: find.step_option_id,
-        //         price: find.price,
-        //         short_description: find.short_description,
-        //         step_attachment: find.option_attachment,
-        //         step_id: find.step_id,
-        //         title: data.title,
-        //     }
-        // if(find) {
-        //     console.log(steps)
-        //     const stepIndex = stepOptionId.indexOf(find)
-        //     steps.splice(stepIndex, 1)
-        //     steps.push(newEditData)
-        //     console.log(steps)
-        //     setStepOptionId(steps)
-        // } else {
-        //     steps.push(newEditData)
-        // setStepOptionId(steps)
-        // console.log(steps)
-        // }
-        }else{
+        
             console.log(data)
         const steps = [...stepOptionId];
         const find = stepOptionId.find((e) => e.step_id === data.step_id)
@@ -349,14 +325,12 @@ export default function StepOne(props) {
         setStepOptionId(steps)
         console.log(steps)
         }
-        }
+        
         
         
     }
     const getSubData = async (e,data) => {
-        if(editData) {
-            console.log(data)
-        }else{
+        
             console.log(data)
         
             if(e.target.checked) {
@@ -366,12 +340,13 @@ export default function StepOne(props) {
                 const allCategory = categoryId
                 console.log(allCategory)
                 const index = allCategory.indexOf(data)
+                console.log(index)
                 if( index !== -1 ) {
                     allCategory.splice(index, 1)
                     await setCategoryId(allCategory)
     
                     }
-            } 
+            
         }
         
         // }
