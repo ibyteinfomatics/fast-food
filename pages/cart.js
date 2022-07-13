@@ -5,45 +5,147 @@ import Header from '../components/Header/Header'
 import { Cartlists } from './api/Cartlists'
 import { useRouter } from 'next/router';
 import ClipLoader from "react-spinners/ClipLoader";
+import { toast } from 'react-toastify';
 
 export default function CartView() {
     
     const [ cart, setCart ] = useState("")
     const [ loading, setLoading ] = useState(false);
     const [token, setToken ] = useState("")
-    const [ logoutCart, setLogoutCart] = useState([])
+    const [ cartListing, setCartListing] = useState([])
     const [price, setPrice] = useState(0)
     const router = useRouter();
+    useEffect(() => {
+        
+        if( localStorage.getItem("itemId") ) {
+            itemData();
+        }
+        if( localStorage.getItem("items") ) {
+            withoutLogin();
+
+        }
+        if(localStorage.getItem("token")){
+            cartList();
+            setToken(localStorage.getItem("token"))
+            if(localStorage.getItem("items")){
+                addApi();
+                
+            }
+        }
+        
+        setToken(localStorage.getItem("token"))
+        
+        document.body.classList.add("cart__page");
+        document.body.classList.remove("steps");
+        document.body.classList.remove("home__page");
+        document.body.classList.remove("rest__pages");
+        document.body.classList.remove('login__form');
+        document.body.classList.remove('checkout__page');
+    }, [])
     const saveUrl = () => {
         localStorage.setItem("url", router.asPath)
     }
-    const deleteItem = async (data) => {
+    const deleteItem = async (index, data) => {
+        console.log(index)
+        console.log(data)
+        
+            const items = JSON.parse(localStorage.getItem("items"))
+        items.splice(index, 1)
+        localStorage.setItem("items" , JSON.stringify(items));
+        withoutLogin()
 
-        const item = localStorage.getItem("itemId")
-        const myArray = item.split(",");
-        const index = myArray.indexOf(`${data.item_id}`)
-            if( index !== -1 ) {
-            myArray.splice(index, 1)
-            localStorage.setItem("itemId" , myArray);
-            itemData()
+    }
+    const deleteApi = async (data) =>{
+        setLoading(true)
+        console.log(data)
+        const result = await fetch(
+            // `${process.env.baseApiUrl}/api/item/list/by/Id?item_id=${myArray.at(-1)}`,
+            `${process.env.baseApiUrl}/api/delete/cart/item`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8",
+                    Accept: "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                },
+                body: JSON.stringify({"cart_id":data.cart_id})
             }
+        );
+        let response = await result.json();
+        if (response.success) {
+            cartList()
+            
+        } else {
+        
+            return response;
+        }
 
     }
 
     const withoutLogin = () => {
         const items = JSON.parse(localStorage.getItem("items"))
-        setLogoutCart(items)
+        setCartListing(items)
+        const total = 0
         items.map((item) => {
-            setPrice(price+item.price)
+            total = total +  item.price
         })
+        setPrice(total)
     }
-    console.log(price,'Price');
+    const duplicate = async (data) => {
+        if( token) {
+            setLoading(true)
+            const storeId = localStorage.getItem("storeId")
+        console.log(data)
+        const arrayItem = []
+        arrayItem.push({item_id: data.item_id, is_customize: 1 ,selectedOptions: data.selected_options.length >0 ? data.selected_options : [], selectedCategory: data.selected_category.length > 0 ? data.selected_category : []})
+        const result = await fetch(
+            `${process.env.baseApiUrl}/api/add/to/cart`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8",
+                    Accept: "application/json",
+                    store_id: storeId,
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                },
+                body: JSON.stringify(arrayItem)
+            }
+        );
+        
+        let response = await result.json();
+        console.log(response)
+        if (response.success) {
+        //   localStorage.removeItem("items")
+        //   setCartListing([])
+          cartList()
+          toast.success(response.message, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+          
+          
+          
+      } else {
+    
+          return response;
+      }
+
+        }else{
+            console.log(data)
+        const items = JSON.parse(localStorage.getItem("items"))
+            console.log(items)
+            items.push(data)
+            console.log(items)
+            
+            localStorage.setItem("items",JSON.stringify(items))
+            withoutLogin()
+
+        }
+        
+    }
 
     const itemData = async () => {
         const items = JSON.parse(localStorage.getItem("items"))
         console.log(items)
-        // const itemId = localStorage.getItem("itemId")
-        // const myArray = itemId.split(",");
         setLoading(true)
         const result = await fetch(
             // `${process.env.baseApiUrl}/api/item/list/by/Id?item_id=${myArray.at(-1)}`,
@@ -69,32 +171,97 @@ export default function CartView() {
             return response;
         }
     };
-    useEffect(() => {
-        if( localStorage.getItem("itemId") ) {
-            itemData();
-        }
-        if( localStorage.getItem("items") ) {
-            withoutLogin();
-        }
+
+    const cartList = async () => {
+        setLoading(true)
+        const result = await fetch(
+            `${process.env.baseApiUrl}/api/cart/list`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8",
+                    Accept: "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                },
+            }
+        );
+        let response = await result.json();
+      console.log(response)
+      if (response.success) {
+        setLoading(false)
+        const total = 0
+        response.cart_item.map((item) => {
+            total = total +  item.price
+        })
+        setPrice(total)
+        setCartListing(response.cart_item)
         
-        setToken(localStorage.getItem("token"))
+    } else {
+  
+        return response;
+    }
+
+    }
+
+    const addApi = async() => {
+        const storeId = localStorage.getItem("storeId")
+                const items = JSON.parse(localStorage.getItem("items"))
+                const arrayItem = []
+        // item['selectedOptions'] = stepOptionId
+        // item['selectedCategory'] = categoryId
+        items.map((data) => {
+            arrayItem.push({item_id: data.item_id, is_customize: data.selectedCategory || data.selectedOptions ? 1 : 0, selectedOptions: data.selectedOptions ? data.selectedCategory : [], selectedCategory: data.selectedCategory ? data.selectedCategory : []})
         
-        document.body.classList.add("cart__page");
-        document.body.classList.remove("steps");
-        document.body.classList.remove("home__page");
-        document.body.classList.remove("rest__pages");
-        document.body.classList.remove('login__form');
-        document.body.classList.remove('checkout__page');
-    }, [])
+        })
+        console.log(arrayItem)
+        
+        const result = await fetch(
+          `${process.env.baseApiUrl}/api/add/to/cart`,
+          {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json; charset=utf-8",
+                  Accept: "application/json",
+                  store_id: storeId,
+                  Authorization: `Bearer ${localStorage.getItem("token")}`
+              },
+              body: JSON.stringify(arrayItem)
+          }
+      );
+      
+      let response = await result.json();
+      console.log(response)
+      if (response.success) {
+        localStorage.removeItem("items")
+        setCartListing([])
+        cartList()
+        toast.success(response.message, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        
+        
+        
+    } else {
+  
+        return response;
+    }
+
+}
+// const editData = (data) => {
+//     const itemData = {
+//         item: data,
+//       };
+//       router.push(`/prepSteps/step-1/?item_id=${data.item_id}/?data=${itemData}`)
+// }
     // const listLength = Cartlists.length;
     return(
         <React.Fragment>
             {/* Header */}
-            <Header/>
+            <Header />
 
             {/* Cart view */}
             <div className='cart__wrapper'>
-                {/* {!token && */}
+                {!token &&
                 <div className='notlogged--in'>
                     <span>
                         <p>Please <b>SIGN IN</b> to continue to checkout</p>
@@ -103,7 +270,7 @@ export default function CartView() {
                         </Link>
                     </span>
                 </div>
-{/* } */}
+                }
                 {loading &&
                 <>
                 <div style={{ 'display': 'flex', 'justifyContent': 'center', marginTop: '15px' }}>
@@ -113,7 +280,7 @@ export default function CartView() {
                 }
                 {!loading &&
                 <div className='cart--table'>
-                    {logoutCart.length > 0 ?
+                    {cartListing.length > 0 ?
                     <table>
                         <tbody></tbody>
                         <thead></thead>
@@ -129,28 +296,56 @@ export default function CartView() {
                             return(  */}
                             {/* {token &&  */}
                             <>
-                                {logoutCart && logoutCart.length > 0 &&
-                                    logoutCart.map((cart) => {
-                                        console.log(cart)
+                                {cartListing && cartListing.length > 0 &&
+                                    cartListing.map((cart, index) => {
+                                        console.log(cart, index)
                                         return(
 
                                         
                                                              
-                            <tr>
+                            <tr key={index}>
                                 
                                 <td>
                                     <div className='cart__info'>
                                         {cart.item_attachment &&
                                         <div className='cart__image'>
+                                            
                                             <img src={`${process.env.baseApiUrl}${cart?.item_attachment?.attachment_url}`} alt="item image" layout="fill" quality={100} />
                                         </div>
                                         }
+                                        {cart.cart_attachment &&
+                                        <div className='cart__image'>
+                                            
+                                            <img src={`${process.env.baseApiUrl}${cart?.cart_attachment?.attachment_url}`} alt="item image" layout="fill" quality={100} />
+                                        </div>
+                                        }
+                                        <div>
                                         {cart?.name &&
                                         <div className='cart__title'>
                                             <h3>{cart?.name}</h3>
                                         </div>
                                         }
+                                        {cart.selectedOptions &&
+                                                cart.selectedOptions.map((data, index) => {
+                                                    console.log(data)
+                                                    return(
+                                                        <div style={{display: "inline-block", padding: '5px'}} key={data.item_step_option_id}>
+                                                            <p>{data.title}</p> 
+                                                        </div>
+                                                       
+                                                    )})}
+                                        {cart.selectedCategory &&
+                                                cart.selectedCategory.map((data, index) => {
+                                                    console.log(data)
+                                                    return(
+                                                        
+                                                        <h3 key={data.item_id}>{data?.name}</h3>
+                                                    
+                                                    )})}
+                                                    </div>
+                                                    
                                     </div>
+                                    
                                     {cart.addon_status != 0 &&
                                     <div className='cart__offers'>
                                         <form>
@@ -196,19 +391,21 @@ export default function CartView() {
                                 </td>
                                 <td>
                                     <div className='cart__actions'>
-                                        <Link href={`/prepSteps/step-1/?item_id=${cart.item_id}`}>
+                                        {cart.customize_status > 0 &&
+                                        <Link href={`/prepSteps/step-1/?edit_id=${JSON.stringify(cart)}`}>
                                             <a><img src="/images/edit-icon--black.svg" alt="edit" layout='fill' quality={100} /></a>
                                         </Link>
+                                    }
                                         {/* <Link href="#"> */}
-                                            <a><img src="/images/bin-icon.svg" alt="delete" layout='fill' quality={100} onClick={() => {deleteItem(cart)}}/></a>
+                                            <a><img src="/images/bin-icon.svg" alt="delete" layout='fill' quality={100} onClick={() => { token ? deleteApi(cart)  : deleteItem(index,cart)}}/></a>
                                         {/* </Link> */}
-                                        <Link href="#">
-                                            <a><img src="/images/add-item-icon.svg" alt="add item" layout='fill' quality={100} /></a>
-                                        </Link>
+                                        {/* <Link href="#"> */}
+                                            <a><img src="/images/add-item-icon.svg" alt="add item" layout='fill' quality={100} onClick={() => duplicate(cart)} /></a>
+                                        {/* </Link> */}
                                     </div>
                                 </td>
                                 <td className='site_font--700'>1</td>
-                                <td>$ {cart.price}</td>
+                                <td>$ {cart.price.toFixed(2)}</td>
                             </tr>
                              )
                             }) 
@@ -222,17 +419,17 @@ export default function CartView() {
                             <td colSpan='4'>
                                 <div className='cart--subtotal'>
                                     <span>Sub Total</span>
-                                    <span>${price}</span>
+                                    <span>${price.toFixed(2)}</span>
                                 </div>
                                 <div className='cart--subtotal'>
                                     <span>Tax</span>
-                                    <span>${price * 3/100}</span>
+                                    <span>${(price * 3/100).toFixed(2)}</span>
                                     
                                 </div>
                                 
                                 <div className='cart--subtotal'>
                                     <span>Total</span>
-                                    <span>${price+ price * 3/100}</span>
+                                    <span>${(price+ price * 3/100).toFixed(2)}</span>
                                 </div>
                             </td>
                         </tr>

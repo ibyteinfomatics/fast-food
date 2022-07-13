@@ -220,6 +220,11 @@ export default function RestraLists() {
                             </div>
                             <div className="orderStatus">
                               <Link href={`/store/${resList.store_url}`}>
+                              {/* <Link href={{
+            pathname: "/store/",
+            query: resList.store_url,
+          }}> */}
+                              {/* <Link href={`/store/?store_id=${resList.store_url}`}> */}
                               {/* <Link href="/store/:[pid]" as={`/store/${resList.store_url}`}> */}
                                 <a className="btnRed btn">Order Online</a>
                               </Link>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -12,13 +12,93 @@ export default function CardImage(props) {
   const slug_url = router.query.slug;
   const rout = router.pathname.split("/");
   const route = rout[1];
+  const [cartCount, setCartCount] = useState(0)
+  const [ token, setToken] = useState("")
   
   const singleItemData = {
     item_id: props.item_id ? props.item_id : props.itemId,
   };
 
-  const directAddToCart = (data) => {
-    console.log(data)
+  useEffect(()=> {
+    if(localStorage.getItem("token")){
+      setToken(localStorage.getItem("token"))
+    }
+  },[])
+
+  const directAddToCart = async (data) => {
+    if(token) {
+      const storeId = localStorage.getItem("storeId")
+      if(data.customize_status === 0) {
+        console.log("token present")
+        console.log(data.item)
+        const arrayItem = []
+        // item['selectedOptions'] = stepOptionId
+        // item['selectedCategory'] = categoryId
+        arrayItem.push({item_id: data.item.item_id, is_customize: 0, selectedOptions: [], selectedCategory: []})
+        console.log(arrayItem)
+        if(localStorage.getItem("items") ) {
+          const cartItem = JSON.parse(localStorage.getItem("items"))
+          cartItem.map((data) => {
+            arrayItem.push({item_id: data.item_id, is_customize: data.selectedCategory || data.selectedOptions ? 1 : 0, selectedOptions: data.selectedOptions ? data.selectedCategory : [], selectedCategory: data.selectedCategory ? data.selectedCategory : []})
+          })
+        }
+        console.log(arrayItem)
+        const result = await fetch(
+          // `${process.env.baseApiUrl}/api/item/list/by/Id?item_id=${myArray.at(-1)}`,
+          `${process.env.baseApiUrl}/api/add/to/cart`,
+          {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json; charset=utf-8",
+                  Accept: "application/json",
+                  store_id: storeId,
+                  Authorization: `Bearer ${token}`
+              },
+              body: JSON.stringify(arrayItem)
+          }
+      );
+      
+      let response = await result.json();
+      console.log(response)
+      if (response.success) {
+        setCartCount(response.count)
+        toast.success(response.message, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        localStorage.removeItem("items")
+        
+    } else {
+  
+        return response;
+    }
+      //   if(localStorage.getItem("items")) {
+      //     const items = JSON.parse(localStorage.getItem("items"))
+      //     console.log(items)
+      //     items.push(data.item)
+      //     console.log(items)
+          
+      //     localStorage.setItem("items",JSON.stringify(items))
+      // }else {
+      //     const array = [data.item]
+      //     localStorage.setItem("items", JSON.stringify(array))
+      // }
+      //   if(localStorage.getItem("itemId")) {
+      //     const items = localStorage.getItem("itemId");
+      //     items = [items, singleItemData.item_id]
+          
+      //     localStorage.setItem("itemId", items)
+          
+      // } else {
+      //   localStorage.setItem("itemId", singleItemData.item_id)
+      // }
+      
+      } else {
+        router.push(`/prepSteps/step-1/?item_id=${singleItemData.item_id}`)
+
+      }
+
+    }else {
+      console.log(data)
       if(data.customize_status === 0) {
         if(localStorage.getItem("items")) {
           const items = JSON.parse(localStorage.getItem("items"))
@@ -47,6 +127,10 @@ export default function CardImage(props) {
         router.push(`/prepSteps/step-1/?item_id=${singleItemData.item_id}`)
 
       }
+
+    }
+    
+    
   }
   return (
     <React.Fragment>

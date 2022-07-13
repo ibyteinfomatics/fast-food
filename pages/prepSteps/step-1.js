@@ -9,34 +9,112 @@ import StepSelection from './step1-selection';
 import ClipLoader from "react-spinners/ClipLoader";
 import { Sidelist } from '../api/Sideslist';
 import Image from 'next/image';
+import { toast } from 'react-toastify';
+
 
 
 export default function StepOne(props) {
     
     const router = useRouter();
     const [token, setToken ] = useState("")
+    // const [id, setId] = useState("")
+    const [editData, setEditData] = useState()
     const id = router.asPath.substring(router.asPath.indexOf('=') + 1);
+    
+    
     const [item, setItem] = useState([]);
     const [loading, setLoading] = useState(false);
     const [options, setOptions] = useState(true);
     const [heatOptions, setHeatOptions] = useState("");
     const [tweak, setTweak] = useState([]);
     const [stepOptionId, setStepOptionId] = useState([]);
-    const [categoryId, setCategoryId] = useState([])
+    const [categoryId, setCategoryId] = useState([]);
+
+    
 
 
     
-    const handleClick = (data, tweakData) => {
+    const handleClick = async (data, tweakData) => {
         
         setTweak(tweakData);
         setHeatOptions(data);
     };
-    const addToCart =() => {
-        console.log(item)
-        item['selecteOptions'] = stepOptionId
+    const addToCart = async() => {
+        if(token) {
+            const storeId = localStorage.getItem("storeId")
+            console.log("token recieved")
+            console.log(item)
+            const arrayItem = []
+        // item['selectedOptions'] = stepOptionId
+        // item['selectedCategory'] = categoryId
+        arrayItem.push({item_id: item.item_id, is_customize: 1, selectedOptions: stepOptionId, selectedCategory: categoryId})
+        console.log(arrayItem)
+        const result = await fetch(
+            // `${process.env.baseApiUrl}/api/item/list/by/Id?item_id=${myArray.at(-1)}`,
+            `${process.env.baseApiUrl}/api/add/to/cart`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8",
+                    Accept: "application/json",
+                    store_id: storeId,
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify(arrayItem)
+            }
+        );
+        let response = await result.json();
+      console.log(response)
+      if (response.success) {
+        toast.success(response.message, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        localStorage.removeItem("items")
+        router.push("/cart")
+        
+    } else {
+  
+        return response;
+    }
+        // if(localStorage.getItem("items") !=[] && localStorage.getItem("items")) {
+        //     const items = JSON.parse(localStorage.getItem("items"))
+        //     console.log(items)
+        //     items.push(item)
+        //     console.log(items)
+            
+        //     // console.log(cartItem)
+            
+        //     // localStorage.setItem("items",JSON.stringify(items))
+        // }else {
+        //     const array = [item]
+        //     // localStorage.setItem("items", JSON.stringify(array))
+        //     console.log(array)
+        // }
+        // router.push("/cart")
+        //     console.log(categoryId)
+        // const sub = stepOptionId.map((item) => {
+        //     return item.item_step_option_id
+        // });
+        
+        //    localStorage.setItem("subCatgeoryId", categoryId)
+        //    localStorage.setItem("stepOptions", sub)
+        //     if(localStorage.getItem("itemId")) {
+        //         const items = localStorage.getItem("itemId");
+        //         items = [items, id]
+                
+        //         localStorage.setItem("itemId", items)
+            
+        //     } else {
+        //       localStorage.setItem("itemId", id)
+        //     }
+        //     router.push("/cart")
+        }
+        else{
+            console.log(item)
+        item['selectedOptions'] = stepOptionId
         item['selectedCategory'] = categoryId
         console.log(item)
-        if(localStorage.getItem("items")) {
+        if(localStorage.getItem("items") !=[] && localStorage.getItem("items")) {
             const items = JSON.parse(localStorage.getItem("items"))
             console.log(items)
             items.push(item)
@@ -46,8 +124,11 @@ export default function StepOne(props) {
         }else {
             const array = [item]
             localStorage.setItem("items", JSON.stringify(array))
+            console.log(array)
         }
         router.push("/cart")
+        }
+        
         
     }
     // const addToCart = () => {
@@ -98,25 +179,50 @@ export default function StepOne(props) {
     const itemData = async () => {
         // window.location.reload();
         setLoading(true);
-        
-        const result = await fetch(
-            `${process.env.baseApiUrl}/api/item/list/by/Id?item_id=${id}`,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json; charset=utf-8",
-                    Accept: "application/json",
-                },
+        if(router.query.edit_id) {
+            const data= JSON.parse(router.query.edit_id)
+            setEditData(data)
+            const result = await fetch(
+                `${process.env.baseApiUrl}/api/item/list/by/Id?item_id=${data.item_id}`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json; charset=utf-8",
+                        Accept: "application/json",
+                    },
+                }
+            );
+            let response = await result.json();
+            if (response.success) {
+                setItem(response.item_data);
+                setLoading(false);
+            } else {
+                return response;
             }
-        );
-
-        let response = await result.json();
-        if (response.success) {
-            setItem(response.item_data);
-            setLoading(false);
-        } else {
-            return response;
         }
+        else{
+            const result = await fetch(
+                `${process.env.baseApiUrl}/api/item/list/by/Id?item_id=${id}`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json; charset=utf-8",
+                        Accept: "application/json",
+                    },
+                }
+            );
+            let response = await result.json();
+            if (response.success) {
+                setItem(response.item_data);
+                setLoading(false);
+            } else {
+                return response;
+            }
+        }
+        
+    
+
+       
     };
     const getOptionData = async (data) => {
         console.log(data)
@@ -139,20 +245,38 @@ export default function StepOne(props) {
     }
     const getSubData = async (e,data) => {
         console.log(data)
-        
-            if(e.target.checked) {
-            const category = [...categoryId, data]
-            await setCategoryId(category)
-        } else {
-            const allCategory = categoryId
-            console.log(allCategory)
-            const index = allCategory.indexOf(data)
-            if( index !== -1 ) {
-                allCategory.splice(index, 1)
-                await setCategoryId(allCategory)
+        // if(token) {
 
-                }
-        }        
+        //     if(e.target.checked) {
+        //         const category = [...categoryId, data.item_id]
+        //         await setCategoryId(category)
+        //     } else {
+        //         const allCategory = categoryId
+        //         console.log(allCategory)
+        //         const index = allCategory.indexOf(data.item_id)
+        //         if( index !== -1 ) {
+        //             allCategory.splice(index, 1)
+        //             await setCategoryId(allCategory)
+    
+        //             }
+        //     } 
+        // }
+        // else{
+            if(e.target.checked) {
+                const category = [...categoryId, data]
+                await setCategoryId(category)
+            } else {
+                const allCategory = categoryId
+                console.log(allCategory)
+                const index = allCategory.indexOf(data)
+                if( index !== -1 ) {
+                    allCategory.splice(index, 1)
+                    await setCategoryId(allCategory)
+    
+                    }
+            } 
+        // }
+                  
     }
    
     useEffect(() => {
@@ -221,7 +345,7 @@ export default function StepOne(props) {
                                                                                 return(
                                                                                     
                                                                     
-                                                                                    <div className='chooseOption extraheat' key={optionData.item_step_option_id} >
+                                                                                    <div className='chooseOption extraheat'  key={optionData.item_step_option_id} >
                                                                             <input type="radio" id={optionData.item_step_option_id} name={optionData.step_id}/>
                                                                             
                                                                             <label htmlFor={optionData.item_step_option_id} onClick={() => getOptionData(optionData)}>

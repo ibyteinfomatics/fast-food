@@ -858,6 +858,7 @@ label {
 .cart__info, .cart__offers ul{
   @apply flex items-center gap-4 flex-wrap;
 }
+
 table tr:first-child, table thead{
   @apply hidden;
 }

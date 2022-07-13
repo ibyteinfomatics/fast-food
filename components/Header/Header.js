@@ -8,9 +8,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import { setHeaderData } from "./header-reducer";
 
+
 export default function Header(props) {
   // console.log(props.price)
   const router = useRouter();
+
+  
   // const navigate = useNavigate();
   const dispatch = useDispatch();
   const slug_url = router.query.slug;
@@ -42,6 +45,7 @@ export default function Header(props) {
   const menuList = async (slug_url) => {
     // console.log(slug_url)
     const result = await fetch(
+      // `${process.env.baseApiUrl}/api/get/categories?store_url=37e50546f8938bebeaa2d13f159fde5bc947c745`,
       `${process.env.baseApiUrl}/api/get/categories?store_url=37e50546f8938bebeaa2d13f159fde5bc947c745`,
       {
         method: "GET",
@@ -127,6 +131,7 @@ export default function Header(props) {
                       <a>
                         <span className="map_icon">
                           <Image
+                          
                             src="/images/map-pin.svg"
                             alt="Map Pin Icon"
                             layout="fill"
@@ -144,7 +149,9 @@ export default function Header(props) {
                   <ul>
                     {isToken !== "" &&
                     <div className="add--order">
+                      
                       <Link href="/cart">
+                        
                         <img
                           src="/images/cart.jpg"
                           alt="Cart"
@@ -288,6 +295,7 @@ export default function Header(props) {
               </ul>
               {/* {isToken !== "" && */}
               <div className="add--order">
+              {/* <p>{cartCount}</p> */}
                       <Link href="/cart">
                         <img
                           src="/images/cart.jpg"
@@ -297,6 +305,7 @@ export default function Header(props) {
                           width="50px"
                           height="50px"
                         />
+                        
                       </Link>
                       
                     </div>
