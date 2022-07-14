@@ -100,6 +100,7 @@ export default function CartView() {
         console.log(data)
         const arrayItem = []
         arrayItem.push({item_id: data.item_id, is_customize: 1 ,selectedoptions: data.selected_options.length >0 ? data.selected_options : [], selectedCategory: data.selected_category.length > 0 ? data.selected_category : []})
+        console.log(arrayItem)
         const result = await fetch(
             `${process.env.baseApiUrl}/api/add/to/cart`,
             {
@@ -199,6 +200,7 @@ export default function CartView() {
         })
         setPrice(total)
         setCartListing(response.cart_item)
+        localStorage.removeItem("items")
         
     } else {
   
@@ -338,12 +340,29 @@ export default function CartView() {
                                                         </div>
                                                        
                                                     )})}
+                                                    {cart.selected_options &&
+                                                cart.selected_options.map((data, index) => {
+                                                    console.log(data)
+                                                    return(
+                                                        <div style={{display: "inline-block", padding: '5px'}} key={data.step_option_id}>
+                                                            <p>{data.title}</p> 
+                                                        </div>
+                                                       
+                                                    )})}
                                         {cart.selectedCategory &&
                                                 cart.selectedCategory.map((data, index) => {
                                                     console.log(data)
                                                     return(
                                                         
                                                         <h3 key={data.item_id}>{data?.name}</h3>
+                                                    
+                                                    )})}
+                                                    {cart.selected_category &&
+                                                cart.selected_category.map((data, index) => {
+                                                    console.log(data)
+                                                    return(
+                                                        
+                                                       <b> <h3 key={data.item_id}>{data.name}</h3> </b>
                                                     
                                                     )})}
                                                     </div>
@@ -410,7 +429,17 @@ export default function CartView() {
                                     </div>
                                 </td>
                                 <td className='site_font--700'>1</td>
+                                
                                 <td>$ {cart.price.toFixed(2)}</td>
+                                {/* {cart.selected_category &&
+                                cart.selected_category.map((data) => {
+                                    return(
+                                        <td>$ {cart.price.toFixed(2)}</td>
+                                    )
+                                })
+                                
+                                } */}
+                                
                             </tr>
                              )
                             }) 

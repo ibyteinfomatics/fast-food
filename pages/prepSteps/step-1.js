@@ -17,7 +17,6 @@ export default function StepOne(props) {
     
     const router = useRouter();
     const [token, setToken ] = useState("")
-    // const [id, setId] = useState("")
     const [editData, setEditData] = useState()
     const id = router.asPath.substring(router.asPath.indexOf('=') + 1);
     
@@ -144,36 +143,36 @@ export default function StepOne(props) {
 
                     const changeOptionData = []
                 const changeCategoryData = []
-                data.selected_options.map((data) => {
-                    console.log(data)
+                data.selected_options.map((data1) => {
+                    console.log(data1)
                     changeOptionData.push({
-                        attachment_id: data.attachment_id,
-                        step_id: data.step_id,
+                        attachment_id: data1.attachment_id,
+                        step_id: data1.step_id,
                         is_option: null,
-                        item_id: data.item_id,
-                        item_step_option_id: data.step_option_id,
-                        price: data.price,
-                        short_description: data.short_description,
-                        step_attachment: data.option_attachment,
-                        title: "test1"
+                        item_id: data1.item_id,
+                        item_step_option_id: data1.item_step_option_id,
+                        price: data1.price,
+                        short_description: data1.short_description,
+                        step_attachment: data1.option_attachment,
+                        title: data1.title
                     })
                 })
-                data.selected_category.map((data) => {
-                    console.log(data)
+                data.selected_category.map((data1) => {
+                    console.log(data1)
                     changeCategoryData.push({
                         addon_status: 0,
-                        attachment_id: data.attachment_id,
-                        customize_status: data.customize_status,
-                        description:  data.description,
-                        item_attachment:data.sub_category_attachment ,
-                        item_id: data.item_id,
-                        item_type_id: data.item_type_id,
-                        name: "Combo Meal",
+                        attachment_id: data1.attachment_id,
+                        customize_status: data1.customize_status,
+                        description:  data1.description,
+                        item_attachment:data1.sub_category_attachment ,
+                        item_id: data1.item_id,
+                        item_type_id: data1.item_type_id,
+                        name: data1.name,
                         price: 90,
                         short_description: "",
                         slug: "combo",
                         status: 1,
-                        user_id:data.user_id
+                        user_id:data1.user_id
                     })
                 })
                 setStepOptionId(changeOptionData)
@@ -201,6 +200,11 @@ export default function StepOne(props) {
                 
             }
             else{
+                // const data = router.asPath.substring(router.asPath.indexOf('=') + 1);
+                // data.split("?")[0];
+                // // const data= JSON.parse(router.query.edit_id)
+                // console.log(JSON.parse(data))
+                
                 const result = await fetch(
                     `${process.env.baseApiUrl}/api/item/list/by/Id?item_id=${id}`,
                     {
@@ -216,7 +220,9 @@ export default function StepOne(props) {
                     setItem(response.item_data);
                     setLoading(false);
                 } else {
-                    return response;
+                    router.push('/cart')
+                    // return response;
+                    
                 }
             }
             
@@ -256,10 +262,9 @@ export default function StepOne(props) {
                     const category = [...categoryId, data]
                     await setCategoryId(category)
                 } else {
-                    console.log(...categoryId)
                     const allCategory = [...categoryId]
                     console.log(allCategory)
-                    const findDataId = allCategory.find((e) => e.item_id ===data.item_id )
+                    const findDataId = allCategory.find((e) => e.item_id === data.item_id )
                     console.log(findDataId)
                     const index = allCategory.indexOf(findDataId)
                     console.log(index)
@@ -367,7 +372,7 @@ export default function StepOne(props) {
                                                                                     
                                                                     
                                                                                     <div className='chooseOption extraheat'  key={optionData.item_step_option_id} >
-                                                                            <input type="radio" id={optionData.item_step_option_id} defaultChecked={ editData && editData.selected_options.find( (e) => e.step_option_id === optionData.item_step_option_id) ? true: false}   name={optionData.step_id}/>
+                                                                            <input type="radio" id={optionData.item_step_option_id} defaultChecked={ editData && editData.selected_options.find( (e) => e.item_step_option_id === optionData.item_step_option_id) ? true: false}   name={optionData.step_id}/>
                                                                             
                                                                             <label htmlFor={optionData.item_step_option_id} onClick={() => getOptionData(optionData)}>
                                                                                 <span className='heatIcon'>
