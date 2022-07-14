@@ -219,7 +219,7 @@ export default function RestraLists() {
                               </p>
                             </div>
                             <div className="orderStatus">
-                              <Link href={`/store/${resList.store_url}`}>
+                              <Link href={`/store/?store_id=${resList.store_url}`}>
                               {/* <Link href={{
             pathname: "/store/",
             query: resList.store_url,

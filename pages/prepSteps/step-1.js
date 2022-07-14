@@ -24,21 +24,10 @@ export default function StepOne(props) {
     
     const [item, setItem] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [options, setOptions] = useState(true);
-    const [heatOptions, setHeatOptions] = useState("");
-    const [tweak, setTweak] = useState([]);
     const [stepOptionId, setStepOptionId] = useState([]);
     const [categoryId, setCategoryId] = useState([]);
 
     
-
-
-    
-    const handleClick = async (data, tweakData) => {
-        
-        setTweak(tweakData);
-        setHeatOptions(data);
-    };
     const addToCart = async() => {
         if(token) {
             if(editData) {
@@ -86,12 +75,10 @@ export default function StepOne(props) {
             console.log("token recieved")
             console.log(item)
             const arrayItem = []
-        // item['selectedOptions'] = stepOptionId
-        // item['selectedCategory'] = categoryId
         arrayItem.push({item_id: item.item_id, is_customize: 1, selectedoptions: stepOptionId, selectedCategory: categoryId})
         console.log(arrayItem)
         const result = await fetch(
-            // `${process.env.baseApiUrl}/api/item/list/by/Id?item_id=${myArray.at(-1)}`,
+
             `${process.env.baseApiUrl}/api/add/to/cart`,
             {
                 method: "POST",
@@ -119,52 +106,23 @@ export default function StepOne(props) {
     }
             }
             
-        // if(localStorage.getItem("items") !=[] && localStorage.getItem("items")) {
-        //     const items = JSON.parse(localStorage.getItem("items"))
-        //     console.log(items)
-        //     items.push(item)
-        //     console.log(items)
-            
-        //     // console.log(cartItem)
-            
-        //     // localStorage.setItem("items",JSON.stringify(items))
-        // }else {
-        //     const array = [item]
-        //     // localStorage.setItem("items", JSON.stringify(array))
-        //     console.log(array)
-        // }
-        // router.push("/cart")
-        //     console.log(categoryId)
-        // const sub = stepOptionId.map((item) => {
-        //     return item.item_step_option_id
-        // });
-        
-        //    localStorage.setItem("subCatgeoryId", categoryId)
-        //    localStorage.setItem("stepOptions", sub)
-        //     if(localStorage.getItem("itemId")) {
-        //         const items = localStorage.getItem("itemId");
-        //         items = [items, id]
-                
-        //         localStorage.setItem("itemId", items)
-            
-        //     } else {
-        //       localStorage.setItem("itemId", id)
-        //     }
-        //     router.push("/cart")
         }
         else{
             console.log(item)
+            
         item['selectedoptions'] = stepOptionId
         item['selectedCategory'] = categoryId
         console.log(item)
         if(localStorage.getItem("items") !=[] && localStorage.getItem("items")) {
             const items = JSON.parse(localStorage.getItem("items"))
+            item['uniqueIndex'] = items.length > 0 ? items[items.length -1].uniqueIndex + 1 : 1
             console.log(items)
             items.push(item)
             console.log(items)
             
             localStorage.setItem("items",JSON.stringify(items))
         }else {
+            item["uniqueIndex"] = 1
             const array = [item]
             localStorage.setItem("items", JSON.stringify(array))
             console.log(array)
@@ -174,137 +132,97 @@ export default function StepOne(props) {
         
         
     }
-    // const addToCart = () => {
-    //     if(!token) {
-    //         localStorage.setItem("url", router.asPath)
-    //         console.log(categoryId)
-    //     const sub = stepOptionId.map((item) => {
-    //         return item.item_step_option_id
-    //     });
-        
-    //        localStorage.setItem("subCatgeoryId", categoryId)
-    //        localStorage.setItem("stepOptions", sub)
-    //         if(localStorage.getItem("itemId")) {
-    //             const items = localStorage.getItem("itemId");
-    //             items = [items, id]
-                
-    //             localStorage.setItem("itemId", items)
-            
-    //         } else {
-    //           localStorage.setItem("itemId", id)
-    //         }
-    //         router.push("/login")
-    //     }
-    //     else {
-            
-    //         console.log(categoryId)
-    //     const sub = stepOptionId.map((item) => {
-    //         return item.item_step_option_id
-    //     });
-        
-    //        localStorage.setItem("subCatgeoryId", categoryId)
-    //        localStorage.setItem("stepOptions", sub)
-    //         if(localStorage.getItem("itemId")) {
-    //             const items = localStorage.getItem("itemId");
-    //             items = [items, id]
-                
-    //             localStorage.setItem("itemId", items)
-            
-    //         } else {
-    //           localStorage.setItem("itemId", id)
-    //         }
-    //         router.push("/cart")
-    //     }
-        
-            
-          
-    // }
     const itemData = async () => {
         
-        // window.location.reload();
+        
         setLoading(true);
         if(router.query.edit_id) {
-            console.log("enter in edit")
-            const data= JSON.parse(router.query.edit_id)
-            console.log(data)
-            const changeOptionData = []
-            const changeCategoryData = []
-            data.selected_options.map((data) => {
+                setToken(localStorage.getItem("token"))
+                console.log("enter in edit")
+                const data= JSON.parse(router.query.edit_id)
                 console.log(data)
-                changeOptionData.push({
-                    attachment_id: data.attachment_id,
-                    step_id: data.step_id,
-                    is_option: null,
-                    item_id: data.item_id,
-                    item_step_option_id: data.step_option_id,
-                    price: data.price,
-                    short_description: data.short_description,
-                    step_attachment: data.option_attachment,
-                    title: "test1"
-                })
-            })
-            data.selected_category.map((data) => {
-                console.log(data)
-                changeCategoryData.push({
-                    addon_status: 0,
-                    attachment_id: data.attachment_id,
-                    customize_status: data.customize_status,
-                    description:  data.description,
-                    item_attachment:data.sub_category_attachment ,
-                    item_id: data.item_id,
-                    item_type_id: data.item_type_id,
-                    name: "Combo Meal",
-                    price: 90,
-                    short_description: "",
-                    slug: "combo",
-                    status: 1,
-                    user_id:data.user_id
-                })
-            })
-            setStepOptionId(changeOptionData)
-            setCategoryId(changeCategoryData)
-            // setStepOptionId(data.selected_options)
-            setEditData(data)
-            const result = await fetch(
-                `${process.env.baseApiUrl}/api/item/list/by/Id?item_id=${data.item_id}`,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json; charset=utf-8",
-                        Accept: "application/json",
-                    },
-                }
-            );
-            let response = await result.json();
-            if (response.success) {
-                setItem(response.item_data);
-                setLoading(false);
-            } else {
-                return response;
-            }
-        }
-        else{
-            const result = await fetch(
-                `${process.env.baseApiUrl}/api/item/list/by/Id?item_id=${id}`,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json; charset=utf-8",
-                        Accept: "application/json",
-                    },
-                }
-            );
-            let response = await result.json();
-            if (response.success) {
-                setItem(response.item_data);
-                setLoading(false);
-            } else {
-                return response;
-            }
-        }
-        
-    
 
+                    const changeOptionData = []
+                const changeCategoryData = []
+                data.selected_options.map((data) => {
+                    console.log(data)
+                    changeOptionData.push({
+                        attachment_id: data.attachment_id,
+                        step_id: data.step_id,
+                        is_option: null,
+                        item_id: data.item_id,
+                        item_step_option_id: data.step_option_id,
+                        price: data.price,
+                        short_description: data.short_description,
+                        step_attachment: data.option_attachment,
+                        title: "test1"
+                    })
+                })
+                data.selected_category.map((data) => {
+                    console.log(data)
+                    changeCategoryData.push({
+                        addon_status: 0,
+                        attachment_id: data.attachment_id,
+                        customize_status: data.customize_status,
+                        description:  data.description,
+                        item_attachment:data.sub_category_attachment ,
+                        item_id: data.item_id,
+                        item_type_id: data.item_type_id,
+                        name: "Combo Meal",
+                        price: 90,
+                        short_description: "",
+                        slug: "combo",
+                        status: 1,
+                        user_id:data.user_id
+                    })
+                })
+                setStepOptionId(changeOptionData)
+                setCategoryId(changeCategoryData)
+                // setStepOptionId(data.selected_options)
+                setEditData(data)
+                const result = await fetch(
+                    `${process.env.baseApiUrl}/api/item/list/by/Id?item_id=${data.item_id}`,
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json; charset=utf-8",
+                            Accept: "application/json",
+                        },
+                    }
+                );
+                let response = await result.json();
+                if (response.success) {
+                    setItem(response.item_data);
+                    setLoading(false);
+                } else {
+                    return response;
+                }
+                
+                
+            }
+            else{
+                const result = await fetch(
+                    `${process.env.baseApiUrl}/api/item/list/by/Id?item_id=${id}`,
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json; charset=utf-8",
+                            Accept: "application/json",
+                        },
+                    }
+                );
+                let response = await result.json();
+                if (response.success) {
+                    setItem(response.item_data);
+                    setLoading(false);
+                } else {
+                    return response;
+                }
+            }
+            
+        
+               
+    
        
     };
     const getOptionData = async (data) => {
@@ -330,24 +248,49 @@ export default function StepOne(props) {
         
     }
     const getSubData = async (e,data) => {
-        
+            console.log(e)
             console.log(data)
-        
-            if(e.target.checked) {
-                const category = [...categoryId, data]
-                await setCategoryId(category)
-            } else {
-                const allCategory = categoryId
-                console.log(allCategory)
-                const index = allCategory.indexOf(data)
-                console.log(index)
-                if( index !== -1 ) {
-                    allCategory.splice(index, 1)
-                    await setCategoryId(allCategory)
-    
-                    }
             
-        }
+            if(editData) {
+                if(e.target.checked) {
+                    const category = [...categoryId, data]
+                    await setCategoryId(category)
+                } else {
+                    console.log(...categoryId)
+                    const allCategory = [...categoryId]
+                    console.log(allCategory)
+                    const findDataId = allCategory.find((e) => e.item_id ===data.item_id )
+                    console.log(findDataId)
+                    const index = allCategory.indexOf(findDataId)
+                    console.log(index)
+                    if( index !== -1 ) {
+                        allCategory.splice(index, 1)
+                        await setCategoryId(allCategory)
+        
+                        }
+                
+            }
+
+            }else{
+                if(e.target.checked) {
+                    const category = [...categoryId, data]
+                    await setCategoryId(category)
+                } else {
+                    const allCategory = categoryId
+                    console.log(allCategory)
+                    
+                    const index = allCategory.indexOf(data)
+                    console.log(index)
+                    if( index !== -1 ) {
+                        allCategory.splice(index, 1)
+                        await setCategoryId(allCategory)
+        
+                        }
+                
+            }
+            }
+        
+            
         
         // }
                   
@@ -450,46 +393,12 @@ export default function StepOne(props) {
                                                                 
                                                                 
                                                             </div>
-                                                                    {/* <h4 className='step--title'>{stepList.title}</h4> */}
+                                                                   
                                                                     <div className='optionTitle'
-                                                                    //  onClick={() => { openEdit() }}
                                                                      >
-                                                                        {/* <Link href="/prepSteps/step1-selection"> */}
-
-                                                                        {/* <a>
-                                                                            <h4>{tweak && heatOptions ? `${heatOptions}, ${tweak} ` : heatOptions ? heatOptions : stepList.sub_title}</h4>
-                                                                            {!heatOptions &&
-                                                                                <p className='addIcon'>
-
-                                                                                    <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                                        <path d="M21 0.6875C9.80615 0.6875 0.6875 9.80615 0.6875 21C0.6875 32.1938 9.80615 41.3125 21 41.3125C32.1938 41.3125 41.3125 32.1938 41.3125 21C41.3125 9.80615 32.1938 0.6875 21 0.6875ZM21 3.8125C30.5093 3.8125 38.1875 11.4907 38.1875 21C38.1875 30.5093 30.5093 38.1875 21 38.1875C11.4907 38.1875 3.8125 30.5093 3.8125 21C3.8125 11.4907 11.4907 3.8125 21 3.8125ZM19.4375 13.1875V19.4375H13.1875V22.5625H19.4375V28.8125H22.5625V22.5625H28.8125V19.4375H22.5625V13.1875H19.4375Z" fill="#FE0435" />
-                                                                                    </svg>
-
-
-                                                                                </p>
-                                                                            }
-
-                                                                            {heatOptions && tweak &&
-                                                                                <p className='addIcon'>
-
-                                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="#FE0435" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="16 3 21 8 8 21 3 21 3 16 16 3"></polygon></svg>
-
-
-                                                                                </p>
-                                                                            }
-
-
-
-                                                                        </a> */}
-
-
-                                                                        {/* </Link> */}
+                                                                        
                                                                     </div>
-                                                                    {/* {options && */}
-                                                                        {/* <StepSelection 
-                                                                        selectHeat={heatOptions} tweak={tweak} options={stepList.option} handleClick={handleClick}
-                                                                         /> */}
-                                                                    {/* } */}
+                                                                    
 
 
 
@@ -562,27 +471,3 @@ export default function StepOne(props) {
         </React.Fragment>
     )
 }
-
-// {item.sub_category_data.length > 0 &&
-//     item.sub_category_data.map((side_data) => {
-//         return (
-            
-//             <div className='optionRow' key={side_data.side_option_id}>                                                                
-//             <h4 className='font-26'>{side_data.title}</h4>
-            
-//                 {/* <div className='optionTitle'>
-
-//                     <a>
-//                         <h4>{side_data.sub_title}</h4>
-//                         <p className='addIcon'>
-//                             <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-//                                 <path d="M21 0.6875C9.80615 0.6875 0.6875 9.80615 0.6875 21C0.6875 32.1938 9.80615 41.3125 21 41.3125C32.1938 41.3125 41.3125 32.1938 41.3125 21C41.3125 9.80615 32.1938 0.6875 21 0.6875ZM21 3.8125C30.5093 3.8125 38.1875 11.4907 38.1875 21C38.1875 30.5093 30.5093 38.1875 21 38.1875C11.4907 38.1875 3.8125 30.5093 3.8125 21C3.8125 11.4907 11.4907 3.8125 21 3.8125ZM19.4375 13.1875V19.4375H13.1875V22.5625H19.4375V28.8125H22.5625V22.5625H28.8125V19.4375H22.5625V13.1875H19.4375Z" fill="#FE0435" />
-//                             </svg>
-//                         </p>
-//                     </a>
-
-//                 </div> */}
-
-//             </div>
-//         )
-//     })}

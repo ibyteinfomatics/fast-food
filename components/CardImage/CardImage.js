@@ -32,8 +32,7 @@ export default function CardImage(props) {
         console.log("token present")
         console.log(data.item)
         const arrayItem = []
-        // item['selectedOptions'] = stepOptionId
-        // item['selectedCategory'] = categoryId
+    
         arrayItem.push({item_id: data.item.item_id, is_customize: 0, selectedoptions: [], selectedCategory: []})
         console.log(arrayItem)
         if(localStorage.getItem("items") ) {
@@ -44,7 +43,6 @@ export default function CardImage(props) {
         }
         console.log(arrayItem)
         const result = await fetch(
-          // `${process.env.baseApiUrl}/api/item/list/by/Id?item_id=${myArray.at(-1)}`,
           `${process.env.baseApiUrl}/api/add/to/cart`,
           {
               method: "POST",
@@ -71,26 +69,6 @@ export default function CardImage(props) {
   
         return response;
     }
-      //   if(localStorage.getItem("items")) {
-      //     const items = JSON.parse(localStorage.getItem("items"))
-      //     console.log(items)
-      //     items.push(data.item)
-      //     console.log(items)
-          
-      //     localStorage.setItem("items",JSON.stringify(items))
-      // }else {
-      //     const array = [data.item]
-      //     localStorage.setItem("items", JSON.stringify(array))
-      // }
-      //   if(localStorage.getItem("itemId")) {
-      //     const items = localStorage.getItem("itemId");
-      //     items = [items, singleItemData.item_id]
-          
-      //     localStorage.setItem("itemId", items)
-          
-      // } else {
-      //   localStorage.setItem("itemId", singleItemData.item_id)
-      // }
       
       } else {
         router.push(`/prepSteps/step-1/?item_id=${singleItemData.item_id}`)
@@ -102,24 +80,19 @@ export default function CardImage(props) {
       if(data.customize_status === 0) {
         if(localStorage.getItem("items")) {
           const items = JSON.parse(localStorage.getItem("items"))
+          data.item['uniqueIndex'] = items[items.length -1].uniqueIndex + 1
           console.log(items)
           items.push(data.item)
           console.log(items)
           
           localStorage.setItem("items",JSON.stringify(items))
+          
       }else {
+          data.item["uniqueIndex"] = 1
           const array = [data.item]
           localStorage.setItem("items", JSON.stringify(array))
       }
-      //   if(localStorage.getItem("itemId")) {
-      //     const items = localStorage.getItem("itemId");
-      //     items = [items, singleItemData.item_id]
-          
-      //     localStorage.setItem("itemId", items)
-          
-      // } else {
-      //   localStorage.setItem("itemId", singleItemData.item_id)
-      // }
+      
       toast.success("1 Item Added In Cart", {
         position: toast.POSITION.TOP_RIGHT,
       });

@@ -134,6 +134,8 @@ export default function CartView() {
         }else{
             console.log(data)
         const items = JSON.parse(localStorage.getItem("items"))
+        console.log(items)
+        data['uniqueIndex'] = items[items.length -1].uniqueIndex + 1
             console.log(items)
             items.push(data)
             console.log(items)
@@ -234,7 +236,7 @@ export default function CartView() {
       let response = await result.json();
       console.log(response)
       if (response.success) {
-        localStorage.removeItem("items")
+        localStorage.setItem("items", [])
         setCartListing([])
         cartList()
         toast.success(response.message, {

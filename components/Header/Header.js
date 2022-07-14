@@ -13,13 +13,15 @@ export default function Header(props) {
   // console.log(props.price)
   const router = useRouter();
 
-  
+
   // const navigate = useNavigate();
   const dispatch = useDispatch();
   const slug_url = router.query.slug;
   const [isToken, setIsToken] = useState("");
+  const [ count, setCount] = useState(0)
+  const [cartPrice, setCartPrice] = useState(0)
   const rout = router.pathname.split("/");
-  
+
   const route = rout[1];
   // console.log(route)
   const [showMe, setShowMe] = useState(false);
@@ -27,15 +29,56 @@ export default function Header(props) {
   function toggle() {
     setShowMe(!showMe);
   }
+  const cartCount =async() => {
+
+    const result = await fetch(
+      `${process.env.baseApiUrl}/api/cart/list`,
+      {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json; charset=utf-8",
+              Accept: "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`
+          },
+      }
+  );
+  let response = await result.json();
+console.log(response)
+if (response.success) {
+  setCount(response.cart_item.length)
+  const total = 0;
+  response?.cart_item.map((data) => {
+    console.log(data)
+    total += data?.price
+  })
+  await setCartPrice(total)
+  
+} else {
+
+  return response;
+}
+
+  }
+
   useEffect(() => {
+    if(localStorage.getItem("items")){
+      const length = JSON.parse(localStorage.getItem("items"));
+      const total = 0
+      length.map((data) => {
+        total+=data.price
+      })
+      setCartPrice(total)
+      setCount(length.length)
+    }
     // Perform localStorage action
     if (slug_url && slug_url !== "") {
       menuList(slug_url);
-      
+
     }
     const token = localStorage.getItem("token");
     if (token != null) {
       setIsToken(token);
+      cartCount()
     }
   }, [slug_url]);
   const setRouter = () => {
@@ -59,41 +102,41 @@ export default function Header(props) {
     if (response.success) {
       // console.log(response )
       setMenuData(response.category_data);
-    //  console.log( slug_url)
-     if( route === 'submenu') {
-      const categoryId = response.category_data.find( (item) =>
-      item.slug === slug_url
-      )
-    //  localStorage.setItem("categoryId", categoryId?.category_id)
-    //  localStorage.setItem("categoryItem", JSON.stringify([{'categoryId': categoryId.category_id , 'item': [null]}]))
-     }
-     
+      //  console.log( slug_url)
+      if (route === 'submenu') {
+        const categoryId = response.category_data.find((item) =>
+          item.slug === slug_url
+        )
+        //  localStorage.setItem("categoryId", categoryId?.category_id)
+        //  localStorage.setItem("categoryItem", JSON.stringify([{'categoryId': categoryId.category_id , 'item': [null]}]))
+      }
+
       await dispatch(setHeaderData(response.category_data));
     } else {
       return response;
     }
   };
   const itemId = () => {
-    if(localStorage.getItem("itemId")) {
-    const items = localStorage.getItem("itemId");
-    const allItems = [items]
-    allItems.push(props.item_id)
-    localStorage.setItem("itemId", allItems)
+    if (localStorage.getItem("itemId")) {
+      const items = localStorage.getItem("itemId");
+      const allItems = [items]
+      allItems.push(props.item_id)
+      localStorage.setItem("itemId", allItems)
     } else {
       localStorage.setItem("itemId", props.item_id)
     }
-    
-    
+
+
   }
-  
+
   const logout = () => {
-    
+
     localStorage.removeItem("token");
-    if(router.asPath === '/' ) {
+    if (router.asPath === '/') {
       window.location.reload()
     }
     router.push('/')
-    
+
   };
   return (
     <>
@@ -131,7 +174,7 @@ export default function Header(props) {
                       <a>
                         <span className="map_icon">
                           <Image
-                          
+
                             src="/images/map-pin.svg"
                             alt="Map Pin Icon"
                             layout="fill"
@@ -147,10 +190,10 @@ export default function Header(props) {
               <div className="header__right">
                 <nav className="site__navigation">
                   <ul>
-                    {isToken !== "" &&
-                   <div className="add--order cartBtn">
-                   <Link href="/cart">
-                     {/* <img
+                  <div className="add--order cartBtn">
+                  
+                        <Link href="/cart">
+                          {/* <img
                        src="/images/cart.jpg"
                        alt="Cart"
                        layout="fill"
@@ -158,10 +201,10 @@ export default function Header(props) {
                        width="50px"
                        height="50px"
                      /> */}
-                     <a><svg width="20" height="20" viewBox="0 0 328.997 329.146"><path id="icons8_shopping_cart_1" d="M57.147,2,1,2.285l.161,32.908,34.065-.161L89.445,165.091l-19.7,31.495C55.95,218.613,72.724,248.872,98.7,248.872H297.113V215.964H98.7c-1.831,0-2.042-.36-1.061-1.928l19.346-30.98H239.878a32.9,32.9,0,0,0,28.762-16.936L327.9,59.393a16.431,16.431,0,0,0-14.366-24.424H70.87Zm42.517,263.33a32.908,32.908,0,1,0,32.908,32.908A32.908,32.908,0,0,0,99.664,265.326Zm164.541,0a32.908,32.908,0,1,0,32.908,32.908A32.908,32.908,0,0,0,264.205,265.326Z" transform="translate(-1.004 -1.996)" fill="#fff"></path></svg> &nbsp;<span>$10 / 5 items</span></a>
-                   </Link>
-                 </div>
-                    }
+                     
+                          <a><p>{count}</p><svg width="20" height="20" viewBox="0 0 328.997 329.146"><path id="icons8_shopping_cart_1" d="M57.147,2,1,2.285l.161,32.908,34.065-.161L89.445,165.091l-19.7,31.495C55.95,218.613,72.724,248.872,98.7,248.872H297.113V215.964H98.7c-1.831,0-2.042-.36-1.061-1.928l19.346-30.98H239.878a32.9,32.9,0,0,0,28.762-16.936L327.9,59.393a16.431,16.431,0,0,0-14.366-24.424H70.87Zm42.517,263.33a32.908,32.908,0,1,0,32.908,32.908A32.908,32.908,0,0,0,99.664,265.326Zm164.541,0a32.908,32.908,0,1,0,32.908,32.908A32.908,32.908,0,0,0,264.205,265.326Z" transform="translate(-1.004 -1.996)" fill="#fff"></path></svg> &nbsp;<span>${cartPrice}</span></a>
+                        </Link>
+                      </div>
                     {isToken != "" ? (
                       <li className="logOut">
                         <Link href="/">
@@ -169,7 +212,7 @@ export default function Header(props) {
                         </Link>{" "}
                       </li>
                     ) : (
-                      <li>
+                      <li className="logOut">
                         <Link href="/login">
                           <a onClick={setRouter}> Login</a>
                         </Link>
@@ -194,14 +237,14 @@ export default function Header(props) {
                     return (
                       <li
                         className={
-                          slug_url == menuList.slug ? "menu-active" : "" 
-                          
+                          slug_url == menuList.slug ? "menu-active" : ""
+
                         }
-                        
+
                         key={menuList.slug}
-                        
+
                       >
-                        <Link  href={`/submenu/${menuList.slug}`}>
+                        <Link href={`/submenu/${menuList.slug}`}>
                           <a className="">{menuList.name}</a>
                         </Link>
                       </li>
@@ -286,7 +329,7 @@ export default function Header(props) {
               <ul>
                 <li>
                   <Link href="/submenu/burger-wraps/">
-                    <a className="back--menu--icon" 
+                    <a className="back--menu--icon"
                     ></a>
                   </Link>
                 </li>
@@ -294,8 +337,8 @@ export default function Header(props) {
               </ul>
               {/* {isToken !== "" && */}
               <div className="add--order cartBtn">
-                      <Link href="/cart">
-                        {/* <img
+                <Link href="/cart">
+                  {/* <img
                           src="/images/cart.jpg"
                           alt="Cart"
                           layout="fill"
@@ -303,12 +346,12 @@ export default function Header(props) {
                           width="50px"
                           height="50px"
                         /> */}
-                        <a><svg width="20" height="20" viewBox="0 0 328.997 329.146"><path id="icons8_shopping_cart_1" d="M57.147,2,1,2.285l.161,32.908,34.065-.161L89.445,165.091l-19.7,31.495C55.95,218.613,72.724,248.872,98.7,248.872H297.113V215.964H98.7c-1.831,0-2.042-.36-1.061-1.928l19.346-30.98H239.878a32.9,32.9,0,0,0,28.762-16.936L327.9,59.393a16.431,16.431,0,0,0-14.366-24.424H70.87Zm42.517,263.33a32.908,32.908,0,1,0,32.908,32.908A32.908,32.908,0,0,0,99.664,265.326Zm164.541,0a32.908,32.908,0,1,0,32.908,32.908A32.908,32.908,0,0,0,264.205,265.326Z" transform="translate(-1.004 -1.996)" fill="#fff"></path></svg> &nbsp;<span>$10 / 5 items</span></a>
-                      </Link>
-                    </div>
-                    
+                  <a><p>{count}</p><svg width="20" height="20" viewBox="0 0 328.997 329.146"><path id="icons8_shopping_cart_1" d="M57.147,2,1,2.285l.161,32.908,34.065-.161L89.445,165.091l-19.7,31.495C55.95,218.613,72.724,248.872,98.7,248.872H297.113V215.964H98.7c-1.831,0-2.042-.36-1.061-1.928l19.346-30.98H239.878a32.9,32.9,0,0,0,28.762-16.936L327.9,59.393a16.431,16.431,0,0,0-14.366-24.424H70.87Zm42.517,263.33a32.908,32.908,0,1,0,32.908,32.908A32.908,32.908,0,0,0,99.664,265.326Zm164.541,0a32.908,32.908,0,1,0,32.908,32.908A32.908,32.908,0,0,0,264.205,265.326Z" transform="translate(-1.004 -1.996)" fill="#fff"></path></svg><span>$10</span></a>
+                </Link>
+              </div>
+
               {/* } */}
-            {/* {isToken == '' &&
+              {/* {isToken == '' &&
               <ul>
       
                 <li>
@@ -319,26 +362,26 @@ export default function Header(props) {
               
             </ul>
             } */}
-            
+
             </div>
           )}
           {route == "cart" && (
             <div className="header__wrap--inner prepSteps">
-              
+
               <ul>
                 <li>
-                <div className="site__logo">
-                  <Link href="/">
-                    <a className="logo__link">
-                      <Image
-                        src="/images/logo.svg"
-                        alt="Fast Food Logo"
-                        layout="fill"
-                        quality={100}
-                      />
-                    </a>
-                  </Link>
-                </div>
+                  <div className="site__logo">
+                    <Link href="/">
+                      <a className="logo__link">
+                        <Image
+                          src="/images/logo.svg"
+                          alt="Fast Food Logo"
+                          layout="fill"
+                          quality={100}
+                        />
+                      </a>
+                    </Link>
+                  </div>
                 </li>
                 {/* <li>
                   
@@ -349,25 +392,25 @@ export default function Header(props) {
               </ul>
               <div className="add--order">
                 <Link href="/submenu/burger-wraps">
-                {/* <Link href="submenu/burger-wraps/"> */}
+                  {/* <Link href="submenu/burger-wraps/"> */}
                   <a className="conti--order">Continue Ordering</a>
                 </Link>
                 {isToken &&
-                <ul>
-                  <li>
-                 <Link href="/card-checkout">
-                  <a className="btnRed btn">Checkout</a>
-                </Link>
-                </li>
-               
-                <li className="logOut">
-                        <Link href="/">
-                          <a onClick={() => logout()}>Logout</a>
-                        </Link>{" "}
-                      </li>
-                </ul>
-               
-              
+                  <ul>
+                    <li>
+                      <Link href="/card-checkout">
+                        <a className="btnRed btn">Checkout</a>
+                      </Link>
+                    </li>
+
+                    <li className="logOut">
+                      <Link href="/">
+                        <a onClick={() => logout()}>Logout</a>
+                      </Link>{" "}
+                    </li>
+                  </ul>
+
+
                 }
               </div>
             </div>
@@ -439,7 +482,7 @@ export default function Header(props) {
               </div>
             </div>
           )} */}
-          
+
           {router.pathname == "/userProfile/in-progress" && (
             <div className="header__wrap--inner progress--header">
               <ul>
