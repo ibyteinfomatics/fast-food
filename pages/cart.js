@@ -266,7 +266,7 @@ export default function CartView() {
             <Header />
 
             {/* Cart view */}
-            <div className='cart__wrapper'>
+            <div className='cart__wrapper show--item--table'>
                 {!token &&
                 <div className='notlogged--in'>
                     <span>
@@ -286,191 +286,193 @@ export default function CartView() {
                 }
                 {!loading &&
                 <div className='cart--table'>
-                    {cartListing.length > 0 ?
-                    <table>
-                        <tbody></tbody>
-                        <thead></thead>
-                        <tfoot></tfoot>
-                        <tr>
-                            <th>Item</th>
-                            <th></th>
-                            <th>Quantity</th>
-                            <th>Price</th>
-                        </tr>
-                        {/* {cart?.map((data, index) =>{
-                            console.log(data)
-                            return(  */}
-                            {/* {token &&  */}
-                            <>
-                                {cartListing && cartListing.length > 0 &&
-                                    cartListing.map((cart, index) => {
-                                        console.log(cart, index)
-                                        return(
-
-                                        
-                                                             
-                            <tr key={index}>
-                                
-                                <td>
-                                    <div className='cart__info'>
-                                        {cart.item_attachment &&
-                                        <div className='cart__image'>
-                                            
-                                            <img src={`${process.env.baseApiUrl}${cart?.item_attachment?.attachment_url}`} alt="item image" layout="fill" quality={100} />
-                                        </div>
-                                        }
-                                        {cart.cart_attachment &&
-                                        <div className='cart__image'>
-                                            
-                                            <img src={`${process.env.baseApiUrl}${cart?.cart_attachment?.attachment_url}`} alt="item image" layout="fill" quality={100} />
-                                        </div>
-                                        }
-                                        <div>
-                                        {cart?.name &&
-                                        <div className='cart__title'>
-                                            <h3>{cart?.name}</h3>
-                                        </div>
-                                        }
-                                        {cart.selectedoptions &&
-                                                cart.selectedoptions.map((data, index) => {
-                                                    console.log(data)
-                                                    return(
-                                                        <div style={{display: "inline-block", padding: '5px'}} key={data.item_step_option_id}>
-                                                            <p>{data.title}</p> 
-                                                        </div>
-                                                       
-                                                    )})}
-                                                    {cart.selected_options &&
-                                                cart.selected_options.map((data, index) => {
-                                                    console.log(data)
-                                                    return(
-                                                        <div style={{display: "inline-block", padding: '5px'}} key={data.step_option_id}>
-                                                            <p>{data.title}</p> 
-                                                        </div>
-                                                       
-                                                    )})}
-                                        {cart.selectedCategory &&
-                                                cart.selectedCategory.map((data, index) => {
-                                                    console.log(data)
-                                                    return(
-                                                        
-                                                        <h3 key={data.item_id}>{data?.name}</h3>
-                                                    
-                                                    )})}
-                                                    {cart.selected_category &&
-                                                cart.selected_category.map((data, index) => {
-                                                    console.log(data)
-                                                    return(
-                                                        
-                                                       <b> <h3 key={data.item_id}>{data.name}</h3> </b>
-                                                    
-                                                    )})}
-                                                    </div>
-                                                    
-                                    </div>
-                                    
-                                    {cart.addon_status != 0 &&
-                                    <div className='cart__offers'>
-                                        <form>
-                                            <ul>
-                                            {/* {cart.addon_data.length > 0 &&
-                                                <li>
-                                                    <div className='offer__select'>
-                                                        <input type="checkbox" name="offerList" value="" id={data.labelId1} />
-                                                        <label htmlFor={data.labelId1}>
-                                                            <span className='remove__offer'>
-                                                                <Image src="/images/remove-offer--icon.svg" alt="remove item" layout="fill" quality={100} />
-                                                            </span>
-                                                            <span className='add__offer'>
-                                                                <Image src="/images/add-offer--icon.svg" alt="add item" layout="fill" quality={100} />
-                                                            </span>
-                                                            <span className='offer__title'>{data.cartOffer}</span>
-                                                            <span className='offer__price'><span>$ {data.offerItemPrice}</span> $ {data.offerPrice}</span>
-                                                        </label>
-                                                    </div>
-                                                </li>
-                                                } */}
-                                                {/* {cart.addon_data.length > 0 &&
-                                                <li>
-                                                    <div className='offer__select'>
-                                                        <input type="checkbox" name="offerList" value="" id={data.labelId2} />
-                                                        <label htmlFor={data.labelId2}>
-                                                            <span className='remove__offer'>
-                                                                <Image src="/images/remove-offer--icon.svg" alt="remove-item" layout="fill" quality={100} />
-                                                            </span>
-                                                            <span className='add__offer'>
-                                                                <Image src="/images/add-offer--icon.svg" alt="add item" layout="fill" quality={100} />
-                                                            </span>
-                                                            <span className='offer__title'>{data.cartOffer2}</span>
-                                                            <span className='offer__price'><span>$ {data.offerItemPrice2}</span> $ {data.offerPrice}</span>
-                                                        </label>
-                                                    </div>
-                                                </li>
-                                                } */}
-                                            </ul>
-                                        </form>
-                                    </div>
-                                    }
-                                </td>
-                                <td>
-                                    <div className='cart__actions'>
-                                        
-                                        {/* <Link href="#"> */}
-                                            <a><img src="/images/bin-icon.svg" alt="delete" layout='fill' quality={100} onClick={() => { token ? deleteApi(cart)  : deleteItem(index,cart)}}/></a>
-                                        {/* </Link> */}
-                                        {/* <Link href="#"> */}
-                                            <a><img src="/images/add-item-icon.svg" alt="add item" layout='fill' quality={100} onClick={() => duplicate(cart)} /></a>
-                                        {/* </Link> */}
-                                        {cart.customize_status > 0 &&
-                                        <Link href={`/prepSteps/step-1/?edit_id=${JSON.stringify(cart)}`}>
-                                            <a><img src="/images/edit-icon--black.svg" alt="edit" layout='fill' quality={100} /></a>
-                                        </Link>
-                                    }
-                                    </div>
-                                </td>
-                                <td className='site_font--700'>1</td>
-                                
-                                <td>$ {cart.price.toFixed(2)}</td>
-                                {/* {cart.selected_category &&
-                                cart.selected_category.map((data) => {
-                                    return(
-                                        <td>$ {cart.price.toFixed(2)}</td>
-                                    )
-                                })
-                                
-                                } */}
-                                
+                    <div className='table--scroll'>
+                        {cartListing.length > 0 ?
+                        <table>
+                            <tbody></tbody>
+                            <thead></thead>
+                            <tfoot></tfoot>
+                            <tr>
+                                <th>Item</th>
+                                <th></th>
+                                <th>Quantity</th>
+                                <th>Price</th>
                             </tr>
-                             )
-                            }) 
-                        }
-                        </>
-                    {/* // } */}
-                            {/* );
-                        })} */}
-                        <tr>
-                            
-                            <td colSpan='4'>
-                                <div className='cart--subtotal'>
-                                    <span>Sub Total</span>
-                                    <span>${price.toFixed(2)}</span>
-                                </div>
-                                <div className='cart--subtotal'>
-                                    <span>Tax</span>
-                                    <span>${(price * 3/100).toFixed(2)}</span>
+                            {/* {cart?.map((data, index) =>{
+                                console.log(data)
+                                return(  */}
+                                {/* {token &&  */}
+                                <>
+                                    {cartListing && cartListing.length > 0 &&
+                                        cartListing.map((cart, index) => {
+                                            console.log(cart, index)
+                                            return(
+
+                                            
+                                                                
+                                <tr key={index}>
                                     
-                                </div>
+                                    <td>
+                                        <div className='cart__info'>
+                                            {cart.item_attachment &&
+                                            <div className='cart__image'>
+                                                
+                                                <img src={`${process.env.baseApiUrl}${cart?.item_attachment?.attachment_url}`} alt="item image" layout="fill" quality={100} />
+                                            </div>
+                                            }
+                                            {cart.cart_attachment &&
+                                            <div className='cart__image'>
+                                                
+                                                <img src={`${process.env.baseApiUrl}${cart?.cart_attachment?.attachment_url}`} alt="item image" layout="fill" quality={100} />
+                                            </div>
+                                            }
+                                            <div>
+                                            {cart?.name &&
+                                            <div className='cart__title'>
+                                                <h3>{cart?.name}</h3>
+                                            </div>
+                                            }
+                                            {cart.selectedoptions &&
+                                                    cart.selectedoptions.map((data, index) => {
+                                                        console.log(data)
+                                                        return(
+                                                            <div style={{display: "inline-block", padding: '5px'}} key={data.item_step_option_id}>
+                                                                <p>{data.title}</p> 
+                                                            </div>
+                                                        
+                                                        )})}
+                                                        {cart.selected_options &&
+                                                    cart.selected_options.map((data, index) => {
+                                                        console.log(data)
+                                                        return(
+                                                            <div style={{display: "inline-block", padding: '5px'}} key={data.step_option_id}>
+                                                                <p>{data.title}</p> 
+                                                            </div>
+                                                        
+                                                        )})}
+                                            {cart.selectedCategory &&
+                                                    cart.selectedCategory.map((data, index) => {
+                                                        console.log(data)
+                                                        return(
+                                                            
+                                                            <h3 key={data.item_id}>{data?.name}</h3>
+                                                        
+                                                        )})}
+                                                        {cart.selected_category &&
+                                                    cart.selected_category.map((data, index) => {
+                                                        console.log(data)
+                                                        return(
+                                                            
+                                                        <b> <h3 key={data.item_id}>{data.name}</h3> </b>
+                                                        
+                                                        )})}
+                                                        </div>
+                                                        
+                                        </div>
+                                        
+                                        {cart.addon_status != 0 &&
+                                        <div className='cart__offers'>
+                                            <form>
+                                                <ul>
+                                                {/* {cart.addon_data.length > 0 &&
+                                                    <li>
+                                                        <div className='offer__select'>
+                                                            <input type="checkbox" name="offerList" value="" id={data.labelId1} />
+                                                            <label htmlFor={data.labelId1}>
+                                                                <span className='remove__offer'>
+                                                                    <Image src="/images/remove-offer--icon.svg" alt="remove item" layout="fill" quality={100} />
+                                                                </span>
+                                                                <span className='add__offer'>
+                                                                    <Image src="/images/add-offer--icon.svg" alt="add item" layout="fill" quality={100} />
+                                                                </span>
+                                                                <span className='offer__title'>{data.cartOffer}</span>
+                                                                <span className='offer__price'><span>$ {data.offerItemPrice}</span> $ {data.offerPrice}</span>
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                    } */}
+                                                    {/* {cart.addon_data.length > 0 &&
+                                                    <li>
+                                                        <div className='offer__select'>
+                                                            <input type="checkbox" name="offerList" value="" id={data.labelId2} />
+                                                            <label htmlFor={data.labelId2}>
+                                                                <span className='remove__offer'>
+                                                                    <Image src="/images/remove-offer--icon.svg" alt="remove-item" layout="fill" quality={100} />
+                                                                </span>
+                                                                <span className='add__offer'>
+                                                                    <Image src="/images/add-offer--icon.svg" alt="add item" layout="fill" quality={100} />
+                                                                </span>
+                                                                <span className='offer__title'>{data.cartOffer2}</span>
+                                                                <span className='offer__price'><span>$ {data.offerItemPrice2}</span> $ {data.offerPrice}</span>
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                    } */}
+                                                </ul>
+                                            </form>
+                                        </div>
+                                        }
+                                    </td>
+                                    <td>
+                                        <div className='cart__actions'>
+                                            
+                                            {/* <Link href="#"> */}
+                                                <a><img src="/images/bin-icon.svg" alt="delete" layout='fill' quality={100} onClick={() => { token ? deleteApi(cart)  : deleteItem(index,cart)}}/></a>
+                                            {/* </Link> */}
+                                            {/* <Link href="#"> */}
+                                                <a><img src="/images/add-item-icon.svg" alt="add item" layout='fill' quality={100} onClick={() => duplicate(cart)} /></a>
+                                            {/* </Link> */}
+                                            {cart.customize_status > 0 &&
+                                            <Link href={`/prepSteps/step-1/?edit_id=${JSON.stringify(cart)}`}>
+                                                <a><img src="/images/edit-icon--black.svg" alt="edit" layout='fill' quality={100} /></a>
+                                            </Link>
+                                        }
+                                        </div>
+                                    </td>
+                                    <td className='site_font--700'>1</td>
+                                    
+                                    <td>$ {cart.price.toFixed(2)}</td>
+                                    {/* {cart.selected_category &&
+                                    cart.selected_category.map((data) => {
+                                        return(
+                                            <td>$ {cart.price.toFixed(2)}</td>
+                                        )
+                                    })
+                                    
+                                    } */}
+                                    
+                                </tr>
+                                )
+                                }) 
+                            }
+                            </>
+                        {/* // } */}
+                                {/* );
+                            })} */}
+                            <tr>
                                 
-                                <div className='cart--subtotal'>
-                                    <span>Total</span>
-                                    <span>${(price+ price * 3/100).toFixed(2)}</span>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                    :
-                    <p>Nothing In The Cart...</p>
-                    }
+                                <td colSpan='4'>
+                                    <div className='cart--subtotal'>
+                                        <span>Sub Total</span>
+                                        <span>${price.toFixed(2)}</span>
+                                    </div>
+                                    <div className='cart--subtotal'>
+                                        <span>Tax</span>
+                                        <span>${(price * 3/100).toFixed(2)}</span>
+                                        
+                                    </div>
+                                    
+                                    <div className='cart--subtotal'>
+                                        <span>Total</span>
+                                        <span>${(price+ price * 3/100).toFixed(2)}</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        :
+                        <p>Nothing In The Cart...</p>
+                        }
+                    </div>
                 </div>
                 }
             </div>
