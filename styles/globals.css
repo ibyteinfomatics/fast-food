@@ -594,7 +594,7 @@ body.steps .cardImg{
 
 /* Steps pages styling */
 .bg--red{
-  background-color: #D64444;
+  /* background-color: #D64444; */
 }
 .bg--green{
   background-color: #739C70;
@@ -1435,7 +1435,7 @@ td.total:after {
 }
 .rest__pages .product__lists.rest--pages__lists .cardBlock:nth-child(4),
 .rest__pages .product__lists.rest--pages__lists .cardBlock:nth-child(5){
-  grid-column: span 2 / auto;
+  grid-column: span 1 / auto;
 }
 .rest__pages .product__lists.rest--pages__lists .cardBlock:first-of-type .cardImg,
 .rest__pages .product__lists.rest--pages__lists .cardBlock:nth-child(4) .cardImg,
