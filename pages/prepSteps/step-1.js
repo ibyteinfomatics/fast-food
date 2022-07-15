@@ -321,7 +321,7 @@ export default function StepOne(props) {
         <React.Fragment>
             <Header />
 
-            <div className='siteWidth'>
+            <div className='siteWidth step-one'>
                 {loading &&
                     <>
                         <div style={{ 'display': 'flex', 'justifyContent': 'center', marginTop: '15px' }}>

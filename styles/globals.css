@@ -1781,11 +1781,12 @@ ul.pagination li {
 }
 .cart__wrapper.show--item--table .cart--table .table--scroll{
   overflow-y: auto;
-  height: calc(100vh - 13.5rem);
+  height: calc(100vh - 27.5rem);
 }
 .cart__wrapper.show--item--table .cart--table .table--scroll tr:last-child {
-  position: sticky;
-  bottom: 0;
+  position: -webkit-sticky;
+  position: absolute;
+  bottom: 5.75rem;
   max-width: 78.85%;
   width: 100%;
   box-shadow: 0px 4px 4px rgba(177, 177, 177, 0.25);
@@ -1804,4 +1805,14 @@ ul.pagination li {
   width: 0.175rem;
   background: #5e5c5c;
   @apply block;
+}
+.cart__wrapper.show--item--table {
+  height: calc(100vh - 12rem);
+  background: #f2f2f2;
+}
+.heatSelection .heatOption .chooseOption.extraheat .hidden-img .heatIcon {
+  height: 2.5rem;
+}
+.step-one .heatSelection .heatOption {
+  align-items: flex-start;
 }
