@@ -62,6 +62,7 @@ export default function CardImage(props) {
         setCartCount(response.count)
         toast.success(response.message, {
           position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000
         });
         localStorage.removeItem("items")
         
@@ -95,6 +96,7 @@ export default function CardImage(props) {
       
       toast.success("1 Item Added In Cart", {
         position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000
       });
       } else {
         router.push(`/prepSteps/step-1/?item_id=${singleItemData.item_id}`)

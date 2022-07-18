@@ -57,6 +57,7 @@ export default function Login() {
           // localStorage.setItem('theme', "theme1");
           toast.success(response.data.message, {
             position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000
           });
           await wait(1000);
           setLoading(false)

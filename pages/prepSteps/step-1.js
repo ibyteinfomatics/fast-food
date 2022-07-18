@@ -55,6 +55,7 @@ export default function StepOne(props) {
 
                     toast.success("item updated sucessfully", {
                         position: toast.POSITION.TOP_RIGHT,
+                        autoClose: 1000
 
                     });
                     setTimeout(() => {
@@ -95,6 +96,7 @@ export default function StepOne(props) {
                 if (response.success) {
                     toast.success(response.message, {
                         position: toast.POSITION.TOP_RIGHT,
+                        autoClose: 1000
                     });
                     localStorage.removeItem("items")
                     router.push("/cart")
@@ -107,11 +109,51 @@ export default function StepOne(props) {
 
         }
         else {
-            console.log(item)
+            if(editData) {
+                console.log(editData)
+                console.log("editData")
+                console.log(item)
+                item['selectedoptions'] = stepOptionId
+                item['selectedCategory'] = categoryId
+                item['uniqueIndex'] = editData.uniqueIndex
+                //this is for selected options and category price add
+                const price = 0;
+            price = item.price
+            item.selectedoptions.map((data) => {
+                price = price + parseInt(data.price ? data.price : 0)
+            })
+            item.selectedCategory.map((data) => {
+                price = price + parseInt(data.price ? data.price : 0)
+            })
+            item['price'] = price
+            console.log(price)
+                console.log(item)
+                const findData = JSON.parse(localStorage.getItem("items"))
+                const ui = findData.find((e) => e.uniqueIndex === item.uniqueIndex)
+                const index = findData.indexOf(ui)
+                console.log(index)
+                findData.splice(index, 1, item)
+                console.log(findData)
+                localStorage.setItem("items", JSON.stringify(findData))
+                router.push("/cart")
 
+            }else{
+                console.log(item)
+                
             item['selectedoptions'] = stepOptionId
             item['selectedCategory'] = categoryId
-            console.log(item)
+            //this is for selected options and category price add
+            const price = 0;
+            price = item.price
+            item.selectedoptions.map((data) => {
+                
+                price = price + parseInt(data?.price ? data.price : 0)
+            })
+            item.selectedCategory.map((data) => {
+                price = price + parseInt(data?.price ? data.price : 0)
+            })
+            item['price'] = price
+            console.log(price)
             if (localStorage.getItem("items") != [] && localStorage.getItem("items")) {
                 const items = JSON.parse(localStorage.getItem("items"))
                 item['uniqueIndex'] = items.length > 0 ? items[items.length - 1].uniqueIndex + 1 : 1
@@ -127,6 +169,9 @@ export default function StepOne(props) {
                 console.log(array)
             }
             router.push("/cart")
+
+            }
+            
         }
 
 
@@ -136,7 +181,8 @@ export default function StepOne(props) {
 
         setLoading(true);
         if (router.query.edit_id) {
-            setToken(localStorage.getItem("token"))
+            if(localStorage.getItem("token")) {
+                setToken(localStorage.getItem("token"))
             console.log("enter in edit")
             const data = JSON.parse(router.query.edit_id)
             console.log(data)
@@ -196,6 +242,35 @@ export default function StepOne(props) {
             } else {
                 return response;
             }
+
+            } else {
+                console.log("edit without login");
+                const data = JSON.parse(router.query.edit_id)
+            console.log(data)
+
+            setStepOptionId(data.selectedoptions)
+            setCategoryId(data.selectedCategory)
+            // setStepOptionId(data.selected_options)
+            setEditData(data)
+            const result = await fetch(
+                `${process.env.baseApiUrl}/api/item/list/by/Id?item_id=${data.item_id}`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json; charset=utf-8",
+                        Accept: "application/json",
+                    },
+                }
+            );
+            let response = await result.json();
+            if (response.success) {
+                setItem(response.item_data);
+                setLoading(false);
+            } else {
+                return response;
+            }
+            }
+            
 
 
         }
@@ -368,18 +443,37 @@ export default function StepOne(props) {
                                                                             stepList.option.map((optionData) => {
                                                                                 console.log(optionData, 'optionData')
                                                                                 return (
+                                                                                   
+                                                                                    
+                                                                                    
                                                                                     <div className='chooseOption extraheat' key={optionData.item_step_option_id} >
-                                                                                        <input type="radio" id={optionData.item_step_option_id} defaultChecked={editData && editData.selected_options.find((e) => e.item_step_option_id === optionData.item_step_option_id) ? true : false} name={optionData.step_id} />
+                                                                                    {localStorage.getItem("token") &&
+                                                                                        <><input type="radio" id={optionData.item_step_option_id} defaultChecked={editData && editData.selected_options.find((e) => e.item_step_option_id === optionData.item_step_option_id) ? true : false} name={optionData.step_id} /><label className={optionData?.step_attachment ? "" : 'hidden-img'} htmlFor={optionData.item_step_option_id} onClick={() => getOptionData(optionData)}>
+                                                                                                {<span className='heatIcon'>
+                                                                                                    {optionData?.step_attachment && <img src={`${process.env.baseApiUrl}${optionData?.step_attachment?.attachment_url}`} />}
 
-                                                                                        <label className={optionData?.step_attachment ? "" : 'hidden-img'} htmlFor={optionData.item_step_option_id} onClick={() => getOptionData(optionData)}>
-                                                                                            {<span className='heatIcon'>
-                                                                                                {optionData?.step_attachment && <img src={`${process.env.baseApiUrl}${optionData?.step_attachment?.attachment_url}`} />}
+                                                                                                </span>}
+                                                                                                <p className='font-21'>{optionData.title}</p>
+                                                                                                <p className='font-8'>{optionData?.price && `$ ${optionData?.price}`}</p>
+                                                                                            </label></>
+                                                                                        }
+                                                                                        {!localStorage.getItem("token") &&
+                                                                                    
+                                                                                    
+                                                                                    <><input type="radio" id={optionData.item_step_option_id} defaultChecked={editData && editData.selectedoptions.find((e) => e.item_step_option_id === optionData.item_step_option_id) ? true : false} name={optionData.step_id} /><label className={optionData?.step_attachment ? "" : 'hidden-img'} htmlFor={optionData.item_step_option_id} onClick={() => getOptionData(optionData)}>
+                                                                                                {<span className='heatIcon'>
+                                                                                                    {optionData?.step_attachment && <img src={`${process.env.baseApiUrl}${optionData?.step_attachment?.attachment_url}`} />}
 
-                                                                                            </span>}
-                                                                                            <p className='font-21'>{optionData.title}</p>
-                                                                                            <p className='font-8'>{optionData?.price && `$ ${optionData?.price}`}</p>
-                                                                                        </label>
+                                                                                                </span>}
+                                                                                                <p className='font-21'>{optionData.title}</p>
+                                                                                                <p className='font-8'>{optionData?.price && `$ ${optionData?.price}`}</p>
+                                                                                            </label></>
+                                                                                
+                                                                        }
                                                                                     </div>
+                                                                            
+                                                                            
+                                                                                   
 
 
                                                                                 )
@@ -425,20 +519,39 @@ export default function StepOne(props) {
                                                                             return (
                                                                                 <li key={index}>
                                                                                     {data.map_item.map((data1, index) => {
-                                                                                        // console.log(data1);
+                                                                                        console.log(data1);
                                                                                         return (
+                                                                                            
+                                                                                            
                                                                                             <div className='form--item' key={data1.item_id} onClick={(e) => getSubData(e, data1)}>
-                                                                                                <input type="checkbox" defaultChecked={editData && editData.selected_category.find((e) => e.item_id === data1.item_id) ? true : false} id={data1.item_id} name="sides" />
-                                                                                                <label htmlFor={data1.item_id}>
-                                                                                                    <span className='side__image'>
-                                                                                                        <img src={`${process.env.baseApiUrl}${data1?.item_attachment?.attachment_url}`} alt="side image" width="215" height="195" />
-                                                                                                    </span>
-                                                                                                    <span className='side__header'>
-                                                                                                        <h3>{data1.name}</h3>
-                                                                                                        <p>${data1.price}</p>
-                                                                                                    </span>
-                                                                                                </label>
+                                                                                                {localStorage.getItem("token") &&
+                                                                                                <><input type="checkbox" defaultChecked={editData && editData.selected_category.find((e) => e.item_id === data1.item_id) ? true : false} id={data1.item_id} name="sides" /><label htmlFor={data1.item_id}>
+                                                                                                        <span className='side__image'>
+                                                                                                            <img src={`${process.env.baseApiUrl}${data1?.item_attachment?.attachment_url}`} alt="side image" width="215" height="195" />
+                                                                                                        </span>
+                                                                                                        <span className='side__header'>
+                                                                                                            <h3>{data1.name}</h3>
+                                                                                                            <p>${data1.price}</p>
+                                                                                                        </span>
+                                                                                                    </label></>
+                                                                                        }
+                                                                                        {!localStorage.getItem("token") &&
+                                                                                            
+                                                                                            <><input type="checkbox" defaultChecked={editData && editData.selectedCategory.find((e) => e.item_id === data1.item_id) ? true : false} id={data1.item_id} name="sides" /><label htmlFor={data1.item_id}>
+                                                                                                        <span className='side__image'>
+                                                                                                            <img src={`${process.env.baseApiUrl}${data1?.item_attachment?.attachment_url}`} alt="side image" width="215" height="195" />
+                                                                                                        </span>
+                                                                                                        <span className='side__header'>
+                                                                                                            <h3>{data1.name}</h3>
+                                                                                                            <p>${data1.price}</p>
+                                                                                                        </span>
+                                                                                                    </label></>
+                                                                                        
+                                                                                }
                                                                                             </div>
+                                                                                    
+                                                                                    
+                                                                                            
                                                                                         )
                                                                                     })}
                                                                                 </li>

@@ -59,6 +59,7 @@ export default function SignUp() {
           localStorage.setItem('userName', response.data.data.name);
           toast.success(response.data.message, {
             position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000
           });
           await wait(1000);
           setLodaing(false);

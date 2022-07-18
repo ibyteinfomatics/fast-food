@@ -51,6 +51,7 @@ export default function ForgotPassword() {
           
           toast.success(response.data.message, {
             position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000
           });
           await wait(2000);
           setLoading(false)

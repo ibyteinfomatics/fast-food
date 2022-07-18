@@ -56,10 +56,10 @@ export default function CartView() {
 
     }
     const deleteApi = async (data) =>{
+        
         setLoading(true)
         console.log(data)
         const result = await fetch(
-            // `${process.env.baseApiUrl}/api/item/list/by/Id?item_id=${myArray.at(-1)}`,
             `${process.env.baseApiUrl}/api/delete/cart/item`,
             {
                 method: "POST",
@@ -76,6 +76,7 @@ export default function CartView() {
             cartList()
             toast.success(response.message, {
                 position: toast.POSITION.TOP_RIGHT,
+                autoClose: 1000
               });
         } else {
         
@@ -86,6 +87,8 @@ export default function CartView() {
 
     const withoutLogin = () => {
         const items = JSON.parse(localStorage.getItem("items"))
+        console.log(items);
+        
         setCartListing(items)
         const total = 0
         items.map((item) => {
@@ -123,6 +126,7 @@ export default function CartView() {
           cartList()
           toast.success("item copied sucessfully", {
             position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000
           });
           
           
@@ -216,7 +220,7 @@ export default function CartView() {
         // item['selectedOptions'] = stepOptionId
         // item['selectedCategory'] = categoryId
         items.map((data) => {
-            arrayItem.push({item_id: data.item_id, is_customize: data.selectedCategory || data.selectedoptions ? 1 : 0, selectedoptions: data.selectedoptions ? data.selectedCategory : [], selectedCategory: data.selectedCategory ? data.selectedCategory : []})
+            arrayItem.push({item_id: data.item_id, is_customize: data.selectedCategory || data.selectedoptions ? 1 : 0, selectedoptions: data.selectedoptions ? data.selectedoptions : [], selectedCategory: data.selectedCategory ? data.selectedCategory : []})
         
         })
         console.log(arrayItem)
@@ -243,6 +247,7 @@ export default function CartView() {
         cartList()
         toast.success(response.message, {
           position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000
         });
         
         
@@ -253,13 +258,6 @@ export default function CartView() {
     }
 
 }
-// const editData = (data) => {
-//     const itemData = {
-//         item: data,
-//       };
-//       router.push(`/prepSteps/step-1/?item_id=${data.item_id}/?data=${itemData}`)
-// }
-    // const listLength = Cartlists.length;
     return(
         <React.Fragment>
             {/* Header */}
@@ -298,18 +296,11 @@ export default function CartView() {
                                 <th>Quantity</th>
                                 <th>Price</th>
                             </tr>
-                            {/* {cart?.map((data, index) =>{
-                                console.log(data)
-                                return(  */}
-                                {/* {token &&  */}
                                 <>
                                     {cartListing && cartListing.length > 0 &&
                                         cartListing.map((cart, index) => {
                                             console.log(cart, index)
-                                            return(
-
-                                            
-                                                                
+                                            return(                               
                                 <tr key={index}>
                                     
                                     <td>
@@ -355,15 +346,15 @@ export default function CartView() {
                                                         console.log(data)
                                                         return(
                                                             
-                                                            <h3 key={data.item_id}>{data?.name}</h3>
+                                                            <h3 key={data?.item_id}><b>{data?.name}</b></h3>
                                                         
                                                         )})}
                                                         {cart.selected_category &&
                                                     cart.selected_category.map((data, index) => {
                                                         console.log(data)
                                                         return(
-                                                            
-                                                        <b> <h3 key={data.item_id}>{data.name}</h3> </b>
+                                                        
+                                                        <h3 key={data?.item_id}><b>{data?.name}</b></h3>
                                                         
                                                         )})}
                                                         </div>
@@ -430,18 +421,10 @@ export default function CartView() {
                                         </div>
                                     </td>
                                     <td className='site_font--700'>1</td>
-                                    
                                     <td>$ {cart.price.toFixed(2)}</td>
-                                    {/* {cart.selected_category &&
-                                    cart.selected_category.map((data) => {
-                                        return(
-                                            <td>$ {cart.price.toFixed(2)}</td>
-                                        )
-                                    })
-                                    
-                                    } */}
-                                    
+                                                                        
                                 </tr>
+                                
                                 )
                                 }) 
                             }
@@ -457,15 +440,24 @@ export default function CartView() {
                                         <span>${price.toFixed(2)}</span>
                                     </div>
                                     <div className='cart--subtotal'>
-                                        <span>Tax</span>
-                                        <span>${(price * 3/100).toFixed(2)}</span>
+                                        <span>Service Fee</span>
+                                        <span>${(price * 5/100).toFixed(2)}</span>
                                         
                                     </div>
                                     
                                     <div className='cart--subtotal'>
                                         <span>Total</span>
-                                        <span>${(price+ price * 3/100).toFixed(2)}</span>
+                                        <span>${(price+ price * 5/100).toFixed(2)}</span>
                                     </div>
+                                    {/* <div className='cart--subtotal'>
+                                        <span></span>
+                                        <span>
+                                        <Link href="/card-checkout">
+                        <a className="btnRed btn">Checkout</a>
+                      </Link>
+                                        </span>
+                                    
+                                    </div> */}
                                 </td>
                             </tr>
                         </table>

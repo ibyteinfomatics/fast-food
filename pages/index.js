@@ -8,6 +8,7 @@ import { fetchRestraSearch } from "../restaurant/list";
 import Geocode from "react-geocode";
 import ReactPaginate from 'react-paginate';
 import Layout from "../components/layout";
+import { Router, useRouter } from "next/router";
 
 export default function RestraLists() {
   useEffect(() => {
@@ -20,7 +21,7 @@ export default function RestraLists() {
     document.body.classList.remove("checkout__page");
     
   }, []);
-
+  const router = useRouter();
   const [showMe, setShowMe] = useState(false);
   const [currentAddress, setAddress] = useState("");
   const [checked, setChecked] = useState(false);
@@ -79,6 +80,73 @@ export default function RestraLists() {
       setCurrentData([]);
     }
   };
+
+  // const deleteApi = async(data) => {
+  //   data.map(async(d) => {
+  //     const result = await fetch(
+  //       `${process.env.baseApiUrl}/api/delete/cart/item`,
+  //       {
+  //           method: "POST",
+  //           headers: {
+  //               "Content-Type": "application/json; charset=utf-8",
+  //               Accept: "application/json",
+  //               Authorization: `Bearer ${localStorage.getItem("token")}`
+  //           },
+  //           body: JSON.stringify({"cart_id":d.cart_id})
+  //       }
+  //   );
+  //   let response = await result.json();
+  //   if (response.success) {
+        
+  //   } else {
+    
+  //       return response;
+  //   }
+  //   })
+  // }
+  const changeStore = async (data) => {
+//     const storeId = localStorage.getItem("storeId")
+//     if(storeId === data) {
+//       router.push(`/store/${data}`)
+//     } else{
+//       const confirmBox = window.confirm(
+//         "Are you sure you want to change store? You will lose your current basket if you do."
+//       )
+//       if (confirmBox === true) {
+//         if(localStorage.getItem("token")) {
+//           localStorage.setItem("storeId", data);
+//         localStorage.removeItem("items")
+//     const result = await fetch(
+//       `${process.env.baseApiUrl}/api/cart/list`,
+//       {
+//           method: "POST",
+//           headers: {
+//               "Content-Type": "application/json; charset=utf-8",
+//               Accept: "application/json",
+//               Authorization: `Bearer ${localStorage.getItem("token")}`
+//           },
+//       }
+//   );
+//   let response = await result.json();
+// console.log(response)
+// if (response.success) {
+//   deleteApi(response)
+  
+// } else {
+
+//   return response;
+// }
+//         } else {
+//           localStorage.setItem("storeId", data);
+//         localStorage.removeItem("items")
+//         }
+        
+//         router.push(`/store/${data}`)
+//       }
+//     }
+    router.push(`/store/${data}`)
+
+  }
   const searchRestraResult = async (data,page) => {
     const response = await fetchRestraSearch(data,page);
     if (response.success) {
@@ -219,15 +287,15 @@ export default function RestraLists() {
                               </p>
                             </div>
                             <div className="orderStatus">
-                              <Link href={`/store/?store_id=${resList.store_url}`}>
+                              {/* <Link href={`/store/?store_id=${resList.store_url}`}> */}
                               {/* <Link href={{
             pathname: "/store/",
             query: resList.store_url,
           }}> */}
                               {/* <Link href={`/store/?store_id=${resList.store_url}`}> */}
                               {/* <Link href="/store/:[pid]" as={`/store/${resList.store_url}`}> */}
-                                <a className="btnRed btn">Order Online</a>
-                              </Link>
+                                <a className="btnRed btn"  onClick={ () => changeStore(resList.store_url)}>Order Online</a>
+                              {/* </Link> */}
                             </div>
                           </div>
                         </div>

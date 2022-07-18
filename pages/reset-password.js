@@ -59,6 +59,7 @@ export default function ForgotPassword() {
         if (response.data.success === true) {
           toast.success(response.data.message, {
             position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000
           });
           await wait(2000);
           const previousUrl = localStorage.getItem("url")
