@@ -46,10 +46,10 @@ export default function Header(props) {
 console.log(response)
 if (response.success) {
   setCount(response.cart_item.length)
-  const total = 0;
+  let total = 0;
   response?.cart_item.map((data) => {
     console.log(data)
-    total += data?.price
+    total = total +  (data.total_price ? parseInt(data.total_price) : data.price)
   })
   await setCartPrice(total)
   
@@ -63,9 +63,10 @@ if (response.success) {
   useEffect(() => {
     if(localStorage.getItem("items")){
       const length = JSON.parse(localStorage.getItem("items"));
-      const total = 0
+      let total = 0
       length.map((data) => {
-        total+=data.price
+        console.log(data)
+        total = total +  (data.total_price ? parseInt(data.total_price) : data.price)
       })
       setCartPrice(total)
       setCount(length.length)

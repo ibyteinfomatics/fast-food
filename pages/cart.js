@@ -92,8 +92,10 @@ export default function CartView() {
         setCartListing(items)
         const total = 0
         items.map((item) => {
-            total = total +  item.price
+            console.log(item)
+            total = total +  (item.total_price ? item.total_price : item.price)
         })
+        console.log(total)
         setPrice(total)
     }
     const duplicate = async (data) => {
@@ -200,7 +202,7 @@ export default function CartView() {
         setLoading(false)
         const total = 0
         response.cart_item.map((item) => {
-            total = total +  item.price
+            total = total +  (item.total_price? parseInt(item.total_price) : item.price)
         })
         setPrice(total)
         setCartListing(response.cart_item)
@@ -220,6 +222,7 @@ export default function CartView() {
         // item['selectedOptions'] = stepOptionId
         // item['selectedCategory'] = categoryId
         items.map((data) => {
+            console.log(data)
             arrayItem.push({item_id: data.item_id, is_customize: data.selectedCategory || data.selectedoptions ? 1 : 0, selectedoptions: data.selectedoptions ? data.selectedoptions : [], selectedCategory: data.selectedCategory ? data.selectedCategory : []})
         
         })
@@ -361,27 +364,32 @@ export default function CartView() {
                                                         
                                         </div>
                                         
-                                        {cart.addon_status != 0 &&
-                                        <div className='cart__offers'>
+                                        {cart.addon_data &&
+                                        cart.addon_data.length > 0 &&
+                                        cart.addon_data.map((data, index) => {
+                                            
+                                            return(
+                                        <div className='cart__offers' key={data.addon_id}>
                                             <form>
                                                 <ul>
-                                                {/* {cart.addon_data.length > 0 &&
+                                                {/* {cart.addon_data.length > 0 && */}
                                                     <li>
                                                         <div className='offer__select'>
-                                                            <input type="checkbox" name="offerList" value="" id={data.labelId1} />
-                                                            <label htmlFor={data.labelId1}>
+                                                            <input type="checkbox" name="offerList" value="" id={data.addon_id} />
+                                                            <label htmlFor={data.addon_id}>
                                                                 <span className='remove__offer'>
                                                                     <Image src="/images/remove-offer--icon.svg" alt="remove item" layout="fill" quality={100} />
                                                                 </span>
                                                                 <span className='add__offer'>
                                                                     <Image src="/images/add-offer--icon.svg" alt="add item" layout="fill" quality={100} />
                                                                 </span>
-                                                                <span className='offer__title'>{data.cartOffer}</span>
-                                                                <span className='offer__price'><span>$ {data.offerItemPrice}</span> $ {data.offerPrice}</span>
+                                                                <span className='offer__title'>{data.item_data.name}</span>
+                                                                <span className='offer__price'><span>$ {data.item_data.price}</span> $ {data.offered_price}</span>
                                                             </label>
                                                         </div>
                                                     </li>
-                                                    } */}
+                                                {/* } */}
+                                                    
                                                     {/* {cart.addon_data.length > 0 &&
                                                     <li>
                                                         <div className='offer__select'>
@@ -402,6 +410,7 @@ export default function CartView() {
                                                 </ul>
                                             </form>
                                         </div>
+                                        )})
                                         }
                                     </td>
                                     <td>
@@ -421,7 +430,7 @@ export default function CartView() {
                                         </div>
                                     </td>
                                     <td className='site_font--700'>1</td>
-                                    <td>$ {cart.price.toFixed(2)}</td>
+                                    <td>$ {cart.total_price ? parseInt(cart.total_price).toFixed(2) : cart.price.toFixed(2)}</td>
                                                                         
                                 </tr>
                                 
@@ -429,25 +438,23 @@ export default function CartView() {
                                 }) 
                             }
                             </>
-                        {/* // } */}
-                                {/* );
-                            })} */}
+        
                             <tr>
                                 
                                 <td colSpan='4'>
                                     <div className='cart--subtotal'>
                                         <span>Sub Total</span>
-                                        <span>${price.toFixed(2)}</span>
+                                        <span>${parseInt(price).toFixed(2)}</span>
                                     </div>
                                     <div className='cart--subtotal'>
                                         <span>Service Fee</span>
-                                        <span>${(price * 5/100).toFixed(2)}</span>
+                                        <span>${parseInt(price * 5/100).toFixed(2)}</span>
                                         
                                     </div>
                                     
                                     <div className='cart--subtotal'>
                                         <span>Total</span>
-                                        <span>${(price+ price * 5/100).toFixed(2)}</span>
+                                        <span>${parseInt(price+ price * 5/100).toFixed(2)}</span>
                                     </div>
                                     {/* <div className='cart--subtotal'>
                                         <span></span>

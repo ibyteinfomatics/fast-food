@@ -125,7 +125,7 @@ export default function StepOne(props) {
             item.selectedCategory.map((data) => {
                 price = price + parseInt(data.price ? data.price : 0)
             })
-            item['price'] = price
+            item['total_price'] = price
             console.log(price)
                 console.log(item)
                 const findData = JSON.parse(localStorage.getItem("items"))
@@ -152,7 +152,7 @@ export default function StepOne(props) {
             item.selectedCategory.map((data) => {
                 price = price + parseInt(data?.price ? data.price : 0)
             })
-            item['price'] = price
+            item['total_price'] = price
             console.log(price)
             if (localStorage.getItem("items") != [] && localStorage.getItem("items")) {
                 const items = JSON.parse(localStorage.getItem("items"))
@@ -214,7 +214,7 @@ export default function StepOne(props) {
                     item_id: data1.item_id,
                     item_type_id: data1.item_type_id,
                     name: data1.name,
-                    price: 90,
+                    price: data1.price,
                     short_description: "",
                     slug: "combo",
                     status: 1,
