@@ -292,10 +292,10 @@ export default function RestraLists() {
             pathname: "/store/",
             query: resList.store_url,
           }}> */}
-                              {/* <Link href={`/store/?store_id=${resList.store_url}`}> */}
+                              <Link href={`/store/?store_id=${resList.store_url}`}>
                               {/* <Link href="/store/:[pid]" as={`/store/${resList.store_url}`}> */}
-                                <a className="btnRed btn"  onClick={ () => changeStore(resList.store_url)}>Order Online</a>
-                              {/* </Link> */}
+                                <a className="btnRed btn">Order Online</a>
+                              </Link>
                             </div>
                           </div>
                         </div>
