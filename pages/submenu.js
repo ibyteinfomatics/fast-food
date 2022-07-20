@@ -60,7 +60,7 @@ export default function BurgersWraps() {
                 <div className="prod_cate--name">
                   <h2 className="cateTitle">{`${subCatList.name}`}</h2>
                 </div>
-                <div className="product__lists prod__lists--content" >
+                <div className="product__lists prod__lists--content subMenu" >
                   {subCatList.item_data &&
                     subCatList.item_data.length > 0 &&
                     subCatList.item_data.map((itemList) => {

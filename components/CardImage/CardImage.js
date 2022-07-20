@@ -166,8 +166,10 @@ export default function CardImage(props) {
           <div className="card--img--desc">
             <ReactReadMoreReadLess
                 charLimit={100}
-                readMoreText={"Read more ▼"}
-                readLessText={"Read less ▲"}
+                readMoreText={"read more"}
+                readLessText={"read less"}
+                // readMoreText={"read more ▼"}
+                // readLessText={"read less ▲"}
             >
                 {props.cardDesc}
             </ReactReadMoreReadLess>

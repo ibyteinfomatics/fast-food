@@ -191,14 +191,10 @@ span.map_icon {
 }
 .restra__name--links p a:after {
   content: '';
-  height: 0;
-  width: 0;
-  display: block;
-  margin-top: 0.25rem;
-  margin-left: 1rem;
   border-top: 0.3875rem solid #C4C4C4;
   border-right: 0.3125rem solid transparent;
   border-left: 0.3125rem solid transparent;
+  @apply h-0 w-0 block mt-1 ml-4;
 }
 ul.restra__name--lists {
   @apply absolute z-50 h-0 bg-white inset-x-0 mt-2 opacity-0 transition-opacity overflow-hidden;
@@ -295,9 +291,8 @@ a{
   @apply mt-8 relative;
 }
 .searchBox input {
-  @apply w-full py-4 px-10;
+  @apply w-full py-4 px-10 cursor-pointer;
   border: 0.0625rem solid hsl(216, 24%, 12%);
-  cursor: pointer;
   border-radius: 0.438rem;
 }
 .searchBox .leftIcon{
@@ -345,11 +340,10 @@ a{
   @apply text-center;
 }
 .gridBlockFour{
-  display: grid;
-  align-items: center;
   grid-template-columns: repeat(4, 1fr);
   column-gap: 2.5rem;
   row-gap: 4.5rem;
+  @apply grid items-center;
 }
 .font-18{
   font-size: 1.125rem;
@@ -595,6 +589,9 @@ body.steps .cardImg{
 /* Steps pages styling */
 .bg--red{
   /* background-color: #D64444; */
+}
+.text--red{
+  color: #D64444;
 }
 .bg--green{
   background-color: #739C70;
@@ -1049,7 +1046,9 @@ input[type="checkbox"] {border: 0.125rem solid #000;height: 1.6875rem;width: 1.6
 
 .form--link--desc {text-align: center;font-size: 1.125rem;font-family: 'Camren Sans 700';}
 
-.form--link--desc a {color: #D64444}
+.form--link--desc a {
+  @apply text--red;
+}
 
 span.form--icon {
   position: absolute;
@@ -1190,6 +1189,9 @@ span.user__pic {width: 2.875rem;height: 2.875rem;background: #C4C4C4;display: bl
 }
 .settingPageALign .editProfile{
   @apply text-center;
+}
+.cart__actions a {
+  @apply cursor-pointer;
 }
 .settingPageALign .changeImg {
   @apply flex items-center justify-center m-auto site_font--700 text-xl;
@@ -1864,4 +1866,10 @@ ul.pagination li {
 }
 .total.repeatSummery {
   @apply mb-6;
+}
+.subMenu .flexBlockTwo {
+  flex-wrap: inherit;
+}
+.react-read-more-read-less {
+  @apply text--red;
 }
