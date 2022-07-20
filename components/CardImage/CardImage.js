@@ -28,7 +28,8 @@ export default function CardImage(props) {
   const directAddToCart = async (data) => {
     if(token) {
       const storeId = localStorage.getItem("storeId")
-      if(data.customize_status === 0) {
+      console.log(data)
+      if(data?.customize_status === 0) {
         console.log("token present")
         console.log(data.item)
         const arrayItem = []
@@ -38,6 +39,7 @@ export default function CardImage(props) {
         if(localStorage.getItem("items") ) {
           const cartItem = JSON.parse(localStorage.getItem("items"))
           cartItem.map((data) => {
+            console.log(data)
             arrayItem.push({item_id: data.item_id, is_customize: data.selectedCategory || data.selectedoptions ? 1 : 0, selectedoptions: data.selectedoptions ? data.selectedCategory : [], selectedCategory: data.selectedCategory ? data.selectedCategory : []})
           })
         }

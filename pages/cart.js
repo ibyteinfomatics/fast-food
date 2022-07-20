@@ -367,7 +367,7 @@ export default function CartView() {
                                         {cart.addon_data &&
                                         cart.addon_data.length > 0 &&
                                         cart.addon_data.map((data, index) => {
-                                            
+                                            console.log(data)
                                             return(
                                         <div className='cart__offers' key={data.addon_id}>
                                             <form>
@@ -375,16 +375,16 @@ export default function CartView() {
                                                 {/* {cart.addon_data.length > 0 && */}
                                                     <li>
                                                         <div className='offer__select'>
-                                                            <input type="checkbox" name="offerList" value="" id={data.addon_id} />
-                                                            <label htmlFor={data.addon_id}>
+                                                            <input type="checkbox" name="offerList" value="" id={cart.cart_id + data.addon_id} />
+                                                            <label htmlFor={cart.cart_id + data.addon_id}>
                                                                 <span className='remove__offer'>
                                                                     <Image src="/images/remove-offer--icon.svg" alt="remove item" layout="fill" quality={100} />
                                                                 </span>
                                                                 <span className='add__offer'>
                                                                     <Image src="/images/add-offer--icon.svg" alt="add item" layout="fill" quality={100} />
                                                                 </span>
-                                                                <span className='offer__title'>{data.item_data.name}</span>
-                                                                <span className='offer__price'><span>$ {data.item_data.price}</span> $ {data.offered_price}</span>
+                                                                <span className='offer__title'>{data.addon_item ? data.addon_item.name : data.item_data?.name}</span>
+                                                                <span className='offer__price'><span>$ {data.addon_item ? data.addon_item.price : data.item_data?.price}</span> $ {data.offered_price}</span>
                                                             </label>
                                                         </div>
                                                     </li>

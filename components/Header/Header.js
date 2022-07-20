@@ -250,7 +250,7 @@ if (response.success) {
                         key={menuList.slug}
 
                       >
-                        <Link href={`/submenu/${menuList.slug}`}>
+                        <Link href={`/submenu/?slug=${menuList.slug}`}>
                           <a className="">{menuList.name}</a>
                         </Link>
                       </li>
