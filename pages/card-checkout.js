@@ -178,9 +178,9 @@ export default function CardCheckout() {
                                         console.log(data)
                                         return(
  
-                                        <div className='repeatSummery'>
+                                        <div className='repeatSummery' key={data.cart_id}>
                                             <p>{data.name}</p>
-                                            <p>${data.total_price}</p>
+                                            <p>${parseInt(data.total_price).toFixed(2)}</p>
                                             
                                         </div>
                                         )
@@ -197,7 +197,15 @@ export default function CardCheckout() {
                                 </div>
                                 <div className='total repeatSummery'>
                                     <p>Total</p>
-                                    <p>${finalPrice}</p>
+                                    <p>${parseInt(finalPrice).toFixed(2)}</p>
+                                </div>
+                                <div className='total repeatSummery'>
+                                    <p>Service Charge</p>
+                                    <p>${(finalPrice * 5 / 100).toFixed(2)}</p>
+                                </div>
+                                <div className='total repeatSummery'>
+                                    <p>Total</p>
+                                    <p>${(finalPrice + finalPrice * 5 / 100).toFixed(2)}</p>
                                 </div>
                                 <button type='submit' className='btn btnRed'>
                                     Place Order(${finalPrice})

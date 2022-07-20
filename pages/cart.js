@@ -204,6 +204,7 @@ export default function CartView() {
                 let response = await result.json();
                 if (response.success) {
                     cartList()
+                    window.location.reload(true);
 
                 } else {
                     setLoading(false)
@@ -229,7 +230,7 @@ export default function CartView() {
                 let response = await result.json();
                 if (response.success) {
                     cartList()
-
+                    window.location.reload(true);
                 } else {
                     setLoading(false)
                     setCart("");
@@ -435,12 +436,30 @@ export default function CartView() {
                                                                     <ul>
                                                                         {cart?.addon_data?.length > 0 &&
                                                                             cart?.addon_data?.map((data, index) => {
-                                                                                let selectedItem = cart?.selected_addon_data.filter((e) => e.addon_id == data.addon_id)
+                                                                                console.log(data)
+                                                                                // let selectedItem = cart?.selected_addon_data.filter((e) => e.addon_id == data.addon_id)
                                                                                 return (
-
                                                                                     <li key={data.addon_id}>
-                                                                                        {selectedItem[0]?.addon_id === data.addon_id? <div className='offer__select'>
-                                                                                            <input type="checkbox" name="offerList" defaultChecked id={cart.cart_id + data.addon_id} onClick={(e) => selectAddOn(e, data, cart?.cart_id)} />
+                                                                                        {token &&
+                                                                                        
+                                                        <div className='offer__select'>
+                                                            <input type="checkbox" name="offerList" value="" defaultChecked={cart?.selected_addon_data?.find((e) => e.addon_id == data.addon_id) ? true : false} id={cart.cart_id + data.addon_id.toString()} onClick={(e) => selectAddOn(e, data, cart?.cart_id )} />
+                                                            <label htmlFor={cart.cart_id + data.addon_id.toString()}>
+                                                                <span className='remove__offer'>
+                                                                    <Image src="/images/remove-offer--icon.svg" alt="remove item" layout="fill" quality={100} />
+                                                                </span>
+                                                                <span className='add__offer'>
+                                                                    <Image src="/images/add-offer--icon.svg" alt="add item" layout="fill" quality={100} />
+                                                                </span>
+                                                                <span className='offer__title'>{data.addon_item ? data.addon_item.name : data.item_data?.name}</span>
+                                                                <span className='offer__price'><span>$ {data.addon_item ? data.addon_item.price : data.item_data?.price}</span> $ {data.offered_price}</span>
+                                                            </label>
+                                                        </div>
+                                                                        }
+                                                                        {!token &&
+                                                                                        
+                                                                                        <div className='offer__select'>
+                                                                                            <input type="checkbox" name="offerList" value="" id={cart.cart_id + data.addon_id} onClick={(e) => selectAddOn(e, data, cart?.cart_id )} />
                                                                                             <label htmlFor={cart.cart_id + data.addon_id}>
                                                                                                 <span className='remove__offer'>
                                                                                                     <Image src="/images/remove-offer--icon.svg" alt="remove item" layout="fill" quality={100} />
@@ -452,20 +471,8 @@ export default function CartView() {
                                                                                                 <span className='offer__price'><span>$ {data.addon_item ? data.addon_item.price : data.item_data?.price}</span> $ {data.offered_price}</span>
                                                                                             </label>
                                                                                         </div>
-                                                                                            : <div className='offer__select'>
-                                                                                                <input type="checkbox" name="offerList"  id={cart.cart_id + data.addon_id} onClick={(e) => selectAddOn(e, data, cart?.cart_id)} />
-                                                                                                <label htmlFor={cart.cart_id + data.addon_id}>
-                                                                                                    <span className='remove__offer'>
-                                                                                                        <Image src="/images/remove-offer--icon.svg" alt="remove item" layout="fill" quality={100} />
-                                                                                                    </span>
-                                                                                                    <span className='add__offer'>
-                                                                                                        <Image src="/images/add-offer--icon.svg" alt="add item" layout="fill" quality={100} />
-                                                                                                    </span>
-                                                                                                    <span className='offer__title'>{data.addon_item ? data.addon_item.name : data.item_data?.name}</span>
-                                                                                                    <span className='offer__price'><span>$ {data.addon_item ? data.addon_item.price : data.item_data?.price}</span> $ {data.offered_price}</span>
-                                                                                                </label>
-                                                                                            </div>}
-                                                                                    </li>
+                                                                                                        }
+                                                    </li>
                                                                                 )
                                                                             })
                                                                         }
