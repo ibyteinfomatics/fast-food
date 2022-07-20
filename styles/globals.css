@@ -960,8 +960,16 @@ tr td:not(:first-child) {
 .cart__title {
   @apply text-2xl site_font--700;
 }
-.offer__select label {display: flex;align-items: center;padding: 1rem;border: 0.0625rem solid #000;line-height: 1;border-radius: 1.875rem;gap: 1rem;}
-
+.offer__select label {
+  @apply flex items-center p-4 cursor-pointer;
+  border: 0.0625rem solid #000;
+  line-height: 1;
+  border-radius: 1.875rem;
+  gap: 1rem;
+}
+.table--scroll tr td {
+  white-space: nowrap;
+}
 .offer__select input[type="checkbox"] {display: none;}
 
 .cart__offers {margin-top: 1.5rem;}
@@ -1836,4 +1844,24 @@ ul.pagination li {
 }
 .step-one .chooseOption input[type="radio"]:checked + label {
   background: #f2f2f2;
+}
+.repeatSummery {
+  @apply flex items-center justify-between;
+}
+.orderSummery{
+  @apply mb-6 pb-6;
+  border-bottom: 1px solid #ddd;
+}
+.repeatSummery:not(:last-child){
+  @apply mb-4;
+}
+.repeatSummery p {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+.total.repeatSummery p {
+  font-family: 'Camren Sans 700'
+}
+.total.repeatSummery {
+  @apply mb-6;
 }

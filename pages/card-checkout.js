@@ -5,12 +5,12 @@ import { useRouter } from 'next/router';
 
 export default function CardCheckout() {
     const router = useRouter();
-    
-    useEffect(() => {        
-       
+
+    useEffect(() => {
+
     })
     const [mobile, setMobile] = useState()
-    const [cardNumber, setCardNumber] =useState();
+    const [cardNumber, setCardNumber] = useState();
     const [expires, setExpires] = useState();
     const [cvv, setCvv] = useState()
     const [time, setTime] = useState()
@@ -18,10 +18,10 @@ export default function CardCheckout() {
     const getFormValue = (e) => {
         e.preventDefault()
         const frmdetails = {
-            'Mobile' : mobile,
-            'Card Number' : cardNumber,
-            'Expires On' : expires,
-            'cvv' : cvv,
+            'Mobile': mobile,
+            'Card Number': cardNumber,
+            'Expires On': expires,
+            'cvv': cvv,
             'Time': time,
             'Save Card': saveCard
         }
@@ -33,26 +33,26 @@ export default function CardCheckout() {
         var code = event.keyCode;
         var allowedKeys = [8];
         if (allowedKeys.indexOf(code) !== -1) {
-          return;
+            return;
         }
-      
+
         event.target.value = event.target.value.replace(
-          /^([1-9]\/|[2-9])$/g, '0$1/' // 3 > 03/
+            /^([1-9]\/|[2-9])$/g, '0$1/' // 3 > 03/
         ).replace(
-          /^(0[1-9]|1[0-2])$/g, '$1/' // 11 > 11/
+            /^(0[1-9]|1[0-2])$/g, '$1/' // 11 > 11/
         ).replace(
-          /^([0-1])([3-9])$/g, '0$1/$2' // 13 > 01/3
+            /^([0-1])([3-9])$/g, '0$1/$2' // 13 > 01/3
         ).replace(
-          /^(0?[1-9]|1[0-2])([0-9]{2})$/g, '$1/$2' // 141 > 01/41
+            /^(0?[1-9]|1[0-2])([0-9]{2})$/g, '$1/$2' // 141 > 01/41
         ).replace(
-          /^([0]+)\/|[0]+$/g, '0' // 0/ > 0 and 00 > 0
+            /^([0]+)\/|[0]+$/g, '0' // 0/ > 0 and 00 > 0
         ).replace(
-          /[^\d\/]|^[\/]*$/g, '' // To allow only digits and `/`
+            /[^\d\/]|^[\/]*$/g, '' // To allow only digits and `/`
         ).replace(
-          /\/\//g, '/' // Prevent entering more than 1 `/`
+            /\/\//g, '/' // Prevent entering more than 1 `/`
         );
-      }
-      
+    }
+
     return (
         <React.Fragment>
             <Header />
@@ -60,8 +60,8 @@ export default function CardCheckout() {
             <div className='bgGray'>
                 <div className='siteWidth'>
                     <div className='cardVerify'>
-                    
-                        <form onSubmit={(e) => {getFormValue(e)}}>
+
+                        <form onSubmit={(e) => { getFormValue(e) }}>
                             <div className='card-block'>
                                 <h4 className='cardTitle'>Collection</h4>
                                 <div className='gridBlogTwo'>
@@ -106,31 +106,59 @@ export default function CardCheckout() {
                                     </div>
                                     <div className='form--item'>
                                         <label className='form--label'>Card number</label>
-                                        <input className='form--control' maxLength="16" type="text" placeholder='1234 1234 1234 1234' onChange={e => setCardNumber(e.target.value)}/>
+                                        <input className='form--control' maxLength="16" type="text" placeholder='1234 1234 1234 1234' onChange={e => setCardNumber(e.target.value)} />
                                     </div>
                                     <div className='gridBlogTwo'>
                                         <div className='form--item'>
                                             <label className='form--label'>Expires on</label>
-                                            <input className='form--control' type="text" placeholder='MM/YY' maxLength='5' onKeyUp={(event) => formatString(event)}/>
+                                            <input className='form--control' type="text" placeholder='MM/YY' maxLength='5' onKeyUp={(event) => formatString(event)} />
                                         </div>
                                         <div className='form--item'>
                                             <label className='form--label'>Card CVV</label>
-                                            <input className='form--control' type="text" maxLength="3" placeholder='CVV' onChange={e => setCvv(e.target.value)}/>
+                                            <input className='form--control' type="text" maxLength="3" placeholder='CVV' onChange={e => setCvv(e.target.value)} />
                                         </div>
                                     </div>
                                     <div className='form--item form--item--checkbox'>
-                                        <input type="checkbox" id="keptsigned" onChange={(e) => setSaveCard(e.target.checked)}/>
+                                        <input type="checkbox" id="keptsigned" onChange={(e) => setSaveCard(e.target.checked)} />
                                         <label htmlFor='keptsigned'>Save card details</label>
                                     </div>
                                     <div className='form--item'>
                                         <p>Payment will be taken immediately</p>
                                     </div>
                                     {/* <Link href="/checkout"> */}
-                                    <button type='submit' className='btn btnRed'>
+                                    {/* <button type='submit' className='btn btnRed'>
                                         Place Order($200)
-                                    </button>
+                                    </button> */}
                                     {/* </Link> */}
                                 </div>
+                            </div>
+                            <div className='card-block'>
+                                <div className='form--item'>
+                                    <h6 className='formSubTitle'>Order Summary</h6>
+                                </div>
+                                <div className='orderSummery'>
+                                    <div className='item--list'>
+                                        <div className='repeatSummery'>
+                                            <p>Latte (Regular)</p>
+                                            <p>$100.0</p>
+                                        </div>
+                                        <div className='repeatSummery'>
+                                            <p>Latte (Regular)</p>
+                                            <p>$100.0</p>
+                                        </div>
+                                        <div className='repeatSummery'>
+                                            <p>Latte (Regular)</p>
+                                            <p>$100.0</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className='total repeatSummery'>
+                                    <p>Latte (Regular)</p>
+                                    <p>$100.0</p>
+                                </div>
+                                <button type='submit' className='btn btnRed'>
+                                    Place Order($200)
+                                </button>
                             </div>
                         </form>
                     </div>
