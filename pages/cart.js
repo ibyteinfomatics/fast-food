@@ -92,6 +92,7 @@ export default function CartView() {
         setCartListing(items)
         const total = 0
         items.map((item) => {
+            
             console.log(item)
             total = total +  (item.total_price ? item.total_price : item.price)
         })
@@ -182,6 +183,65 @@ export default function CartView() {
             return response;
         }
     };
+    const selectAddOn = async(e, data, cart_id) => {
+        console.log(data.addon_id, data.item_id,cart_id)
+        if(token) {
+            if(e.target.checked === true) {
+                const result = await fetch(
+                    // `${process.env.baseApiUrl}/api/item/list/by/Id?item_id=${myArray.at(-1)}`,
+                    `${process.env.baseApiUrl}/api/store/addon`,
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json; charset=utf-8",
+                            Accept: "application/json",
+                            Authorization: `Bearer ${token}`
+                        },
+                        body: JSON.stringify({"item_id":data.item_id,"addon_id":data.addon_id,"cart_id":cart_id})
+                    }
+                );
+        
+                let response = await result.json();
+                if (response.success) {
+                    cartList()
+                    
+                } else {
+                    setLoading(false)
+                    setCart("");
+                    return response;
+                }
+
+            }else {
+                const result = await fetch(
+                    // `${process.env.baseApiUrl}/api/item/list/by/Id?item_id=${myArray.at(-1)}`,
+                    `${process.env.baseApiUrl}/api/delete/addon`,
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json; charset=utf-8",
+                            Accept: "application/json",
+                            Authorization: `Bearer ${token}`
+                        },
+                        body: JSON.stringify({"item_id":data.item_id,"addon_id":data.addon_id,"cart_id":cart_id})
+                    }
+                );
+        
+                let response = await result.json();
+                if (response.success) {
+                    cartList()
+                    
+                } else {
+                    setLoading(false)
+                    setCart("");
+                    return response;
+                }
+
+            }
+
+        }else {
+            
+        }
+    }
 
     const cartList = async () => {
         setLoading(true)
@@ -364,18 +424,19 @@ export default function CartView() {
                                                         
                                         </div>
                                         
-                                        {cart.addon_data &&
+                                        
+                                        <div className='cart__offers' >
+                                            <form>
+                                                <ul>
+                                                {cart.addon_data &&
                                         cart.addon_data.length > 0 &&
                                         cart.addon_data.map((data, index) => {
                                             console.log(data)
                                             return(
-                                        <div className='cart__offers' key={data.addon_id}>
-                                            <form>
-                                                <ul>
-                                                {/* {cart.addon_data.length > 0 && */}
-                                                    <li>
+                                                
+                                                    <li key={data.addon_id}>
                                                         <div className='offer__select'>
-                                                            <input type="checkbox" name="offerList" value="" id={cart.cart_id + data.addon_id} />
+                                                            <input type="checkbox" name="offerList" value="" defaultChecked={cart?.selected_addon_data.find((e) => e.addon_id == data.addon_id) ? true : false} id={cart.cart_id + data.addon_id} onClick={(e) => selectAddOn(e, data, cart?.cart_id )} />
                                                             <label htmlFor={cart.cart_id + data.addon_id}>
                                                                 <span className='remove__offer'>
                                                                     <Image src="/images/remove-offer--icon.svg" alt="remove item" layout="fill" quality={100} />
@@ -388,6 +449,8 @@ export default function CartView() {
                                                             </label>
                                                         </div>
                                                     </li>
+                                                    )})
+                                        }
                                                 {/* } */}
                                                     
                                                     {/* {cart.addon_data.length > 0 &&
@@ -410,8 +473,7 @@ export default function CartView() {
                                                 </ul>
                                             </form>
                                         </div>
-                                        )})
-                                        }
+                                        
                                     </td>
                                     <td>
                                         <div className='cart__actions'>

@@ -5,10 +5,44 @@ import { useRouter } from 'next/router';
 
 export default function CardCheckout() {
     const router = useRouter();
+    const [checkoutCart, setCheckoutCart] = useState([])
+    const [finalPrice, setFinalPrice] = useState()
 
+    
     useEffect(() => {
+        cartList()
+    }, [])
 
-    })
+    const cartList = async () => {
+   
+        const result = await fetch(
+            `${process.env.baseApiUrl}/api/cart/list`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8",
+                    Accept: "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                },
+            }
+        );
+        let response = await result.json();
+      console.log(response)
+      if (response.success) {
+        setCheckoutCart(response.cart_item)
+        const total = 0;
+        response.cart_item.map((data) => {
+            
+            total = total + parseInt(data.total_price)
+        })
+        setFinalPrice(total)
+        
+    } else {
+  
+        return response;
+    }
+
+    }
     const [mobile, setMobile] = useState()
     const [cardNumber, setCardNumber] = useState();
     const [expires, setExpires] = useState();
@@ -136,28 +170,37 @@ export default function CardCheckout() {
                                 <div className='form--item'>
                                     <h6 className='formSubTitle'>Order Summary</h6>
                                 </div>
+                                
                                 <div className='orderSummery'>
                                     <div className='item--list'>
+                                    {checkoutCart && checkoutCart.length > 0 &&
+                                    checkoutCart.map((data) => {
+                                        console.log(data)
+                                        return(
+ 
                                         <div className='repeatSummery'>
+                                            <p>{data.name}</p>
+                                            <p>${data.total_price}</p>
+                                            
+                                        </div>
+                                        )
+                                    })}
+                                        {/* <div className='repeatSummery'>
                                             <p>Latte (Regular)</p>
                                             <p>$100.0</p>
                                         </div>
                                         <div className='repeatSummery'>
                                             <p>Latte (Regular)</p>
                                             <p>$100.0</p>
-                                        </div>
-                                        <div className='repeatSummery'>
-                                            <p>Latte (Regular)</p>
-                                            <p>$100.0</p>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
                                 <div className='total repeatSummery'>
-                                    <p>Latte (Regular)</p>
-                                    <p>$100.0</p>
+                                    <p>Total</p>
+                                    <p>${finalPrice}</p>
                                 </div>
                                 <button type='submit' className='btn btnRed'>
-                                    Place Order($200)
+                                    Place Order(${finalPrice})
                                 </button>
                             </div>
                         </form>
