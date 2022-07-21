@@ -1190,6 +1190,7 @@ span.user__pic {width: 2.875rem;height: 2.875rem;background: #C4C4C4;display: bl
 .settingPageALign .editProfile{
   @apply text-center;
 }
+
 .cart__actions a {
   @apply cursor-pointer;
 }
