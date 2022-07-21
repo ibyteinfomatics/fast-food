@@ -104,8 +104,14 @@ export default function CartView() {
             setLoading(true)
             const storeId = localStorage.getItem("storeId")
             console.log(data)
+            const selectedAddon = [];
+            if(data.selected_addon_data) {
+                data?.selected_addon_data.map((data) =>{
+                    selectedAddon.push({"addon_id": data.addon_id})
+                })
+            }
             const arrayItem = []
-            arrayItem.push({ item_id: data.item_id, is_customize: 1, selectedoptions: data.selected_options.length > 0 ? data.selected_options : [], selectedCategory: data.selected_category.length > 0 ? data.selected_category : [] })
+            arrayItem.push({ item_id: data.item_id, is_customize: 1, selectedoptions: data.selected_options.length > 0 ? data.selected_options : [], selectedCategory: data.selected_category.length > 0 ? data.selected_category : [],SelectedAddon: selectedAddon })
             console.log(arrayItem)
             const result = await fetch(
                 `${process.env.baseApiUrl}/api/add/to/cart`,

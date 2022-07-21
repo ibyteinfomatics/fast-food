@@ -80,6 +80,25 @@ export default function RestraLists() {
       setCurrentData([]);
     }
   };
+  const changeStoreData = (store_url) => {
+    console.log(store_url)
+    const storeId = localStorage.getItem("storeId")
+    console.log(storeId)
+
+    if( (localStorage.getItem("items") && storeId) && storeId != store_url ) {
+      const confirmBox = window.confirm(
+                "Are you sure you want to change store? You will lose your current basket if you do."
+              )
+              if (confirmBox === true) {
+                localStorage.setItem("storeId", store_url)
+                localStorage.removeItem("items")
+                router.push(`/store/?store_id=${store_url}`)
+              }
+    } else {
+      router.push(`/store/?store_id=${store_url}`)
+    }
+    
+  }
 
   // const deleteApi = async(data) => {
   //   data.map(async(d) => {
@@ -292,10 +311,10 @@ export default function RestraLists() {
             pathname: "/store/",
             query: resList.store_url,
           }}> */}
-                              <Link href={`/store/?store_id=${resList.store_url}`}>
+                              {/* <Link href={`/store/?store_id=${resList.store_url}`}> */}
                               {/* <Link href="/store/:[pid]" as={`/store/${resList.store_url}`}> */}
-                                <a className="btnRed btn">Order Online</a>
-                              </Link>
+                                <a className="btnRed btn" onClick={() => changeStoreData(resList.store_url)}>Order Online</a>
+                              {/* </Link> */}
                             </div>
                           </div>
                         </div>
