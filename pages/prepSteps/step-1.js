@@ -539,7 +539,7 @@ export default function StepOne(props) {
                                                                                                             <img src={`${process.env.baseApiUrl}${data1?.item_attachment?.attachment_url}`} alt="side image" width="215" height="195" />
                                                                                                         </span>
                                                                                                         <span className='side__header'>
-                                                                                                            <h3>{data1.name}</h3>
+                                                                                                            <h3>{data1.name.substring(0,27)+"..."}</h3>
                                                                                                             <p>${data1.price}</p>
                                                                                                         </span>
                                                                                                     </label></>
@@ -551,7 +551,7 @@ export default function StepOne(props) {
                                                                                                             <img src={`${process.env.baseApiUrl}${data1?.item_attachment?.attachment_url}`} alt="side image" width="215" height="195" />
                                                                                                         </span>
                                                                                                         <span className='side__header'>
-                                                                                                            <h3>{data1.name}</h3>
+                                                                                                            <h3>{data1.name.substring(0,27)+"..."}</h3>
                                                                                                             <p>${data1.price}</p>
                                                                                                         </span>
                                                                                                     </label></>
