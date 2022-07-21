@@ -208,7 +208,7 @@ export default function CardCheckout() {
                                     <p>${(finalPrice + finalPrice * 5 / 100).toFixed(2)}</p>
                                 </div>
                                 <button type='submit' className='btn btnRed'>
-                                    Place Order(${finalPrice})
+                                    Place Order(${(finalPrice + finalPrice * 5 / 100).toFixed(2)})
                                 </button>
                             </div>
                         </form>

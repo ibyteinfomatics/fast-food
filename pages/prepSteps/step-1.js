@@ -116,17 +116,24 @@ export default function StepOne(props) {
                 item['selectedoptions'] = stepOptionId
                 item['selectedCategory'] = categoryId
                 item['uniqueIndex'] = editData.uniqueIndex
+                item['selected_addOn'] = editData?.selected_addOn
                 //this is for selected options and category price add
                 const price = 0;
-                price = item.price
-                item.selectedoptions.map((data) => {
-                    price = price + parseInt(data.price ? data.price : 0)
+            price = item.price
+            item.selectedoptions.map((data) => {
+                price = price + parseInt(data.price ? data.price : 0)
+            })
+            item.selectedCategory.map((data) => {
+                price = price + parseInt(data.price ? data.price : 0)
+            })
+            if(item.selected_addOn) {
+                item?.selected_addOn.map((data) => {
+                    price = price + parseInt(data.offered_price ? data.offered_price : 0)
                 })
-                item.selectedCategory.map((data) => {
-                    price = price + parseInt(data.price ? data.price : 0)
-                })
-                item['total_price'] = price
-                console.log(price)
+            }
+            
+            item['total_price'] = price
+            console.log(price)
                 console.log(item)
                 const findData = JSON.parse(localStorage.getItem("items"))
                 const ui = findData.find((e) => e.uniqueIndex === item.uniqueIndex)
