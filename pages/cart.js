@@ -184,7 +184,8 @@ export default function CartView() {
         }
     };
     const selectAddOn = async (e, data, cart_id) => {
-        console.log(data.addon_id, data.item_id, cart_id)
+        console.log(data, cart_id)
+        const total = 0
         if (token) {
             if (e.target.checked === true) {
                 const result = await fetch(
@@ -223,7 +224,7 @@ export default function CartView() {
                             Accept: "application/json",
                             Authorization: `Bearer ${token}`
                         },
-                        body: JSON.stringify({ "item_id": data.item_id, "addon_id": data.addon_id, "cart_id": cart_id })
+                        body: JSON.stringify({ "item_id": data.item_data.item_id, "addon_id": data.addon_id, "cart_id": cart_id })
                     }
                 );
 
@@ -240,7 +241,56 @@ export default function CartView() {
             }
 
         } else {
+            console.log()
+            if(e.target.checked === true) {
+                
+                const items = JSON.parse(localStorage.getItem("items"))
+                const findOut = items.find((e) => e.uniqueIndex === cart_id.uniqueIndex);
+                const index = items.indexOf(findOut)
+                findOut['total_price'] = findOut.total_price + data.offered_price;
+                if(!findOut.selected_addOn) {
+                    findOut['selected_addOn'] = []
+                findOut['selected_addOn'].push(data)
+                } else{
+                    findOut['selected_addOn'].push(data)
+                }
+                
+                items.splice(index, 1, findOut);
+                
+                // items.push(findOut)
+                localStorage.setItem("items", JSON.stringify(items))
+                items.map((item) => {
 
+                    console.log(item)
+                    total = total + (item.total_price ? item.total_price : item.price)
+                })
+                console.log(total)
+                setPrice(total)
+                setCartListing(JSON.parse(localStorage.getItem("items")))
+
+                
+            }else {
+                console.log("unchecked")
+                const items = JSON.parse(localStorage.getItem("items"))
+                const findOut = items.find((e) => e.uniqueIndex === cart_id.uniqueIndex);
+                console.log(findOut);
+                const index = items.indexOf(findOut)
+                findOut['total_price'] = findOut.total_price - data.offered_price;
+                findOut['selected_addOn'].splice(findOut.selected_addOn.indexOf(findOut.selected_addOn.find((e) => e.addon_id === data.addon_id)), 1)
+                items.splice(index, 1, findOut);
+                
+                // items.push(findOut)
+                localStorage.setItem("items", JSON.stringify(items))
+                items.map((item) => {
+
+                    console.log(item)
+                    total = total + (item.total_price ? item.total_price : item.price)
+                })
+                console.log(total)
+                setPrice(total)
+                setCartListing(JSON.parse(localStorage.getItem("items")))
+            }
+            // console.log(data)
         }
     }
 
@@ -283,8 +333,15 @@ export default function CartView() {
         // item['selectedOptions'] = stepOptionId
         // item['selectedCategory'] = categoryId
         items.map((data) => {
-            console.log(data)
-            arrayItem.push({ item_id: data.item_id, is_customize: data.selectedCategory || data.selectedoptions ? 1 : 0, selectedoptions: data.selectedoptions ? data.selectedoptions : [], selectedCategory: data.selectedCategory ? data.selectedCategory : [] })
+            const selectedAddon = [];
+            if(data.selected_addOn) {
+                data?.selected_addOn.map((data) =>{
+                    selectedAddon.push({"addon_id": data.addon_id})
+                })
+            }
+            
+            console.log(selectedAddon)
+            arrayItem.push({ item_id: data.item_id, is_customize: data.selectedCategory || data.selectedoptions ? 1 : 0, selectedoptions: data.selectedoptions ? data.selectedoptions : [], selectedCategory: data.selectedCategory ? data.selectedCategory : [], SelectedAddon: selectedAddon  })
 
         })
         console.log(arrayItem)
@@ -437,6 +494,7 @@ export default function CartView() {
                                                                         {cart?.addon_data?.length > 0 &&
                                                                             cart?.addon_data?.map((data, index) => {
                                                                                 console.log(data)
+                                                                                console.log(cart)
                                                                                 // let selectedItem = cart?.selected_addon_data.filter((e) => e.addon_id == data.addon_id)
                                                                                 return (
                                                                                     <li key={data.addon_id}>
@@ -456,11 +514,13 @@ export default function CartView() {
                                                             </label>
                                                         </div>
                                                                         }
+                                                                        
                                                                         {!token &&
+                                                        
                                                                                         
                                                                                         <div className='offer__select'>
-                                                                                            <input type="checkbox" name="offerList" value="" id={cart.cart_id + data.addon_id} onClick={(e) => selectAddOn(e, data, cart?.cart_id )} />
-                                                                                            <label htmlFor={cart.cart_id + data.addon_id}>
+                                                                                            <input type="checkbox" name="offerList" value="" defaultChecked={cart?.selected_addOn?.find((e) => e.addon_id == data.addon_id ) ? true : false } id={cart.uniqueIndex.toString() + data.addon_id} onClick={(e) => selectAddOn(e, data, cart)} />
+                                                                                            <label htmlFor={cart.uniqueIndex.toString() + data.addon_id}>
                                                                                                 <span className='remove__offer'>
                                                                                                     <Image src="/images/remove-offer--icon.svg" alt="remove item" layout="fill" quality={100} />
                                                                                                 </span>
