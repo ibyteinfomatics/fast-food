@@ -161,6 +161,33 @@ export default function CartView() {
 
     }
 
+    const clearCart = async() => {
+        const storeId = localStorage.getItem("storeId")
+        const result = await fetch(
+            // `${process.env.baseApiUrl}/api/item/list/by/Id?item_id=${myArray.at(-1)}`,
+            `${process.env.baseApiUrl}/api/delete/addon/change/store`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8",
+                    Accept: "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body:JSON.stringify({"store_id":storeId})
+            }
+        );
+
+        let response = await result.json();
+        if (response.success) {
+            cartList()
+
+        } else {
+            
+            return response;
+        }
+
+    }
+
     const itemData = async () => {
         const items = JSON.parse(localStorage.getItem("items"))
         console.log(items)
@@ -211,7 +238,7 @@ export default function CartView() {
                 let response = await result.json();
                 if (response.success) {
                     cartList()
-                    window.location.reload(true);
+                    // window.location.reload(true);
 
                 } else {
                     setLoading(false)
@@ -237,7 +264,7 @@ export default function CartView() {
                 let response = await result.json();
                 if (response.success) {
                     cartList()
-                    window.location.reload(true);
+                    // window.location.reload(true);
                 } else {
                     setLoading(false)
                     setCart("");
@@ -316,7 +343,7 @@ export default function CartView() {
         let response = await result.json();
         console.log(response)
         if (response.success) {
-            setLoading(false)
+            
             const total = 0
             response.cart_item.map((item) => {
                 total = total + (item.total_price ? parseInt(item.total_price) : item.price)
@@ -324,7 +351,7 @@ export default function CartView() {
             setPrice(total)
             setCartListing(response.cart_item)
             localStorage.removeItem("items")
-
+            setLoading(false)
         } else {
 
             return response;
@@ -609,6 +636,7 @@ export default function CartView() {
                                                 <span>Total</span>
                                                 <span>${parseInt(price + price * 5 / 100).toFixed(2)}</span>
                                             </div>
+                                            <button onClick={() => clearCart()}>Clear All</button>
                                             {/* <div className='cart--subtotal'>
                                         <span></span>
                                         <span>
@@ -620,12 +648,16 @@ export default function CartView() {
                                     </div> */}
                                         </td>
                                     </tr>
+                                    
                                 </table>
+                                
                                 :
                                 <p>Nothing In The Cart...</p>
                             }
                         </div>
+                        
                     </div>
+                    
                 }
             </div>
         </React.Fragment>

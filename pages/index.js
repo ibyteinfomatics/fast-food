@@ -10,8 +10,15 @@ import ReactPaginate from 'react-paginate';
 import Layout from "../components/layout";
 import { Router, useRouter } from "next/router";
 
+
+
 export default function RestraLists() {
+
+  const [cartData, setCartData] = useState([])
   useEffect(() => {
+    if(localStorage.getItem("token")) {
+      cartList()
+    }
     
     document.body.classList.add("home__page");
     document.body.classList.remove("steps");
@@ -30,6 +37,31 @@ export default function RestraLists() {
   Geocode.setLanguage("en");
   Geocode.enableDebug();
   const [page, setPage] = useState(1);
+
+  const cartList = async () => {
+    
+    const result = await fetch(
+        `${process.env.baseApiUrl}/api/cart/list`,
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+                Accept: "application/json",
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            },
+        }
+    );
+    let response = await result.json();
+    console.log(response)
+    if (response.success) {
+        console.log(response)
+        setCartData(response.cart_item)
+    } else {
+
+        return response;
+    }
+
+}
 
   const handleClick = async (path) => {
     
@@ -80,8 +112,48 @@ export default function RestraLists() {
       setCurrentData([]);
     }
   };
-  const changeStoreData = (store_url) => {
-    console.log(store_url)
+  const changeStoreData = async(store_url) => {
+    if (localStorage.getItem("token")) {
+      const storeId = localStorage.getItem("storeId")
+      if( cartData.length > 0 && storeId != store_url ) {
+        const confirmBox = window.confirm(
+                  "Are you sure you want to change store? You will lose your current basket if you do."
+                )
+                if (confirmBox === true) {
+                  localStorage.setItem("storeId", store_url)
+                  localStorage.removeItem("items")
+                  const result = await fetch(
+                    // `${process.env.baseApiUrl}/api/item/list/by/Id?item_id=${myArray.at(-1)}`,
+                    `${process.env.baseApiUrl}/api/delete/addon/change/store`,
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json; charset=utf-8",
+                            Accept: "application/json",
+                            Authorization: `Bearer ${localStorage.getItem("token")}`
+                        },
+                        body:JSON.stringify({"store_id":storeId})
+                    }
+                );
+        
+                let response = await result.json();
+                if (response.success) {
+                  router.push(`/store/?store_id=${store_url}`)
+                    return response;
+                    
+        
+                } else {
+                    
+                    return response;
+                }
+                  
+                }
+      } else {
+        router.push(`/store/?store_id=${store_url}`)
+      }
+
+    } else{
+      console.log(store_url)
     const storeId = localStorage.getItem("storeId")
     console.log(storeId)
 
@@ -97,6 +169,9 @@ export default function RestraLists() {
     } else {
       router.push(`/store/?store_id=${store_url}`)
     }
+
+    }
+    
     
   }
 

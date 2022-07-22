@@ -83,7 +83,7 @@ export default function CardImage(props) {
       if(data.customize_status === 0) {
         if(localStorage.getItem("items")) {
           const items = JSON.parse(localStorage.getItem("items"))
-          data.item['uniqueIndex'] = items[items.length -1].uniqueIndex + 1
+          data.item['uniqueIndex'] = items[items.length -1]?.uniqueIndex + 1
           console.log(items)
           items.push(data.item)
           console.log(items)

@@ -12,6 +12,13 @@ import wait from 'wait';
 import ClipLoader from "react-spinners/ClipLoader";
 
 export default function Login() {
+  const handleSocialLogin = (user) => {
+    console.log(user);
+  };
+  
+  const handleSocialLoginFailure = (err) => {
+    console.error(err);
+  };
   useEffect(() => {
     // if(localStorage.getItem("token")) {
     //   router.push(localStorage.getItem("url"))
@@ -188,7 +195,9 @@ export default function Login() {
                 <Link href="/signup">
                   <a>Sign up</a>
                 </Link>
+                
               </p>
+              
             </div>
           </form>
         </div>
