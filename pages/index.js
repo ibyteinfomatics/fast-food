@@ -9,17 +9,18 @@ import Geocode from "react-geocode";
 import ReactPaginate from 'react-paginate';
 import Layout from "../components/layout";
 import { Router, useRouter } from "next/router";
+import Modal from 'react-modal';
 
 export default function RestraLists() {
   useEffect(() => {
-    
+
     document.body.classList.add("home__page");
     document.body.classList.remove("steps");
     document.body.classList.remove("rest__pages");
     document.body.classList.remove("login__form");
     document.body.classList.remove("cart__page");
     document.body.classList.remove("checkout__page");
-    
+
   }, []);
   const router = useRouter();
   const [showMe, setShowMe] = useState(false);
@@ -30,9 +31,10 @@ export default function RestraLists() {
   Geocode.setLanguage("en");
   Geocode.enableDebug();
   const [page, setPage] = useState(1);
+  const [orderOnline, setOrderOnline] = useState(false);
 
   const handleClick = async (path) => {
-    
+
     if (path === "/useMylocation") {
       navigator.geolocation.getCurrentPosition(function (position) {
         const search = {
@@ -68,7 +70,7 @@ export default function RestraLists() {
   }
   const restaurantSearch = async (event) => {
     // console.log( event );
-    
+
     const val = event?.target?.value;
     setAddress(val);
     if (val != "") {
@@ -85,19 +87,19 @@ export default function RestraLists() {
     const storeId = localStorage.getItem("storeId")
     console.log(storeId)
 
-    if( (localStorage.getItem("items") && storeId) && storeId != store_url ) {
+    if ((localStorage.getItem("items") && storeId) && storeId != store_url) {
       const confirmBox = window.confirm(
-                "Are you sure you want to change store? You will lose your current basket if you do."
-              )
-              if (confirmBox === true) {
-                localStorage.setItem("storeId", store_url)
-                localStorage.removeItem("items")
-                router.push(`/store/?store_id=${store_url}`)
-              }
+        "Are you sure you want to change store? You will lose your current basket if you do."
+      )
+      if (confirmBox === true) {
+        localStorage.setItem("storeId", store_url)
+        localStorage.removeItem("items")
+        router.push(`/store/?store_id=${store_url}`)
+      }
     } else {
       router.push(`/store/?store_id=${store_url}`)
     }
-    
+
   }
 
   // const deleteApi = async(data) => {
@@ -116,62 +118,62 @@ export default function RestraLists() {
   //   );
   //   let response = await result.json();
   //   if (response.success) {
-        
+
   //   } else {
-    
+
   //       return response;
   //   }
   //   })
   // }
   const changeStore = async (data) => {
-//     const storeId = localStorage.getItem("storeId")
-//     if(storeId === data) {
-//       router.push(`/store/${data}`)
-//     } else{
-//       const confirmBox = window.confirm(
-//         "Are you sure you want to change store? You will lose your current basket if you do."
-//       )
-//       if (confirmBox === true) {
-//         if(localStorage.getItem("token")) {
-//           localStorage.setItem("storeId", data);
-//         localStorage.removeItem("items")
-//     const result = await fetch(
-//       `${process.env.baseApiUrl}/api/cart/list`,
-//       {
-//           method: "POST",
-//           headers: {
-//               "Content-Type": "application/json; charset=utf-8",
-//               Accept: "application/json",
-//               Authorization: `Bearer ${localStorage.getItem("token")}`
-//           },
-//       }
-//   );
-//   let response = await result.json();
-// console.log(response)
-// if (response.success) {
-//   deleteApi(response)
-  
-// } else {
+    //     const storeId = localStorage.getItem("storeId")
+    //     if(storeId === data) {
+    //       router.push(`/store/${data}`)
+    //     } else{
+    //       const confirmBox = window.confirm(
+    //         "Are you sure you want to change store? You will lose your current basket if you do."
+    //       )
+    //       if (confirmBox === true) {
+    //         if(localStorage.getItem("token")) {
+    //           localStorage.setItem("storeId", data);
+    //         localStorage.removeItem("items")
+    //     const result = await fetch(
+    //       `${process.env.baseApiUrl}/api/cart/list`,
+    //       {
+    //           method: "POST",
+    //           headers: {
+    //               "Content-Type": "application/json; charset=utf-8",
+    //               Accept: "application/json",
+    //               Authorization: `Bearer ${localStorage.getItem("token")}`
+    //           },
+    //       }
+    //   );
+    //   let response = await result.json();
+    // console.log(response)
+    // if (response.success) {
+    //   deleteApi(response)
 
-//   return response;
-// }
-//         } else {
-//           localStorage.setItem("storeId", data);
-//         localStorage.removeItem("items")
-//         }
-        
-//         router.push(`/store/${data}`)
-//       }
-//     }
+    // } else {
+
+    //   return response;
+    // }
+    //         } else {
+    //           localStorage.setItem("storeId", data);
+    //         localStorage.removeItem("items")
+    //         }
+
+    //         router.push(`/store/${data}`)
+    //       }
+    //     }
     router.push(`/store/${data}`)
 
   }
-  const searchRestraResult = async (data,page) => {
-    const response = await fetchRestraSearch(data,page);
+  const searchRestraResult = async (data, page) => {
+    const response = await fetchRestraSearch(data, page);
     if (response.success) {
       // console.log(response)
       setCurrentData(response.store_data)
-      
+
       setChecked(false);
     } else {
       setCurrentData([]);
@@ -185,7 +187,7 @@ export default function RestraLists() {
 
     const searchStr = { search_item: currentAddress, longitude: "", latitude: "" };
     setChecked(true);
-    await searchRestraResult(searchStr,pageNo);
+    await searchRestraResult(searchStr, pageNo);
   };
   return (
     <React.Fragment>
@@ -201,7 +203,7 @@ export default function RestraLists() {
               Have an allergy? Unfortunately, we can’t cater for allergens on
               Click & Collect - head to one of our restaurants to order.
             </p>
-            
+
             <form className="searchForm">
               <div className="searchBox">
                 <span className="leftIcon">
@@ -295,7 +297,7 @@ export default function RestraLists() {
                           <div className="flexBlockTwo">
                             <div className="flexBlockLeft">
                               <Link href={`/store/${resList.store_url}`}>
-                                
+
                                 <a className="collect">Click & Collect</a>
                               </Link>
                               <p className="openStatus">
@@ -308,49 +310,100 @@ export default function RestraLists() {
                             <div className="orderStatus">
                               {/* <Link href={`/store/?store_id=${resList.store_url}`}> */}
                               {/* <Link href={{
-            pathname: "/store/",
-            query: resList.store_url,
-          }}> */}
+                                  pathname: "/store/",
+                                  query: resList.store_url,
+                                }}> */
+                              }
                               {/* <Link href={`/store/?store_id=${resList.store_url}`}> */}
                               {/* <Link href="/store/:[pid]" as={`/store/${resList.store_url}`}> */}
-                                <a className="btnRed btn" onClick={() => changeStoreData(resList.store_url)}>Order Online</a>
+                              <a className="btnRed btn" onClick={() => changeStoreData(resList.store_url)}>Order Online</a>
+                              <a className="btnRed btn" onClick={() => setOrderOnline(!orderOnline)}>order</a>
                               {/* </Link> */}
                             </div>
                           </div>
                         </div>
                       </div>
-                      
+
                     </div>
-                    
+
                   );
                 })
-                
+
               )
-               : (
-                "Restaurant not found"
-              )}
+                : (
+                  "Restaurant not found"
+                )}
               {currentData?.total > 5 &&
-                  <ReactPaginate
-                    previousLabel={"prev"}
-                    nextLabel={"next"}
-                    breakLabel={"..."}
-                    breakClassName={"break-me"}
-                    pageCount={Math.ceil((currentData?.total) / (currentData?.per_page))}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={handlePageClick}
-                    containerClassName={"pagination"}
-                    subContainerClassName={"pages pagination"}
-                    activeClassName={"active"} />}
-              
+                <ReactPaginate
+                  previousLabel={"prev"}
+                  nextLabel={"next"}
+                  breakLabel={"..."}
+                  breakClassName={"break-me"}
+                  pageCount={Math.ceil((currentData?.total) / (currentData?.per_page))}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={5}
+                  onPageChange={handlePageClick}
+                  containerClassName={"pagination"}
+                  subContainerClassName={"pages pagination"}
+                  activeClassName={"active"} />}
+
             </div>
-            
+
           </div>
         </div>
       </div>
+
+      {/* Order Online Modal */}
+      {orderOnline &&
+        <Modal ariaHideApp={false}
+          className="confirmation"
+          isOpen={orderOnline}
+          contentLabel=""
+        >
+          <div className="modalHeader">
+            <div className="headerTitle">
+              Order Online
+            </div>
+            <button
+              className="close"
+              onClick={() => setOrderOnline(!orderOnline)}>
+              <svg
+                id="Icons_Alerts_alarm"
+                data-name="Icons/Alerts/alarm"
+                xmlns="http://www.w3.org/2000/svg"
+                width="21.037"
+                height="21.04"
+                viewBox="0 0 21.037 21.04"
+              >
+                <path
+                  id="close"
+                  d="M2.4.412A1.405,1.405,0,1,0,.412,2.4l8.117,8.117L.412,18.634A1.405,1.405,0,1,0,2.4,20.622l8.117-8.112,8.117,8.117a1.405,1.405,0,1,0,1.988-1.988L12.51,10.517,20.627,2.4A1.407,1.407,0,1,0,18.634.412L10.516,8.529Z"
+                  transform="translate(0 0.001)"
+                  fill="#171717"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <div className="modalBody">
+            <div className="card card--block mb-6">
+              <h3 className="modalTitle">
+                Discard all the items in your cart ?
+              </h3>
+            </div>
+          </div>
+          <div className="modalFooter">
+            <div className="actionBtn">
+              <button type="sumit" className="btnRed btn" onClick={() => sharePostOnTimeLine()}>Yes</button>
+              <button type="sumit" className="btnBorderRed btn" onClick={() => sharePostOnTimeLine()}>No</button>
+            </div>
+          </div>
+        </Modal>
+      }
+
     </React.Fragment>
   );
-  
+
 }
 // RestraLists.getLayout = (page) => {
 //   return(

@@ -434,7 +434,7 @@ a{
 .btnRed{
   background: #FE0435;
   border-radius: 2rem;
-  @apply text-white p-4 text-center;
+  @apply text-white p-4 text-center cursor-pointer;
 }
 
 .add--order {
@@ -1148,7 +1148,7 @@ span.form--icon {
 .orderDetail .btnRed.btn{
   min-width: 17.438rem;
   background: #FE0435;
-  @apply text-white text-xl inline-block;
+  @apply text-white text-xl inline-block cursor-pointer;
 }
 .orderDetail .myOrders{
   @apply text-center mb-8;
@@ -1975,4 +1975,61 @@ ul.pagination li {
   width: 2.125rem;
   height: 2.125rem;
   background: #7ECE7D;
+}
+
+/* Popup Css Start */
+.ReactModal__Content.ReactModal__Content--after-open.confirmation{
+  padding: 2rem;
+  overflow-y: auto;
+  /* height: 70%; */
+  @apply bg-white;
+}
+.ReactModal__Content.ReactModal__Content--after-open {
+  max-width: 51.125rem;
+  width: 100%;
+  position: absolute;
+  border-radius: 1.438rem !important;
+  top: 50% !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  margin-right: -50% !important;
+  transform: translate(-50%, -50%) !important;
+  height: auto;
+}
+.ReactModal__Overlay.ReactModal__Overlay--after-open {
+  background: rgb(0 0 0 / 60%) !important;
+  z-index: 999;
+}
+.modalHeader {
+  @apply flex items-center justify-between mb-6;
+}
+.modalHeader .headerTitle {
+  font-size: 1.5rem;
+  @apply font-bold;
+}
+.modalBody {
+  @apply text-center p-8;
+}
+.modalBody .modalTitle{
+  font-size: 1.5rem;
+  @apply font-bold;
+}
+.modalFooter .actionBtn{
+  @apply flex justify-end items-center;
+}
+.btnBorderRed {
+  border: 1px solid #FE0435;
+  border-radius: 2rem;
+  padding: 1rem;
+  text-align: center;
+}
+.modalFooter .actionBtn button {
+  min-width: 14.7rem;
+}
+.modalFooter {
+  @apply mt-12;
+}
+.modalFooter .actionBtn button:nth-child(1){
+  @apply mr-4;
 }

@@ -1,15 +1,23 @@
 import React from 'react'
 import Image from 'next/image'
+import Carousel from 'react-grid-carousel'
 
 export default function Sitebanner() {
     return (
-        <div className='bannerImage'>
-            <Image src="/images/new_images/rest_banner.jpg" alt='Banner Image' layout='responsive' height={427} width={1920} />
-            {/* <div className='bannerContent'>
-                <div className='bannerSubTitle textWhite'>
-                    <h3>Fastfood Elephant & Castle</h3>
-                </div>
-            </div> */}
-        </div>
-    )
+        <Carousel cols={2} rows={1} gap={10} loop>
+          <Carousel.Item>
+            <img width="100%" src="https://picsum.photos/800/600?random=1" />
+          </Carousel.Item>
+          <Carousel.Item>
+            <img width="100%" src="https://picsum.photos/800/600?random=2" />
+          </Carousel.Item>
+          <Carousel.Item>
+            <img width="100%" src="https://picsum.photos/800/600?random=3" />
+          </Carousel.Item>
+          <Carousel.Item>
+            {/* anything you want to show in the grid */}
+          </Carousel.Item>
+          {/* ... */}
+        </Carousel>
+      )
 }
