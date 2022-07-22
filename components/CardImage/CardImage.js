@@ -51,7 +51,7 @@ export default function CardImage(props) {
               headers: {
                   "Content-Type": "application/json; charset=utf-8",
                   Accept: "application/json",
-                  store_id: storeId,
+                  'store-id': storeId,
                   Authorization: `Bearer ${token}`
               },
               body: JSON.stringify(arrayItem)

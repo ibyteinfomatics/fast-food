@@ -1,7 +1,8 @@
 import React from 'react'
 import Image from 'next/image'
 
-export default function Sitebanner() {
+export default function Sitebanner(props) {
+    console.log(props.data)
     return (
         <div className='bannerImage'>
             <Image src="/images/new_images/rest_banner.jpg" alt='Banner Image' layout='responsive' height={427} width={1920} />

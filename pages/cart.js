@@ -120,7 +120,7 @@ export default function CartView() {
                     headers: {
                         "Content-Type": "application/json; charset=utf-8",
                         Accept: "application/json",
-                        store_id: storeId,
+                        "store-id": storeId,
                         Authorization: `Bearer ${localStorage.getItem("token")}`
                     },
                     body: JSON.stringify(arrayItem)
@@ -217,6 +217,7 @@ export default function CartView() {
         }
     };
     const selectAddOn = async (e, data, cart_id) => {
+        const store_id = localStorage.getItem("storeId")
         console.log(data, cart_id)
         const total = 0
         if (token) {
@@ -229,7 +230,8 @@ export default function CartView() {
                         headers: {
                             "Content-Type": "application/json; charset=utf-8",
                             Accept: "application/json",
-                            Authorization: `Bearer ${token}`
+                            Authorization: `Bearer ${token}`,
+                            "store-id": store_id
                         },
                         body: JSON.stringify({ "item_id": data.item_id, "addon_id": data.addon_id, "cart_id": cart_id })
                     }
@@ -386,7 +388,7 @@ export default function CartView() {
                 headers: {
                     "Content-Type": "application/json; charset=utf-8",
                     Accept: "application/json",
-                    store_id: storeId,
+                    "store-id": storeId,
                     Authorization: `Bearer ${localStorage.getItem("token")}`
                 },
                 body: JSON.stringify(arrayItem)

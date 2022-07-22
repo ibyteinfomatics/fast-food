@@ -15,7 +15,6 @@ export default function PageFour() {
   useEffect(() => {
     if (slug_url && slug_url !== "") {
       categoryList(slug_url);
-      localStorage.setItem("storeId", slug_url)
     }
     document.body.classList.add("rest__pages");
     document.body.classList.remove("home__page");
@@ -43,9 +42,10 @@ export default function PageFour() {
     let response = await result.json();
 
     if (response.success) {
+      
+      console.log( response )
+      setCategoryData(response);
       setLoading(false)
-      // console.log( response )
-      setCategoryData(response.category_data);
     } else {
       setLoading(false)
       return response;
@@ -57,15 +57,16 @@ export default function PageFour() {
       <Header />
 
       {/* Top Banner */}
-      <Sitebanner />
+      <Sitebanner data={categoryData?.slider_data} />
     
       <div className="siteWidth">
         {/* Product grids */}
         {!loading &&
         <div className="product__lists rest--pages__lists">
-          {categoryData &&
-            categoryData.length > 0 &&
-            categoryData.map((catList) => {
+          {categoryData.category_data &&
+            categoryData.category_data.length > 0 &&
+            categoryData.category_data.map((catList) => {
+              // console.log(categoryData)
              console.log(catList.slug)
               return (
                

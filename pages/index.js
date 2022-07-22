@@ -91,6 +91,35 @@ export default function RestraLists() {
       });
     }
   };
+  const deleteCart = async(prevStore, store_id, store_url) => {
+    const storeId = localStorage.getItem("storeId")
+    const result = await fetch(
+      // `${process.env.baseApiUrl}/api/item/list/by/Id?item_id=${myArray.at(-1)}`,
+      `${process.env.baseApiUrl}/api/delete/addon/change/store`,
+      {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json; charset=utf-8",
+              Accept: "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`
+          },
+          body:JSON.stringify({"store_id":prevStore})
+      }
+  );
+
+  let response = await result.json();
+  if (response.success) {
+    localStorage.setItem("storeId", store_id);
+    localStorage.setItem("store_url", store_url)
+    router.push(`/store/?store_id=${store_url}`)
+      return response;
+      
+
+  } else {
+      
+      return response;
+  }
+  }
   const handleRemove = async (e) => {
     setAddress("");
     setCurrentData([]);
@@ -112,65 +141,85 @@ export default function RestraLists() {
       setCurrentData([]);
     }
   };
-  const changeStoreData = async(store_url) => {
-    if (localStorage.getItem("token")) {
-      const storeId = localStorage.getItem("storeId")
-      if( cartData.length > 0 && storeId != store_url ) {
-        const confirmBox = window.confirm(
+  const changeStoreData = async(storeData) => {
+    if(localStorage.getItem("token")) {
+      if(localStorage.getItem("storeId")) {
+        const prevStore_id = localStorage.getItem("storeId")
+        if((cartData.length > 0 && prevStore_id) && storeData.store_id != prevStore_id) {
+          const confirmBox = window.confirm(
                   "Are you sure you want to change store? You will lose your current basket if you do."
                 )
                 if (confirmBox === true) {
-                  localStorage.setItem("storeId", store_url)
+                  localStorage.setItem("storeId", storeData.store_id)
+                  localStorage.setItem("store_url", storeData.store_url)
                   localStorage.removeItem("items")
-                  const result = await fetch(
-                    // `${process.env.baseApiUrl}/api/item/list/by/Id?item_id=${myArray.at(-1)}`,
-                    `${process.env.baseApiUrl}/api/delete/addon/change/store`,
-                    {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json; charset=utf-8",
-                            Accept: "application/json",
-                            Authorization: `Bearer ${localStorage.getItem("token")}`
-                        },
-                        body:JSON.stringify({"store_id":storeId})
-                    }
-                );
-        
-                let response = await result.json();
-                if (response.success) {
-                  router.push(`/store/?store_id=${store_url}`)
-                    return response;
-                    
-        
-                } else {
-                    
-                    return response;
+                  deleteCart(prevStore_id, storeData.store_id, storeData.store_url)
                 }
-                  
-                }
-      } else {
-        router.push(`/store/?store_id=${store_url}`)
+  
+        }else {
+          router.push(`/store/?store_id=${storeData.store_url}`)
+          localStorage.setItem("storeId", storeData.store_id)
+        localStorage.setItem("store_url", storeData.store_url)
+        }
+  
+      }else {
+        localStorage.setItem("storeId", storeData.store_id)
+        localStorage.setItem("store_url", storeData.store_url)
+        router.push(`/store/?store_id=${storeData.store_url}`)
       }
 
-    } else{
-      console.log(store_url)
-    const storeId = localStorage.getItem("storeId")
-    console.log(storeId)
+    }else {
+      if(localStorage.getItem("storeId")) {
+        const prevStore_id = localStorage.getItem("storeId")
+        if((localStorage.getItem("items") && prevStore_id) && storeData.store_id != prevStore_id) {
+          const confirmBox = window.confirm(
+                  "Are you sure you want to change store? You will lose your current basket if you do."
+                )
+                if (confirmBox === true) {
+                  localStorage.setItem("storeId", storeData.store_id)
+                  localStorage.setItem("store_url", storeData.store_url)
+                  localStorage.removeItem("items")
+                  
+                  router.push(`/store/?store_id=${storeData.store_url}`)
+                }
+  
+        }else {
+          router.push(`/store/?store_id=${storeData.store_url}`)
+          localStorage.setItem("storeId", storeData.store_id)
+        localStorage.setItem("store_url", storeData.store_url)
+        }
+  
+      }else {
+        localStorage.setItem("storeId", storeData.store_id)
+        localStorage.setItem("store_url", storeData.store_url)
+        router.push(`/store/?store_id=${storeData.store_url}`)
+      }
 
-    if( (localStorage.getItem("items") && storeId) && storeId != store_url ) {
-      const confirmBox = window.confirm(
-                "Are you sure you want to change store? You will lose your current basket if you do."
-              )
-              if (confirmBox === true) {
-                localStorage.setItem("storeId", store_url)
-                localStorage.removeItem("items")
-                router.push(`/store/?store_id=${store_url}`)
-              }
-    } else {
-      router.push(`/store/?store_id=${store_url}`)
     }
+    
 
-    }
+    // if(localStorage.getItem("storeId")) {
+    //   const prevStore_id = localStorage.getItem("storeId")
+    //   if(storeData.store_id != prevStore_id) {
+    //     const confirmBox = window.confirm(
+    //       "Are you sure you want to change store? You will lose your current basket if you do."
+    //     )
+    //     if (confirmBox === true) {
+    //       localStorage.setItem("storeId", storeData.store_id)
+    //       localStorage.setItem("store_url", storeData.store_url)
+    //       localStorage.removeItem("items")
+    //       router.push(`/store/?store_id=${store_url}`)
+    //     }
+    //   }
+    //   else{
+    //     router.push(`/store/?store_id=${store_url}`)
+    //   }
+
+    // }else {
+    //   localStorage.setItem("storeId", storeData.store_id)
+    //   localStorage.setItem("store_url", storeData.store_url)
+    //   router.push(`/store/?store_id=${storeData.store_url}`)
+    // }
     
     
   }
@@ -344,6 +393,7 @@ export default function RestraLists() {
                 <Skeleton count={1} />
               ) : currentData.data && currentData.data.length > 0 ? (
                 currentData.data.map((resList) => {
+                  console.log(resList.store_id)
                   return (
                     <div className="restroDetail" key={resList.store_id}>
                       <div className="restroGroup">
@@ -388,7 +438,9 @@ export default function RestraLists() {
           }}> */}
                               {/* <Link href={`/store/?store_id=${resList.store_url}`}> */}
                               {/* <Link href="/store/:[pid]" as={`/store/${resList.store_url}`}> */}
-                                <a className="btnRed btn" onClick={() => changeStoreData(resList.store_url)}>Order Online</a>
+                                <a className="btnRed btn"
+                                 onClick={() => changeStoreData(resList)}
+                                 >Order Online</a>
                               {/* </Link> */}
                             </div>
                           </div>
