@@ -472,6 +472,7 @@ a{
 }
 .bannerImage {
   @apply relative mt-2.5 mb-3 overflow-hidden;
+  height: 25rem;
   /* border-radius: 1.875rem; */
 }
 .bannerImage > span {
@@ -1975,4 +1976,13 @@ ul.pagination li {
   width: 2.125rem;
   height: 2.125rem;
   background: #7ECE7D;
+}
+.bannerImage img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
 }

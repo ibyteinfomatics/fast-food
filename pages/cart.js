@@ -162,7 +162,8 @@ export default function CartView() {
     }
 
     const clearCart = async() => {
-        const storeId = localStorage.getItem("storeId")
+        if(token) {
+            const storeId = localStorage.getItem("storeId")
         const result = await fetch(
             // `${process.env.baseApiUrl}/api/item/list/by/Id?item_id=${myArray.at(-1)}`,
             `${process.env.baseApiUrl}/api/delete/addon/change/store`,
@@ -185,6 +186,11 @@ export default function CartView() {
             
             return response;
         }
+        }else{
+            localStorage.removeItem("items")
+            setCartListing([])
+        }
+        
 
     }
 
